@@ -17,13 +17,14 @@ const handler = async (
     }
 
     if (req.method === "POST") {
-      const { response } = req.body;
+      const { response, incoming_user_id } = req.body;
       const group = await Group.findOne({ uuid: params.id }).populate("owner");
       if (!group) {
         return new Response("Group not found", {
           status: 400,
         });
       }
+      const currentUserId = incoming_user_id ||currentUser._id
 
       if (
         group.members.include(currentUser._id) &&
@@ -35,18 +36,18 @@ const handler = async (
       }
 
       group.invitations.pending = group.invitations.pending.filter(
-        (x: string) => x !== currentUser._id
+        (x: string) => x !== currentUserId
       );
       group.invitations.outgoing = group.invitations.outgoing.filter(
-        (x: string) => x !== currentUser._id
+        (x: string) => x !== currentUserId
       );
       if (response === "Accept") {
-        group.members.push(currentUser._id);
+        group.members.push(currentUserId);
       } else {
-        group.invitations.rejected.push(currentUser._id);
+        group.invitations.rejected.push(currentUserId);
       }
 
-      await User.findByIdAndUpdate(currentUser._id, {
+      await User.findByIdAndUpdate(currentUserId, {
         $pull: { invitations: group._id },
       });
       await group.save();

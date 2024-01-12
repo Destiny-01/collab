@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema({
     },
     bio: {
       type: String,
-      required: true,
     },
     niche: {
       type: String,
@@ -75,12 +74,11 @@ const userSchema = new mongoose.Schema({
     social_profile: {
       type: String,
     },
-    experience: {
-      type: String,
-    },
-    interest: {
-      type: String,
-    },
+    interest: [
+      {
+        type: String,
+      },
+    ],
   },
 });
 

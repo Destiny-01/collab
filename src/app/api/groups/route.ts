@@ -1,7 +1,5 @@
 import User from "@/app/models/User";
 import { NextApiHandler } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 import getCurrentUser from "@/app/utils/getCurrentUser";
 import Group from "@/app/models/Group";
 
@@ -15,18 +13,22 @@ const handler: NextApiHandler = async (req, res) => {
         });
       }
 
-      const { email, details } = req.body;
+      const { project, uuid, name } = req.body;
 
-      const user = await User.findOneAndUpdate(
-        { email },
-        { details },
-        { new: true }
-      );
-      if (!user) {
-        return new Response("User not found", { status: 400 });
+      const group = await Group.findOne({ uuid });
+      if (!group) {
+        return new Response("Group not found", {
+          status: 400,
+        });
       }
 
-      return Response.json({ success: true, data: user });
+      group.project = project;
+      group.details = project;
+      group.name = name;
+
+      await group.save();
+
+      return Response.json({ success: true, data: group });
     } else if (req.method === "GET") {
       const groups = await Group.find({ visibility: "Public" });
       if (!groups) {

@@ -4,13 +4,6 @@ const groupSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  short_description: {
-    type: String,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
   uuid: {
     type: String,
     required: true,
@@ -18,6 +11,16 @@ const groupSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
+  },
+  project: {
+    short_description: String,
+    description: String,
+    problem: String,
+    solution: String,
+    impact: String,
+    key_features: [String],
+    complexity: String,
+    estimated_timeline: String,
   },
   messages: [
     {
@@ -60,6 +63,18 @@ const groupSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  details: {
+    interests: [
+      {
+        type: String,
+      },
+    ],
+    core_skills: [
+      {
+        type: String,
+      },
+    ],
+  },
   visibility: {
     type: String,
     enum: ["Private", "Public"],
