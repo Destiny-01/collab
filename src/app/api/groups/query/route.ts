@@ -1,8 +1,7 @@
-import User from "@/app/models/User";
 import { NextApiHandler } from "next";
-import getCurrentUser from "@/app/utils/getCurrentUser";
-import Group from "@/app/models/Group";
-import { generateProjectIdeas } from "@/app/services/project.service";
+import getCurrentUser from "@/utils/getCurrentUser";
+import Group from "@/models/Group";
+import { generateProjectIdeas } from "@/services/project.service";
 import { uuid } from "uuidv4";
 
 const handler: NextApiHandler = async (req, res) => {

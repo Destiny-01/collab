@@ -1,4 +1,36 @@
-import mongoose from "mongoose";
+import mongoose, { Types, Document, Model } from "mongoose";
+
+interface UserDetails {
+  short_description?: string;
+  bio?: string;
+  niche?: string;
+  secondary_niche?: string;
+  country?: string;
+  phone_number?: string;
+  timezone?: string;
+  skills?: string[];
+  social_profile?: string;
+  language?: string;
+  interest?: string[];
+}
+
+export interface User {
+  username: string;
+  name: string;
+  email: string;
+  password: string;
+  avatar?: string;
+  email_verification: string;
+  isVerified?: boolean;
+  isReported?: boolean;
+  groups: Types.ObjectId[] | string[]; // Assuming you are using ObjectId or string for references
+  invitations: Types.ObjectId[] | string[]; // Assuming you are using ObjectId or string for references
+  details?: UserDetails;
+}
+
+interface UserDocument extends User, Document {
+  id: any;
+}
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -79,9 +111,11 @@ const userSchema = new mongoose.Schema({
         type: String,
       },
     ],
+    language: {
+      type: String,
+    },
   },
 });
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
-
-export default User;
+export default (mongoose.models.User as unknown as Model<UserDocument>) ||
+  mongoose.model<User>("User", userSchema);
