@@ -1,7 +1,7 @@
-import Group from "@/app/models/Group";
-import User from "@/app/models/User";
-import getCurrentUser from "@/app/utils/getCurrentUser";
-import sendEmail from "@/app/utils/sendMail";
+import Group from "@/models/Group";
+import User from "@/models/User";
+import getCurrentUser from "@/utils/getCurrentUser";
+import sendEmail from "@/utils/sendMail";
 import { NextApiRequest } from "next";
 
 const handler = async (
@@ -24,7 +24,7 @@ const handler = async (
           status: 400,
         });
       }
-      const currentUserId = incoming_user_id ||currentUser._id
+      const currentUserId = incoming_user_id || currentUser._id;
 
       if (
         group.members.include(currentUser._id) &&

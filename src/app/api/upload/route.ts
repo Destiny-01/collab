@@ -1,5 +1,5 @@
-import cloudinary from "@/app/utils/cloudinary";
-import { upload } from "@/app/utils/multer";
+import cloudinary from "@/utils/cloudinary";
+import { upload } from "@/utils/multer";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
 

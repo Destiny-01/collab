@@ -1,6 +1,6 @@
-import getCurrentUser from "@/app/utils/getCurrentUser";
-import User from "@/app/models/User";
-import sendEmail from "@/app/utils/sendMail";
+import getCurrentUser from "@/utils/getCurrentUser";
+import User from "@/models/User";
+import sendEmail from "@/utils/sendMail";
 import { NextApiRequest } from "next";
 
 const handler = async (req: NextApiRequest) => {

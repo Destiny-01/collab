@@ -1,5 +1,5 @@
 import axios from "axios";
-import User from "@/app/models/User";
+import UserModel, { User } from "@/models/User";
 import Group from "../models/Group";
 import { queryChatGPT } from "../utils/openai";
 
@@ -43,10 +43,13 @@ function parseFeedbackString(feedbackString: string) {
   return feedbackObjects;
 }
 
-const rateCandidatesWithGPT = async (user: any, applicants: any) => {
+const rateCandidatesWithGPT = async (user: User, applicants: User[]) => {
   const limit = 15;
   const batchLimit = 10;
   const delayBetweenRequests = 1000; // Adjust the delay as needed (in milliseconds)
+  if (!user || applicants?.length < 3) {
+    return null;
+  }
 
   try {
     const results = [];
@@ -57,7 +60,7 @@ const rateCandidatesWithGPT = async (user: any, applicants: any) => {
         .filter(Boolean);
 
       const prompt = `This document outlines a user profile with a bio "${
-        user.details.bio
+        user?.details?.bio
       }".
             The other necessary details of the users are ${user.details}
             The document includes details about potential candidates (${JSON.stringify(
@@ -67,7 +70,7 @@ const rateCandidatesWithGPT = async (user: any, applicants: any) => {
             such as their alignment with the user, his interests, his skills and his niche.
             Please provide feedback by identifying the (top ${limit} candidates ONLY) in descending order
             and assigning a percentage-based rating to each, ARRAY structured as Stringified JSON
-            {applicant(in lowercase): the account_id value from each applicant in ${applicantsForThisBatch} as a
+            {applicant(in lowercase): the _id value from each applicant in ${applicantsForThisBatch} as a
             string, rating(in lowercase): x%, reason(in lowercase): reason for rating not more than 5 words}. Example of compulsory format output: '[
             '  { applicant: "6401ce264f36bae6e8c6b5b8", rating: "90%", reason: "aligned with bio" },\n' +
             '  { applicant: "64dc1a68c6179cb72e0fcd82", rating: "80%", reason: "relevant skills" },\n' +
@@ -92,9 +95,11 @@ const rateCandidatesWithGPT = async (user: any, applicants: any) => {
 
 export const getMatchesForGroup = async (id: string, isGroup: boolean) => {
   try {
-    const group = isGroup ? await Group.findById(id) : await User.findById(id);
+    const group = isGroup
+      ? await Group.findById(id)
+      : await UserModel.findById(id);
 
-    const core_skills = await Promise.all([
+    const core_skills: any[] = await Promise.all([
       await synonyms(group.core_skills[0]),
       await synonyms(group.core_skills[1]),
       await synonyms(group.core_skills[2]),
@@ -109,11 +114,11 @@ export const getMatchesForGroup = async (id: string, isGroup: boolean) => {
       (word: string) => new RegExp(escapeRegExp(word), "i")
     );
 
-    const users = await User.find({
+    const users = await UserModel.find({
       _id: { $ne: isGroup ? id : { $in: group.members } },
       niche: group.category,
       $or: [
-        { bio: { $regex: new RegExp(core_skills.join("|"), "i") } },
+        { "details.bio": { $regex: new RegExp(core_skills.join("|"), "i") } },
         { "details.interests": { $in: searchRegexes } },
         { "details.skills": { $in: searchRegexes } },
       ],

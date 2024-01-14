@@ -1,5 +1,5 @@
-import User from "@/app/models/User";
-import getCurrentUser from "@/app/utils/getCurrentUser";
+import User from "@/models/User";
+import getCurrentUser from "@/utils/getCurrentUser";
 import { NextApiHandler } from "next";
 
 const handler: NextApiHandler = async (req, res) => {

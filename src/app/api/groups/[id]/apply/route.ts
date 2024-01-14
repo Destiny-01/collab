@@ -1,6 +1,6 @@
-import Group from "@/app/models/Group";
-import getCurrentUser from "@/app/utils/getCurrentUser";
-import sendEmail from "@/app/utils/sendMail";
+import Group from "@/models/Group";
+import getCurrentUser from "@/utils/getCurrentUser";
+import sendEmail from "@/utils/sendMail";
 
 const handler = async (
   req: Request,

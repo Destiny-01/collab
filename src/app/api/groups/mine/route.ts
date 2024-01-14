@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
-import Group from "@/app/models/Group";
-import getCurrentUser from "@/app/utils/getCurrentUser";
+import Group from "@/models/Group";
+import getCurrentUser from "@/utils/getCurrentUser";
 
 const handler: NextApiHandler = async (req, res) => {
   try {
