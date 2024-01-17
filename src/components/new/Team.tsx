@@ -1,17 +1,17 @@
 "use client";
 import Image from "next/image";
-import Smile from "@/assets/smileguy.png";
+// import Smile from "@/assets/smileguy.png";
 
 function Team({ setSelectedTab }: any) {
   return (
     <div className="grid sm:grid-cols-2 gap-4 pt-8">
       <div className="bg-white  rounded-[10px]">
         <div className="h-[200px] p-4">
-          <Image
+          {/* <Image
             src={Smile}
             alt="Smiling Man"
             className="h-full w-full rounded-[10px] object-cover object-top overflow-hidden"
-          />
+          /> */}
         </div>
         <div className="p-4 pt-0">
           <h6>John Dalton</h6>
@@ -35,11 +35,11 @@ function Team({ setSelectedTab }: any) {
       </div>
       <div className="bg-white rounded-[10px]">
         <div className="h-[200px] p-4">
-          <Image
+          {/* <Image
             src={Smile}
             alt="Smiling Man"
             className="h-full w-full rounded-[10px] object-cover object-top overflow-hidden"
-          />
+          /> */}
         </div>
         <div className="p-4 pt-0">
           <h6>John Dalton</h6>
@@ -60,11 +60,11 @@ function Team({ setSelectedTab }: any) {
       </div>
       <div className="bg-white  rounded-[10px]">
         <div className="h-[200px] p-4">
-          <Image
+          {/* <Image
             src={Smile}
             alt="Smiling Man"
             className="h-full w-full rounded-[10px] object-cover object-top overflow-hidden"
-          />
+          /> */}
         </div>
         <div className="p-4 pt-0">
           <h6>John Dalton</h6>
@@ -88,11 +88,11 @@ function Team({ setSelectedTab }: any) {
       </div>
       <div className="bg-white rounded-[10px]">
         <div className="h-[200px] p-4">
-          <Image
+          {/* <Image
             src={Smile}
             alt="Smiling Man"
             className="h-full w-full rounded-[10px] object-cover object-top overflow-hidden"
-          />
+          /> */}
         </div>
         <div className="p-4 pt-0">
           <h6>John Dalton</h6>
