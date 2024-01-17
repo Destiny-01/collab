@@ -9,16 +9,16 @@ const messageSchema = new mongoose.Schema({
     type: String,
   },
   group: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Group",
   },
   author: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
 });
 
 const Message =
-  mongoose.models.Message || mongoose.model("Message", messageSchema);
+  mongoose.models?.Message || mongoose.model("Message", messageSchema);
 
 export default Message;

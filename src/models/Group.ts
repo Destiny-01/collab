@@ -1,4 +1,45 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Types } from "mongoose";
+
+export interface Group extends Document {
+  name?: string;
+  uuid: string;
+  category: string;
+  project?: {
+    name?: string;
+    problem?: string;
+    solution?: string;
+    impact?: string;
+    keyFeatures?: string[];
+    complexity?: string;
+    timeline?: string;
+    description?: string;
+    shortDescription?: string;
+    coreSkills?: string[];
+    interests?: string[];
+  };
+  messages?: Types.ObjectId[];
+  owner?: Types.ObjectId;
+  members?: Types.ObjectId[];
+  invitations?: {
+    pending?: Types.ObjectId[];
+    rejected?: Types.ObjectId[];
+    outgoing?: Types.ObjectId[];
+  };
+  suggestedTopics?: {
+    name?: string;
+    problem?: string;
+    solution?: string;
+    impact?: string;
+    keyFeatures?: string[];
+    complexity?: string;
+    timeline?: string;
+    description?: string;
+    shortDescription?: string;
+    coreSkills?: string[];
+    interests?: string[];
+  }[];
+  visibility?: "Private" | "Public";
+}
 
 const groupSchema = new mongoose.Schema({
   name: {
@@ -13,68 +54,70 @@ const groupSchema = new mongoose.Schema({
     required: true,
   },
   project: {
-    short_description: String,
-    description: String,
+    name: String,
     problem: String,
     solution: String,
     impact: String,
-    key_features: [String],
+    keyFeatures: [String],
     complexity: String,
-    estimated_timeline: String,
+    timeline: String,
+    description: String,
+    shortDescription: String,
+    coreSkills: [String],
+    interests: [String],
   },
+
   messages: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Message",
     },
   ],
   owner: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
   members: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   ],
   invitations: {
     pending: [
       {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
     rejected: [
       {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
     outgoing: [
       {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
   },
   suggestedTopics: [
     {
-      type: String,
+      name: String,
+      problem: String,
+      solution: String,
+      impact: String,
+      keyFeatures: [String],
+      complexity: String,
+      timeline: String,
+      description: String,
+      shortDescription: String,
+      coreSkills: [String],
+      interests: [String],
     },
   ],
-  details: {
-    interests: [
-      {
-        type: String,
-      },
-    ],
-    core_skills: [
-      {
-        type: String,
-      },
-    ],
-  },
   visibility: {
     type: String,
     enum: ["Private", "Public"],
@@ -82,6 +125,7 @@ const groupSchema = new mongoose.Schema({
   },
 });
 
-const Group = mongoose.models.Group || mongoose.model("Group", groupSchema);
+const GroupModel =
+  mongoose.models?.Group || mongoose.model("Group", groupSchema);
 
-export default Group;
+export default GroupModel;

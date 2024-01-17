@@ -2,7 +2,7 @@ import { NextApiHandler } from "next";
 import Group from "@/models/Group";
 import getCurrentUser from "@/utils/getCurrentUser";
 
-const handler: NextApiHandler = async (req, res) => {
+export const GET = async (req: Request, res: Response) => {
   try {
     if (req.method === "GET") {
       const { currentUser } = await getCurrentUser();
@@ -12,7 +12,9 @@ const handler: NextApiHandler = async (req, res) => {
         });
       }
 
-      const groups = await Group.find({ members: { $in: [currentUser._id] } });
+      const groups = await Group.find({
+        $or: [{ members: { $in: [currentUser._id] }, owner: currentUser._id }],
+      });
 
       return Response.json({ success: true, data: groups });
     }
@@ -23,5 +25,3 @@ const handler: NextApiHandler = async (req, res) => {
     });
   }
 };
-
-export default handler;

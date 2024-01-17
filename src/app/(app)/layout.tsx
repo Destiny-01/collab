@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import ToastProvider from "@/components/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex bg-[#F9FAFB] min-h-screen w-full">
-          <Sidebar />
-          <div className="w-full">
-            <Navbar />
-            {children}
+        <ToastProvider>
+          {" "}
+          <div className="flex bg-[#F9FAFB] min-h-screen w-full">
+            <Sidebar />
+            <div className="w-full">
+              <Navbar isLoggedIn={true} />
+              {children}
+            </div>
           </div>
-        </div>
+        </ToastProvider>
       </body>
     </html>
   );

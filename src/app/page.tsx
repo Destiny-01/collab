@@ -3,21 +3,36 @@
 import Image from "next/image";
 import Pic from "@/assets/logo.png";
 import Select from "react-select";
-import { useState } from "react";
+import "@/app/globals.css";
+import { useLayoutEffect, useState } from "react";
 import HomeImage from "@/assets/home-image_out.png";
 import Link from "next/link";
+import getCurrentUser from "@/utils/getCurrentUser";
+import { useRouter } from "next/navigation";
+import Modal from "@/components/Modal";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState(1);
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
   const options = [
-    { value: "all", label: "All Categories" },
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: "design", label: "Design" },
+    { value: "software_development", label: "Software Development" },
+    { value: "science", label: "Science/Tech" },
+    { value: "human_rights", label: "Human Rights" },
+    { value: "education", label: "Education" },
+    { value: "business", label: "Business" },
+    { value: "media", label: "Media" },
+    { value: "environment", label: "Environment" },
+    { value: "sociology", label: "Sociology" },
   ];
+  const { data } = useSession();
   const [selectedOption, setSelectedOption] = useState(options[0]);
-  // const session = await getServerSession(authOptions);
-  // console.log(session);
+
+  useLayoutEffect(() => {
+    data?.user && router.replace("/projects");
+  }, [data, router]);
+
   return (
     <div className="bg-white">
       <nav className="flex bg-[#F3F3FA] items-center px-[72px] py-4 justify-between">
@@ -31,10 +46,10 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex items-center gap-6">
-          <Link href="/login">
+          <Link href="/auth/login">
             <p className="text-[#353799] font-semibold">Login</p>
           </Link>
-          <Link href="/signup">
+          <Link href="/auth/signup">
             <button className="bg-[#353799] text-white flex items-center gap-1 py-2 px-4 rounded-lg">
               Get Started
             </button>
@@ -54,7 +69,7 @@ export default function Home() {
           <div className="flex gap-2 justify-center items-center">
             <Select
               defaultValue={options[0]}
-              onChange={setSelectedOption as any}
+              onChange={(newVal) => setSelectedOption(newVal || options[0])}
               options={options}
               theme={(theme) => ({
                 ...theme,
@@ -82,9 +97,17 @@ export default function Home() {
                 }),
               }}
             />
-            <button className="bg-[#353799] text-white flex items-center gap-1 py-3 px-6 rounded-lg">
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-[#353799] text-white flex items-center gap-1 py-3 px-6 rounded-lg"
+            >
               Get Started
             </button>
+            <Modal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              selectedCategory={selectedOption}
+            />
           </div>
         </div>
         <Image className="w-[80%] mx-auto" src={HomeImage} alt="globe" />

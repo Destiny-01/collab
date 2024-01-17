@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "react-toastify/ReactToastify.min.css";
 import "@/app/globals.css";
+import ToastProvider from "@/components/ToastProvider";
+import AuthContext from "./Auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className} suppressHydrationWarning>
+        <AuthContext>
+          <ToastProvider>{children}</ToastProvider>
+        </AuthContext>{" "}
+      </body>
     </html>
   );
 }

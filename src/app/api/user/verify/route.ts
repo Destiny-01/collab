@@ -1,24 +1,24 @@
 import User from "@/models/User";
-import { NextApiHandler } from "next";
+import { NextRequest } from "next/server";
 
-const handler: NextApiHandler = async (req, res) => {
+export const GET = async (req: NextRequest, res: Response) => {
   try {
-    if (req.method === "GET") {
-      const { email, email_verification } = req.query;
+    const email = req.nextUrl.searchParams.get("email");
+    const email_verification =
+      req.nextUrl.searchParams.get("email_verification");
 
-      const user = await User.findOne({ email, email_verification });
-      if (!user) {
-        return new Response("Invalid or expired verification", {
-          status: 400,
-        });
-      }
-
-      user.isVerified = true;
-      user.email_verification = "";
-      await user.save();
-
-      return Response.json({ success: true, data: user });
+    const user = await User.findOne({ email, email_verification });
+    if (!user) {
+      return new Response("Invalid or expired verification", {
+        status: 400,
+      });
     }
+
+    user.isVerified = true;
+    user.email_verification = "";
+    await user.save();
+
+    return Response.redirect("/auth/login");
   } catch (err) {
     console.log(err);
     return new Response("An error occured", {
@@ -26,5 +26,3 @@ const handler: NextApiHandler = async (req, res) => {
     });
   }
 };
-
-export default handler;
