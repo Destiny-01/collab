@@ -52,7 +52,7 @@ const rateCandidatesWithGPT = async (user: User, applicants: User[]) => {
   }
 
   try {
-    const results = [];
+    const results: User[] = [];
 
     for (let i = 0; i < applicants.length; i = i + batchLimit) {
       const applicantsForThisBatch = applicants
@@ -89,7 +89,7 @@ const rateCandidatesWithGPT = async (user: User, applicants: User[]) => {
     return results;
   } catch (error) {
     console.log({ "ERROR FROM CHATGPT PARENT FUNCTION": error });
-    return { "ERROR FROM CHATGPT PARENT FUNCTION": error };
+    return null;
   }
 };
 

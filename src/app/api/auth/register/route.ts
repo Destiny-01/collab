@@ -1,15 +1,16 @@
 import bcrypt from "bcryptjs";
-import User from "@/app/models/User";
-import { connectDB } from "@/app/utils/db";
+import User from "@/models/User";
+import { connectDB } from "@/utils/db";
 import { NextApiHandler } from "next";
-import { uuid } from "uuidv4";
-import sendEmail from "@/app/utils/sendMail";
+import { v4 as uuid } from "uuid";
+import sendEmail from "@/utils/sendMail";
 
-const handler: NextApiHandler = async (req, res) => {
+export const POST = async (req: Request, res: Response) => {
   try {
     await connectDB();
 
-    const { email, password, username, name } = req.body;
+    const { email, password, username, name } = await req.json();
+    console.log(req.body);
     const user = await User.findOne({ email });
     if (user) {
       return new Response("Email already in use", { status: 400 });
@@ -34,7 +35,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     const newUser = await User.create({
       email,
-      password,
+      password: bcrypt.hashSync(password),
       username,
       name,
       email_verification,
@@ -42,9 +43,9 @@ const handler: NextApiHandler = async (req, res) => {
 
     return Response.json({ success: true, data: newUser });
   } catch (err: any) {
+    console.log(err);
     return new Response("An error occured", {
       status: 400,
     });
   }
 };
-export default handler;

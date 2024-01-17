@@ -1,6 +1,6 @@
-import { connectDB } from "@/app/utils/db";
+import { connectDB } from "@/utils/db";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/app/models/User";
+import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth/next";
 import { AuthOptions } from "next-auth";
@@ -8,13 +8,18 @@ import { AuthOptions } from "next-auth";
 const login = async (credentials: Record<any, string>) => {
   try {
     await connectDB();
-    const user = await User.findOne({ email: credentials.email });
+    const user = await User.findOne({ email: credentials.email }).populate(
+      "groups"
+    );
+    console.log(user);
     if (!user) throw new Error("Wrong credentials");
+
+    if (!user.isVerified) throw new Error("Please verify your email first");
 
     const isCorrect = await bcrypt.compare(credentials.password, user.password);
     if (!isCorrect) throw new Error("Wrong credentials");
 
-    user.details = credentials.details;
+    user.details = credentials.details as any;
     await user.save();
 
     return user;
@@ -26,7 +31,7 @@ const login = async (credentials: Record<any, string>) => {
 export const authOptions: AuthOptions = {
   secret: process.env.JWT_SECRET,
   pages: {
-    signIn: "/login",
+    signIn: "/auth/login",
   },
   providers: [
     CredentialsProvider({
@@ -37,12 +42,13 @@ export const authOptions: AuthOptions = {
           if (!credentials) {
             throw new Error("Invalid credentials");
           }
+          console.log(credentials);
 
           const user = await login(credentials);
           return user;
-        } catch (error) {
+        } catch (error: any) {
           console.log(error);
-          throw new Error("failed to login");
+          throw new Error(error);
         }
       },
     }),
@@ -56,6 +62,7 @@ export const authOptions: AuthOptions = {
         token.details = user.details;
         token.avatar = user.avatar;
         token.isVerified = user.isVerified;
+        token.groups = user.groups;
         token.id = user._id;
       }
 
@@ -69,6 +76,7 @@ export const authOptions: AuthOptions = {
         session.user.id = token.id;
         session.user.details = token.details;
         session.user.avatar = token.avatar;
+        session.user.groups = token.groups;
         session.user.isVerified = token.isVerified;
       }
 

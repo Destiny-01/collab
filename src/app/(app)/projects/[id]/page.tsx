@@ -3,42 +3,54 @@
 import Image from "next/image";
 import Pic from "@/assets/original-0e5c617878edab087b0de31de9396844.png";
 import EmptyState from "@/assets/empty-update.png";
+import { useEffect, useState } from "react";
+import API from "@/utils/api";
+import { Group } from "@/models/Group";
+import { toast } from "react-toastify";
 
 const renderList = (listItems: string[]) => {
   return (
     <ul className="ml-4">
-      {listItems.map((item, index) => (
-        <li key={index} className="list-disc">
-          {item}
-        </li>
-      ))}
+      {Array.isArray(listItems) &&
+        listItems.map((item, index) => (
+          <li key={index} className="list-disc">
+            {item}
+          </li>
+        ))}
     </ul>
   );
 };
 
-export default function Projects() {
-  const project = {
-    problem: "Isolation and Lack of Connection in Remote Work Environments",
-    short_description:
-      "A virtual coworking platform for remote teams to work together as if they were in the same physical office.",
-    solution:
-      "A virtual coworking platform that replicates the collaborative atmosphere of a physical office, allowing remote workers to connect, collaborate, and share experiences in real-time.",
-    impact:
-      "Fosters a sense of community and reduces feelings of isolation among remote workers, ultimately enhancing productivity and job satisfaction.",
-    key_features: [
-      "Virtual collaborative workspaces",
-      "Real-time video conferencing",
-      "Shared task boards",
-      "Customizable avatars for personalization",
-      "Interactive team-building activities",
-      "File sharing and collaboration tools",
-      "Integrated messaging and notification system",
-    ],
-    complexity: "Moderate",
-    estimated_timeline: "6-8 months",
-    description:
-      "The virtual coworking platform aims to bridge the gap created by remote work by providing a digital space where individuals can seamlessly collaborate, communicate, and build a sense of community.",
+export default function Projects({ params }: { params: { id: string } }) {
+  const [project, setProject] = useState<Group["project"] | null>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    API.get(`/groups/${params.id}/apply`)
+      .then((res) => {
+        console.log(res);
+        setIsLoading(false);
+        res.status === 200 &&
+          toast.success(
+            "We've notified the group owner you requested to join! Look out for your mail"
+          );
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        toast.error(err.message);
+      });
   };
+
+  useEffect(() => {
+    console.log(params);
+    API.get(`/groups/${params.id}`)
+      .then((res) => {
+        console.log(res);
+        res.status === 200 && setProject(res.data.data.project);
+      })
+      .catch((err) => toast.error(err.message));
+  }, [params]);
 
   const formatKey = (key: string) => {
     // Convert keys with underscores to spaced words
@@ -67,16 +79,19 @@ export default function Projects() {
             />
           </div>
           <div>
-            {Object.entries(project).map(([key, value]) => (
-              <div key={key}>
-                <h2 className="text-xl mt-8 mb-2 capitalize">
-                  {formatKey(key)}
-                </h2>
-                <p className="text-[#667185]">
-                  {typeof value !== "string" ? renderList(value) : value}
-                </p>
-              </div>
-            ))}
+            {project &&
+              Object.entries(project).map(([key, value]) => (
+                <div key={key}>
+                  <h2 className="text-xl mt-8 mb-2 capitalize">
+                    {formatKey(key)}
+                  </h2>
+                  <p className="text-[#667185]">
+                    {typeof value !== "string" && value
+                      ? renderList(value)
+                      : value}
+                  </p>
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -93,11 +108,21 @@ export default function Projects() {
             </div>
           </div>
           <div className="flex gap-1 mt-6 justify-center text-nowrap">
-            <button className="border rounded-lg border-[#D0D5DD] px-8 py-3 text-[#344054] bg-transparent font-semibold text-sm">
+            <button
+              onClick={() => toast.success("Glad you liked it!")}
+              className="border rounded-lg border-[#D0D5DD] px-8 py-3 text-[#344054] bg-transparent font-semibold text-sm"
+            >
               Upvote
             </button>{" "}
-            <button className="bg-[#353799] text-white flex items-center gap-1 py-3 px-6 rounded-lg">
-              Join Project
+            <button
+              onClick={handleClick}
+              className="bg-[#353799] text-white flex items-center gap-1 py-3 px-6 rounded-lg"
+            >
+              {isLoading ? (
+                <span className="loader small"></span>
+              ) : (
+                "Join Project"
+              )}
             </button>
           </div>
         </div>

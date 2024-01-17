@@ -32,14 +32,51 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  &.small {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @layer base {
-  p {
+  p,
+  label {
     @apply text-[#667185] text-sm;
   }
   h2 {
     @apply font-semibold text-black text-2xl;
   }
+  h3 {
+    @apply font-medium text-sm text-darkgrey;
+  }
+  h4 {
+    @apply font-medium text-sm text-darkblue;
+  }
+  h5 {
+    @apply font-semibold text-[#101928];
+  }
   h6 {
     @apply font-medium text-[#101928] text-base;
+  }
+  label {
+    @apply block mt-4 mb-2;
   }
 }

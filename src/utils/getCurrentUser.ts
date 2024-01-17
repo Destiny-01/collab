@@ -7,6 +7,7 @@ const getCurrentUser = async () => {
   try {
     await connectDB();
     const session = await getServerSession(authOptions);
+    console.log(session);
 
     if (!session?.user?.email) {
       return { currentUser: null, session: null };

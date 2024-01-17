@@ -1,7 +1,6 @@
 import mongoose, { Types, Document, Model } from "mongoose";
 
 interface UserDetails {
-  short_description?: string;
   bio?: string;
   niche?: string;
   secondary_niche?: string;
@@ -28,7 +27,7 @@ export interface User {
   details?: UserDetails;
 }
 
-interface UserDocument extends User, Document {
+export interface UserDocument extends User, Document {
   id: any;
 }
 
@@ -36,6 +35,7 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
   },
   name: {
     type: String,
@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -54,7 +55,6 @@ const userSchema = new mongoose.Schema({
   },
   email_verification: {
     type: String,
-    required: true,
   },
   isVerified: {
     type: Boolean,
@@ -66,20 +66,17 @@ const userSchema = new mongoose.Schema({
   },
   groups: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Group",
     },
   ],
   invitations: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Group",
     },
   ],
   details: {
-    short_description: {
-      type: String,
-    },
     bio: {
       type: String,
     },
@@ -117,5 +114,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default (mongoose.models.User as unknown as Model<UserDocument>) ||
+export default (mongoose.models?.User as unknown as Model<UserDocument>) ||
   mongoose.model<User>("User", userSchema);
