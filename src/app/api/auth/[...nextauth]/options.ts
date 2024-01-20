@@ -28,7 +28,7 @@ const login = async (credentials: Record<any, string>) => {
   }
 };
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   secret: process.env.JWT_SECRET,
   pages: {
     signIn: "/auth/login",
