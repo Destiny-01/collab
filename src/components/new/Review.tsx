@@ -1,17 +1,38 @@
 "use client";
 import React from "react";
 
-function Review({ setSelectedTab }: any) {
+function Review({
+  setSelectedTab,
+  name,
+  description,
+  setName,
+  groupName,
+  setGroupName,
+  setDescription,
+  submit,
+  isLoading,
+}: any) {
   return (
     <div className="p-6 rounded-10 border-solid border-1 border-mcolor ">
-      <form className="pt-8">
-        <h3 className="text-mgrey">Project Title</h3>
+      <form>
+        <h3 className="text-mgrey">Group Title</h3>
         <input
-          className=" bg-shade  w-full  rounded-md border-1  p-4 text-sm mt-1  text-dimegrey border-solid border-scolor"
-          placeholder="Enter Email"
+          value={groupName}
+          onChange={(e) => setGroupName(e.target.value)}
+          className=" bg-shade  w-full  rounded-md border-1  p-4 text-sm mt-1 text-[#101928] placeholder:text-dimegrey border-solid border-scolor"
+          placeholder="What do you want to call your group?"
+        ></input>
+        <h3 className="text-mgrey pt-6">Project Title</h3>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className=" bg-shade w-full  rounded-md border-1  p-4 text-sm mt-1 text-[#101928] placeholder:text-dimegrey border-solid border-scolor"
+          placeholder="Project title"
         ></input>
         <h3 className="text-mgrey pt-6">Description</h3>
         <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           className=" bg-shade  w-full    py-[22px] flex self-stretch items-start rounded-md border-1  px-4  text-sm mt-1  text-dimegrey border-solid border-scolor"
           placeholder="Enter text here..."
         ></textarea>
@@ -26,8 +47,14 @@ function Review({ setSelectedTab }: any) {
           >
             Back
           </button>
-          <button className="bg-dimeblue   w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center">
-            Finish
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              submit();
+            }}
+            className="bg-dimeblue   w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
+          >
+            {isLoading ? <span className="loader small"></span> : "Finish"}
           </button>
         </div>
       </form>

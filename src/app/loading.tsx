@@ -1,9 +1,6 @@
+import Loader from "@/components/Loader";
 import React from "react";
 
 export default function Loading() {
-  return (
-    <div className="h-screen gloal flex justify-center items-center">
-      <span className="loader"></span>
-    </div>
-  );
+  return <Loader isFull />;
 }

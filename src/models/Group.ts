@@ -1,7 +1,9 @@
 import mongoose, { Document, Types } from "mongoose";
+import { UserDocument } from "./User";
 
 export interface Group extends Document {
   name?: string;
+  photo: string;
   uuid: string;
   category: string;
   project?: {
@@ -19,12 +21,21 @@ export interface Group extends Document {
   };
   messages?: Types.ObjectId[];
   owner?: Types.ObjectId;
-  members?: Types.ObjectId[];
+  members?: UserDocument[];
   invitations?: {
     pending?: Types.ObjectId[];
     rejected?: Types.ObjectId[];
     outgoing?: Types.ObjectId[];
   };
+  updates?: {
+    title: String;
+    details: String;
+    author: {
+      name: string;
+      avatar: string;
+    };
+    date: Date;
+  }[];
   suggestedTopics?: {
     name?: string;
     problem?: string;
@@ -39,72 +50,27 @@ export interface Group extends Document {
     interests?: string[];
   }[];
   visibility?: "Private" | "Public";
+  votes: number;
+  createdAt: Date;
 }
 
-const groupSchema = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-  uuid: {
-    type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  project: {
-    name: String,
-    problem: String,
-    solution: String,
-    impact: String,
-    keyFeatures: [String],
-    complexity: String,
-    timeline: String,
-    description: String,
-    shortDescription: String,
-    coreSkills: [String],
-    interests: [String],
-  },
-
-  messages: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Message",
+const groupSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
     },
-  ],
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  members: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    photo: {
+      type: String,
     },
-  ],
-  invitations: {
-    pending: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    rejected: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    outgoing: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-  },
-  suggestedTopics: [
-    {
+    uuid: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    project: {
       name: String,
       problem: String,
       solution: String,
@@ -117,12 +83,84 @@ const groupSchema = new mongoose.Schema({
       coreSkills: [String],
       interests: [String],
     },
-  ],
-  visibility: {
-    type: String,
-    enum: ["Private", "Public"],
-    default: "Public",
+    updates: [
+      {
+        title: String,
+        details: String,
+        author: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        date: Date,
+      },
+    ],
+    messages: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message",
+      },
+    ],
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    members: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    invitations: {
+      pending: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      rejected: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      outgoing: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+    },
+    suggestedTopics: [
+      {
+        name: String,
+        problem: String,
+        solution: String,
+        impact: String,
+        keyFeatures: [String],
+        complexity: String,
+        timeline: String,
+        description: String,
+        shortDescription: String,
+        coreSkills: [String],
+        interests: [String],
+      },
+    ],
+    visibility: {
+      type: String,
+      enum: ["Private", "Public"],
+      default: "Public",
+    },
+    votes: {
+      type: Number,
+      default: 0,
+    },
   },
+  { timestamps: true }
+);
+
+groupSchema.pre(/^find/, function (next) {
+  (this as any).populate("members");
+  next();
 });
 
 const GroupModel =

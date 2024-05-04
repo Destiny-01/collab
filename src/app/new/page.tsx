@@ -1,22 +1,36 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Project from "@/components/new/Project";
 import Team from "@/components/new/Team";
 import Review from "@/components/new/Review";
 import { useSession } from "next-auth/react";
 import { Group } from "@/models/Group";
+import { useGetMyGroups } from "@/hooks/useCurrentProject";
+import { useUpdateProject } from "@/hooks/useUpdateProject";
 
 export default function New() {
   const [selectedProject, setSelectedProjects] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
-  const { data } = useSession();
-  const currentUser = data?.user as any;
-  const projects: Array<Group["project"]> =
-    currentUser?.groups[currentUser.groups.length - 1].suggestedTopics;
+  const { data } = useGetMyGroups();
+  const groups = data?.data?.data || [];
+  const { isPending, mutate } = useUpdateProject();
+
+  const group: Group = groups[groups.length - 1];
+  const projects = group?.suggestedTopics;
+  console.log(projects, groups, selectedProject);
+  const project = projects && projects[selectedProject];
+  const [name, setName] = useState(project?.name);
+  const [groupName, setGroupName] = useState("");
+  const [description, setDescription] = useState(project?.description);
+
+  useEffect(() => {
+    setName(project?.name);
+    setDescription(project?.description);
+  }, [project]);
 
   const renderHeader = () => {
-    if (selectedProject === 0) {
+    if (selectedTab === 0) {
       return (
         <div className="text-center mb-6">
           <h3 className="text-2xl font-semibold">Select Project</h3>
@@ -25,7 +39,7 @@ export default function New() {
           </p>
         </div>
       );
-    } else if (selectedProject === 1) {
+    } else if (selectedTab === 1) {
       return (
         <div className="text-center mb-6">
           <h3 className="text-2xl font-semibold">Choose Team members</h3>
@@ -34,9 +48,9 @@ export default function New() {
           </p>
         </div>
       );
-    } else if (selectedProject === 2) {
+    } else if (selectedTab === 2) {
       return (
-        <div className="text-center mb-6">
+        <div className="text-center">
           <h3 className="text-2xl font-semibold">Review Your Project</h3>
           <p className="text-[#8C94A6]">Review and start your project</p>
         </div>
@@ -49,7 +63,7 @@ export default function New() {
         <Project
           selectedProject={selectedProject}
           projects={projects}
-          category={currentUser?.groups[currentUser.groups.length - 1].category}
+          category={groups[groups.length - 1]?.category}
           setSelectedProject={setSelectedProjects}
           setSelectedTab={setSelectedTab}
         />
@@ -63,7 +77,28 @@ export default function New() {
         />
       );
     } else if (selectedTab === 2) {
-      return <Review setSelectedTab={setSelectedTab} />;
+      return (
+        <Review
+          name={name}
+          groupName={groupName}
+          setGroupName={setGroupName}
+          description={description}
+          setDescription={setDescription}
+          setName={setName}
+          setSelectedTab={setSelectedTab}
+          isLoading={isPending}
+          submit={() =>
+            mutate({
+              data: {
+                ...group,
+                name: groupName,
+                project: { ...project, name, description },
+              },
+              id: group?.uuid,
+            })
+          }
+        />
+      );
     }
   };
 
@@ -71,7 +106,7 @@ export default function New() {
     <div className="bg-milk h-auto w-full pb-[115px]">
       <Navbar isWhite={true} />
       <div className="flex flex-col pt-[24px] gap-9 px-2 lg:flex lg:flex-row justify-center lg:gap-8">
-        <div className="p-6 rounded-10 bg-white ">
+        <div className="p-6 rounded-10 bg-white min-w-[600px] ">
           {renderHeader()}
           {renderComponent()}
         </div>

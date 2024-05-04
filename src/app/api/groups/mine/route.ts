@@ -12,9 +12,16 @@ export const GET = async (req: Request, res: Response) => {
         });
       }
 
-      const groups = await Group.find({
-        $or: [{ members: { $in: [currentUser._id] }, owner: currentUser._id }],
-      });
+      const foundGroups = await Group.find({
+        $or: [
+          { members: { $in: [currentUser._id] } },
+          { owner: currentUser._id },
+        ],
+      })
+        .populate("members")
+        .populate("updates.author");
+      const groups = foundGroups.filter((group) => !!group.project.complexity);
+      console.log({ currentUser, foundGroups });
 
       return Response.json({ success: true, data: groups });
     }

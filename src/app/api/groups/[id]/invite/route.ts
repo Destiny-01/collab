@@ -43,8 +43,8 @@ export const POST = async (
 
     const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
     const content = `<h3>${currentUser.name} has asked you to join his group</h3>
-      <p>View his invitation now</p>
-      <a href="${BASE_URL}/api/user/verify"><button>Verify</button></a>`;
+      <p>Accept his invitation</p>
+      <a href="${BASE_URL}/api/groups/respond?response=Accept><button>Accept</button></a>`;
 
     const isMailSent = await sendEmail(
       email,

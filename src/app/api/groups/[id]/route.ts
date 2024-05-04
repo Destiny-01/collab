@@ -12,17 +12,24 @@ export const PUT = async (
         status: 401,
       });
     }
+    const body = await req.json();
+    console.log(body);
 
-    const group = await Group.findOneAndUpdate(
-      { uuid: params.id },
-      { ...(await req.json()) },
-      { new: true }
-    );
+    const group = await Group.findOne({
+      uuid: params.id,
+      owner: currentUser._id,
+    });
     if (!group) {
       return new Response("Group not found", {
         status: 400,
       });
     }
+
+    await Group.findOneAndUpdate(
+      { uuid: params.id },
+      { ...body },
+      { new: true }
+    );
 
     return Response.json({ success: true, data: group });
   } catch (err) {
@@ -40,7 +47,9 @@ export const GET = async (
   try {
     const group = await Group.findOne({
       uuid: params.id,
-    });
+    })
+      .populate("members")
+      .populate("updates.author");
 
     if (!group) {
       return new Response("Group not found or access denied", {

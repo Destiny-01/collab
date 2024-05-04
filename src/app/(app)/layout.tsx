@@ -21,7 +21,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastProvider>
-          {" "}
           <div className="flex bg-[#F9FAFB] min-h-screen w-full">
             <Sidebar />
             <div className="w-full">

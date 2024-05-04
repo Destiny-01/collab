@@ -13,8 +13,8 @@ export const POST = async (req: Request, res: Response) => {
       });
     }
 
-    const { category, idea, bio } = await req.json();
-    console.log(category, idea, bio);
+    const { category, idea } = await req.json();
+    console.log(category, idea);
 
     // const result = await generateProjectIdeas(
     //   category,
@@ -111,12 +111,13 @@ export const POST = async (req: Request, res: Response) => {
       uuid: uuid(),
       category,
       owner: currentUser._id,
+      members: [currentUser._id],
       suggestedTopics: projects,
     });
     currentUser.groups.push(group._id);
     await currentUser.save();
 
-    return Response.json({ success: true, data: projects, uuid: group.uuid });
+    return Response.json({ success: true, data: group, uuid: group.uuid });
   } catch (err) {
     console.log(err);
     return new Response("An error occurred", {

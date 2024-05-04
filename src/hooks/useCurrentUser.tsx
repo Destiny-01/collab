@@ -1,16 +1,10 @@
 import { UserDocument } from "@/models/User";
-import getCurrentUser from "@/utils/getCurrentUser";
-import { useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useMemo } from "react";
 
 export default function useCurrentUser() {
-  const [currentUser, setCurrentUser] = useState<UserDocument | null>(null);
-
-  useEffect(() => {
-    getCurrentUser().then((res) => {
-      console.log(res);
-      setCurrentUser(res.currentUser);
-    });
-  }, []);
+  const { data: sessionData } = useSession();
+  const currentUser: UserDocument | null | undefined = sessionData?.user as any;
 
   return useMemo(() => currentUser, [currentUser]);
 }

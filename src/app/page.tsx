@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Pic from "@/assets/logo.png";
 import Select from "react-select";
-import "@/app/globals.css";
+// import "@/app/globals.css";
 import { useLayoutEffect, useState } from "react";
 import HomeImage from "@/assets/home-image_out.png";
 import Link from "next/link";
@@ -11,27 +11,22 @@ import getCurrentUser from "@/utils/getCurrentUser";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/Modal";
 import { useSession } from "next-auth/react";
+import options from "@/data/options";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const options = [
-    { value: "design", label: "Design" },
-    { value: "software_development", label: "Software Development" },
-    { value: "science", label: "Science/Tech" },
-    { value: "human_rights", label: "Human Rights" },
-    { value: "education", label: "Education" },
-    { value: "business", label: "Business" },
-    { value: "media", label: "Media" },
-    { value: "environment", label: "Environment" },
-    { value: "sociology", label: "Sociology" },
-  ];
-  const { data } = useSession();
+  const { data, status } = useSession();
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
   useLayoutEffect(() => {
-    data?.user && router.replace("/projects");
+    data?.user && router.replace("/dashboard");
   }, [data, router]);
+
+  if (status === "loading") {
+    return <Loader isFull />;
+  }
 
   return (
     <div className="bg-white">
@@ -47,10 +42,10 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-6">
           <Link href="/auth/login">
-            <p className="text-[#353799] font-semibold">Login</p>
+            <p className="text-purple500 font-semibold">Login</p>
           </Link>
           <Link href="/auth/signup">
-            <button className="bg-[#353799] text-white flex items-center gap-1 py-2 px-4 rounded-lg">
+            <button className="bg-purple500 text-white flex items-center gap-1 py-2 px-4 rounded-lg">
               Get Started
             </button>
           </Link>
@@ -68,7 +63,7 @@ export default function Home() {
           </p>
           <div className="flex gap-2 justify-center items-center">
             <Select
-              defaultValue={options[0]}
+              value={selectedOption}
               onChange={(newVal) => setSelectedOption(newVal || options[0])}
               options={options}
               theme={(theme) => ({
@@ -76,14 +71,14 @@ export default function Home() {
                 colors: {
                   ...theme.colors,
                   primary25: "#F9FAFB",
-                  primary: "white",
+                  primary: "hsl(0, 0%, 90%)",
                 },
                 borderRadius: 8,
               })}
               styles={{
                 option: (styles) => ({
                   ...styles,
-                  color: "#98A2B3",
+                  color: "#101928",
                 }),
                 input: (styles) => ({
                   ...styles,
@@ -92,14 +87,14 @@ export default function Home() {
                 }),
                 singleValue: (styles) => ({
                   ...styles,
-                  color: "#98A2B3",
+                  color: "#101928",
                   paddingLeft: "8px",
                 }),
               }}
             />
             <button
               onClick={() => setShowModal(true)}
-              className="bg-[#353799] text-white flex items-center gap-1 py-3 px-6 rounded-lg"
+              className="bg-purple500 text-white flex items-center gap-1 py-3 px-6 rounded-lg"
             >
               Get Started
             </button>

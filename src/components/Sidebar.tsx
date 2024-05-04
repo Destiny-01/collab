@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import Logo from "@/assets/logo.png";
-import Pic from "@/assets/original-0e5c617878edab087b0de31de9396844.png";
+import Logo from "@/assets/LogoText.png";
+import Medal from "@/assets/medal.png";
 import {
   Home,
   MessageSquare,
@@ -11,95 +11,113 @@ import {
   HelpCircle,
   LogOut,
 } from "react-feather";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import useResponsive from "@/hooks/useResponsive";
 
 function Sidebar() {
+  const path = usePathname();
   const router = useRouter();
   const { data } = useSession();
-  const [activeTab, setActiveTab] = useState("dashboard");
-  const menuItems = [
-    {
-      id: "dashboard",
-      link: "/",
-      icon: <Home size={20} color="#667185" />,
-      label: "Dashboard",
-    },
-    {
-      id: "rooms",
-      link: "/rooms",
-      icon: <MessageSquare size={20} color="#667185" />,
-      label: "Rooms",
-    },
-    {
-      id: "projects",
-      link: "/projects",
-      icon: <Box size={20} color="#667185" />,
-      label: "Projects",
-    },
-    {
-      id: "people",
-      icon: <User size={20} color="#667185" />,
-      link: "/people",
-      label: "People",
-    },
-  ];
+  const menuItems = useMemo(
+    () => [
+      {
+        id: "dashboard",
+        link: "/dashboard",
+        icon: <Home size={20} color="#667185" />,
+        label: "Dashboard",
+      },
+      {
+        id: "projects",
+        link: "/projects",
+        icon: <MessageSquare size={20} color="#667185" />,
+        label: "Projects",
+      },
+      {
+        id: "Explore",
+        link: "/explore",
+        icon: <Box size={20} color="#667185" />,
+        label: "Explore",
+      },
+      {
+        id: "people",
+        icon: <User size={20} color="#667185" />,
+        link: "/people",
+        label: "People",
+      },
+      {
+        id: "settings",
+        icon: <Settings size={20} color="#667185" />,
+        link: "/profile",
+        label: "Settings",
+      },
+      {
+        id: "help-center",
+        icon: <HelpCircle size={20} color="#667185" />,
+        link: "/help-center",
+        label: "Help Center",
+      },
+    ],
+    []
+  );
+
+  const getActiveTab = useCallback(() => {
+    return menuItems.find((item) => {
+      if (path.slice(1).startsWith(item.id)) {
+        return item.id;
+      }
+    });
+  }, [menuItems, path]);
 
   return (
-    <div className="max-w-[25%] h-screen sticky top-0 left-0 justify-between flex flex-col w-96 bg-white border-r border-[#E4E7EC]">
+    <div className="max-w-[20%] hidden lg:flex h-screen sticky top-0 left-0 justify-between flex-col w-96 bg-white border-r border-[#E4E7EC]">
       <div>
-        <div className="mx-6 mt-8 mb-5">
-          <Image src={Logo} alt="logo" />
+        <div className="mx-6 mt-4 mb-8">
+          <Link href="/dashboard">
+            <Image src={Logo} height={40} alt="logo" />
+          </Link>
         </div>
-        <div className="pb-3 px-2 border-b border-[#F0F2F5]">
+        <div className="pb-3 px-2">
           {menuItems.map((item) => (
             <Link key={item.id} href={item.link}>
               <div
                 className={`flex mt-1 cursor-pointer items-center gap-3 px-4 py-3 ${
-                  activeTab === item.id
-                    ? "bg-[#D7D7EB] rounded-lg text-[#101928] font-medium"
+                  getActiveTab()?.id === item.id
+                    ? "bg-[#F1E9FD] rounded-lg"
                     : ""
                 }`}
-                onClick={() => setActiveTab(item.id)}
               >
                 {React.cloneElement(item.icon, {
-                  color: activeTab === item.id ? "#5758AA" : "#667185",
+                  color: getActiveTab()?.id === item.id ? "#9065F2" : "#667185",
                 })}
-                <p>{item.label}</p>
+                <p
+                  className={`text-sm ${
+                    getActiveTab()?.id === item.id
+                      ? "text-gray900 font-medium"
+                      : "text-gray700"
+                  }`}
+                >
+                  {item.label}
+                </p>
               </div>
             </Link>
           ))}
         </div>
-        <div className="pt-3 px-2">
-          <Link href="/profile">
-            {" "}
-            <div
-              className={`flex mt-1 cursor-pointer items-center gap-3 px-4 py-3 ${
-                activeTab === "settings"
-                  ? "bg-[#D7D7EB] rounded-lg text-[#101928]"
-                  : ""
-              }`}
-              onClick={() => setActiveTab("settings")}
-            >
-              <Settings size={20} color="#667185" /> <p> Settings</p>
-            </div>
-          </Link>
-          <div
-            className={`flex mt-1 cursor-pointer items-center gap-3 px-4 py-3 ${
-              activeTab === "help"
-                ? "bg-[#D7D7EB] rounded-lg text-[#101928]"
-                : ""
-            }`}
-            onClick={() => setActiveTab("help")}
-          >
-            <HelpCircle size={20} color="#667185" /> <p> Help Center</p>
-          </div>
-        </div>
       </div>
-      <div className="mt-auto pb-10 px-6 flex items-center">
-        <Image
+      <div className="mt-auto px-4 mb-4 w-full flex items-center">
+        <div className="bg-card-bg p-4 rounded-10 text-center">
+          <Image src={Medal} alt="medal" className="mx-auto" />
+          <p className="text-base text-white">Help Collabo Grow</p>
+          <p className="text-xs text-milk">
+            Love using Collabo? Invite your friends today
+          </p>
+          <button className="text-purple700 mt-3 mx-auto text-sm bg-white flex items-center gap-1 py-3 px-4 rounded-lg">
+            Share with friends
+          </button>
+        </div>
+        {/* <Image
           className="rounded-full h-10 w-10 border border-white"
           src={Pic}
           height={40}
@@ -119,7 +137,7 @@ function Sidebar() {
           }
         >
           <LogOut size={20} color="#000000" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

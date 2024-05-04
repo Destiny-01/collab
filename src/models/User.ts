@@ -1,118 +1,97 @@
 import mongoose, { Types, Document, Model } from "mongoose";
 
-interface UserDetails {
-  bio?: string;
-  niche?: string;
-  secondary_niche?: string;
-  country?: string;
-  phone_number?: string;
-  timezone?: string;
-  skills?: string[];
-  social_profile?: string;
-  language?: string;
-  interest?: string[];
-}
-
 export interface User {
-  username: string;
-  name: string;
+  username?: string;
+  name?: string;
   email: string;
   password: string;
   avatar?: string;
-  email_verification: string;
-  isVerified?: boolean;
-  isReported?: boolean;
-  groups: Types.ObjectId[] | string[]; // Assuming you are using ObjectId or string for references
-  invitations: Types.ObjectId[] | string[]; // Assuming you are using ObjectId or string for references
-  details?: UserDetails;
+  email_verification?: string;
+  isVerified: boolean;
+  isProfileCompleted: boolean;
+  groups: Types.ObjectId[];
+  invitations: Types.ObjectId[];
+  bio?: string;
+  company?: string;
+  title?: string;
+  country?: string;
+  interests: string[];
+  votedProjects: string[];
+  createdAt: Date;
 }
 
 export interface UserDocument extends User, Document {
   id: any;
 }
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  avatar: {
-    type: String,
-  },
-  email_verification: {
-    type: String,
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  isReported: {
-    type: Boolean,
-    default: false,
-  },
-  groups: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Group",
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
     },
-  ],
-  invitations: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Group",
+    name: {
+      type: String,
     },
-  ],
-  details: {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      type: String,
+    },
+    email_verification: {
+      type: String,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    isProfileCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    groups: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Group",
+      },
+    ],
+    invitations: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Group",
+      },
+    ],
     bio: {
       type: String,
     },
-    niche: {
+    company: {
       type: String,
     },
-    secondary_niche: {
+    title: {
       type: String,
     },
     country: {
       type: String,
     },
-    phone_number: {
-      type: String,
-    },
-    timezone: {
-      type: String,
-    },
-    skills: [
+    interests: [
       {
         type: String,
       },
     ],
-    social_profile: {
-      type: String,
-    },
-    interest: [
+    votedProjects: [
       {
         type: String,
       },
     ],
-    language: {
-      type: String,
-    },
   },
-});
+  { timestamps: true }
+);
 
 export default (mongoose.models?.User as unknown as Model<UserDocument>) ||
   mongoose.model<User>("User", userSchema);

@@ -2,6 +2,7 @@
 
 import { Group } from "@/models/Group";
 import SingleProjectModal from "../SingleProjectModal";
+import { underscoreToCapital } from "@/utils";
 
 function Project({
   selectedProject,
@@ -23,9 +24,7 @@ function Project({
           } rounded-10 p-4 cursor-pointer`}
         >
           <h1 className="text-200grey text-xs">
-            {category
-              .replace(/_/g, " ")
-              .replace(/(?:^|\s)\S/g, (match: string) => match.toUpperCase())}
+            {underscoreToCapital(category)}
           </h1>
           <h6 className="text-xl font-semibold text-900grey">
             {project?.name}

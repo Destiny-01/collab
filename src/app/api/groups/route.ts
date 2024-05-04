@@ -1,5 +1,6 @@
 import getCurrentUser from "@/utils/getCurrentUser";
 import Group from "@/models/Group";
+import { NextApiRequest } from "next";
 
 export const POST = async (req: Request, res: Response) => {
   try {
@@ -34,9 +35,21 @@ export const POST = async (req: Request, res: Response) => {
   }
 };
 
-export const GET = async (req: Request, res: Response) => {
+export const GET = async (req: NextApiRequest, res: Response) => {
   try {
-    const groups = await Group.find({ visibility: "Public" });
+    const user = req.query?.user;
+    const { currentUser } = await getCurrentUser();
+
+    const allGroups = await Group.find({
+      members: { $nin: [currentUser?._id] },
+      visibility: "Public",
+      "project.complexity": { $exists: true },
+    })
+      .populate("members")
+      .populate("updates.author");
+    const groups = user
+      ? allGroups.filter((group) => group.members.includes(user))
+      : allGroups;
     if (!groups) {
       return new Response("Groups not found", { status: 400 });
     }

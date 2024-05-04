@@ -8,9 +8,9 @@ import sendEmail from "@/utils/sendMail";
 export const POST = async (req: Request, res: Response) => {
   try {
     await connectDB();
+    console.log("start");
 
-    const { email, password, username, name } = await req.json();
-    console.log(req.body);
+    const { email, password } = await req.json();
     const user = await User.findOne({ email });
     if (user) {
       return new Response("Email already in use", { status: 400 });
@@ -36,8 +36,6 @@ export const POST = async (req: Request, res: Response) => {
     const newUser = await User.create({
       email,
       password: bcrypt.hashSync(password),
-      username,
-      name,
       email_verification,
     });
 

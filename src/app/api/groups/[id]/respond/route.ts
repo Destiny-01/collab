@@ -3,7 +3,7 @@ import User from "@/models/User";
 import getCurrentUser from "@/utils/getCurrentUser";
 import sendEmail from "@/utils/sendMail";
 
-export const POST = async (
+export const GET = async (
   req: Request,
   { params }: { params: { id: string } }
 ) => {
@@ -15,7 +15,10 @@ export const POST = async (
       });
     }
 
-    const { response, incoming_user_id } = await req.json();
+    const { searchParams } = new URL(req.url || "");
+    const response = searchParams.get("response");
+    const incoming_user_id = searchParams.get("incoming_user_id");
+
     const group = await Group.findOne({ uuid: params.id }).populate("owner");
     if (!group) {
       return new Response("Group not found", {
@@ -25,8 +28,8 @@ export const POST = async (
     const currentUserId = incoming_user_id || currentUser._id;
 
     if (
-      group.members.includes(currentUser._id) &&
-      group.owner._id !== currentUser._id
+      group.members.includes(currentUserId) &&
+      group.owner._id !== currentUserId
     ) {
       return new Response("Already in this group", {
         status: 400,
@@ -50,7 +53,7 @@ export const POST = async (
     });
     await group.save();
 
-    return Response.json({ success: true, data: group });
+    return Response.redirect(`${process.env.BASE_URL}/groups/${group.uuid}`);
   } catch (err) {
     console.log(err);
     return new Response("An error occurred", {

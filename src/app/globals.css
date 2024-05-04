@@ -24,12 +24,11 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
 }
 
 .loader {
@@ -45,6 +44,25 @@ body {
     width: 24px;
     height: 24px;
   }
+  &.dark {
+    border-color: #101928;
+    border-bottom-color: transparent;
+  }
+}
+
+.spinning-loader {
+  animation: rotation 1s linear infinite;
+}
+.inner-paths {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bg-login-bg {
+  background: url("../assets/auth-bg.png") center no-repeat;
+  background-size: contain;
 }
 
 @keyframes rotation {
@@ -56,27 +74,38 @@ body {
   }
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @layer base {
-  p,
+  a {
+    @apply text-purple600 lg:text-base text-sm;
+  }
+  p {
+    @apply text-gray600 lg:text-base text-sm font-normal;
+  }
   label {
-    @apply text-[#667185] text-sm;
+    @apply text-gray900 inline-block mt-4 mb-1 font-medium text-sm;
   }
   h2 {
-    @apply font-semibold text-black text-2xl;
+    @apply font-semibold text-gray900 text-2xl;
   }
   h3 {
-    @apply font-medium text-sm text-darkgrey;
+    @apply font-medium text-sm;
   }
   h4 {
-    @apply font-medium text-sm text-darkblue;
+    @apply font-medium text-sm;
   }
   h5 {
-    @apply font-semibold text-[#101928];
+    @apply font-semibold text-gray900;
   }
   h6 {
     @apply font-medium text-[#101928] text-base;
-  }
-  label {
-    @apply block mt-4 mb-2;
   }
 }

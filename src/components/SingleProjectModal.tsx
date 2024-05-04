@@ -1,4 +1,5 @@
 import { Group } from "@/models/Group";
+import { underscoreToCapital } from "@/utils";
 import React, { useState } from "react";
 
 export default function SingleProjectModal({
@@ -20,30 +21,26 @@ export default function SingleProjectModal({
     );
   };
 
-  const formatKey = (key: string) => {
-    // Convert keys with underscores to spaced words
-    return key
-      .replace(/_/g, " ")
-      .replace(/\b\w/g, (match) => match.toUpperCase());
-  };
-
   return (
     <>
-      <p
-        className="text-sm cursor-pointer font-semibold text-20blue"
+      <a
+        href="#"
+        className="text-sm font-medium"
         onClick={() => setShowModal(true)}
       >
-        See More Details
-      </p>
+        More Details
+      </a>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-clip fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="justify-center cursor-default items-center flex overflow-clip fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-[620px] my-6 mx-auto h-4/5 overflow-scroll max-w-3xl">
               {/*content*/}
               <div className="border border-[#E4E7EC] rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="p-5 border-b text-center">
-                  <h3 className="text-3xl font-semibold">Project Details</h3>
+                  <h3 className="text-3xl font-semibold text-gray900">
+                    Project Details
+                  </h3>
                   <p className="text-xs">
                     Here are the details of your project
                   </p>
@@ -53,10 +50,10 @@ export default function SingleProjectModal({
                   {project &&
                     Object.entries(project).map(
                       ([key, value]) =>
-                        key !== "id" && (
+                        key !== "_id" && (
                           <div key={key}>
                             <h2 className="text-xl mt-8 mb-2 capitalize">
-                              {formatKey(key)}
+                              {underscoreToCapital(key)}
                             </h2>
                             <p className="text-[#667185]">
                               {typeof value !== "string"

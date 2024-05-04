@@ -1,11 +1,11 @@
+import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "react-toastify/ReactToastify.min.css";
-import "@/app/globals.css";
+import "./globals.css";
 import ToastProvider from "@/components/ToastProvider";
-import AuthContext from "./Auth";
-
-const inter = Inter({ subsets: ["latin"] });
+import Session from "../components/Session";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className} suppressHydrationWarning>
-        <AuthContext>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body suppressHydrationWarning>
+        <Session>
           <ToastProvider>{children}</ToastProvider>
-        </AuthContext>{" "}
+        </Session>
       </body>
     </html>
   );

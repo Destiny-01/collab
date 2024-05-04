@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import LogoImage from "@/assets/Dray-ui.svg";
+import LogoFull from "@/assets/logo-full.png";
+import LogoText from "@/assets/LogoText.png";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -9,9 +10,12 @@ import API from "@/utils/api";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import "@/app/globals.css";
+import useResponsive from "@/hooks/useResponsive";
+import { ChevronLeft } from "react-feather";
 
 export default function Login() {
   const router = useRouter();
+  const { isMobile } = useResponsive();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -53,53 +57,56 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-home-gradient h-[100vh]">
-      <div className="bg-white ">
-        <Image src={LogoImage} alt="Logo" />
+    <div className="bg-[#F2ECFE] min-h-screen relative">
+      <div className="flex justify-between items-center pt-5 lg:mx-24 mx-6">
+        <Link href="/">
+          <Image src={LogoText} height={isMobile ? 24 : 32} alt="logo" />
+        </Link>
+        <Link href="/">
+          <div className="flex items-center gap-1 text-sm">
+            <ChevronLeft size={16} /> Back to website
+          </div>
+        </Link>
       </div>
-      <div className="bg-white py-7 lg:py-[180px]">
-        <div className=" flex justify-center items-center ">
-          <div className="px-5 lg:px-7 py-8  rounded-10 border-1 border-solid border-bcolor">
-            <div className="flex flex-col justify-center items-center">
-              <h5 className=" text-xl lg:text-[28px]">Log In</h5>
-              <p className="lg:text-base pt-2">
-                Enter your credentials to access your account
+      <div className="bg-login-bg">
+        <div className=" flex flex-col justify-center lg:py-24 py-12 items-center">
+          <div className="bg-white px-5 lg:max-w-[450px] max-w-[90%] lg:px-7 lg:py-8 py-6 rounded-10 border-1 border-solid border-bcolor">
+            <div className="flex flex-col text-center justify-center items-center">
+              <Image src={LogoFull} className="text-center" alt="logo-full" />
+              <h5 className=" text-xl lg:text-[28px] lg:mt-6 mt-3">
+                Login to Collab
+              </h5>
+              <p className="lg:text-base text-gray600 lg:pt-1">
+                Pick up from where you stopped
               </p>
             </div>
-            <form className="pt-8">
-              <h3>EMAIL ADDRESS</h3>
+            <form className="pt-2">
+              <label>Email Address</label>
               <input
-                className=" bg-shade  w-full  rounded-md border-1 p-3 lg:p-4 text-sm mt-1  text-dimegrey border-solid border-scolor"
+                className=" bg-shade  w-full  rounded-md border-1 p-3 lg:p-4 text-sm text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
                 placeholder="Enter Email"
                 name="email"
+                type="email"
                 onChange={handleChange}
               ></input>
-              <h3 className="pt-6">PASSWORD</h3>
+              <label>Password</label>
               <input
-                className=" bg-shade rounded-md  border-1 w-full  p-3 lg:p-4 text-sm  mt-1   text-dimegrey border-solid border-scolor"
+                className=" bg-shade rounded-md  border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
                 type="password"
                 name="password"
                 placeholder="Enter Password"
                 onChange={handleChange}
               ></input>
-              <div className="flex justify-between pt-8  lg:gap-14">
-                <div className="flex gap-2 items-center ">
-                  <input
-                    className="lg:w-[24px] lg:h-[24px] rounded-xl"
-                    type="checkbox"
-                  />
-                  <h3 className=" text-xs lg:text-sm">
-                    Remember me for 30 days
-                  </h3>
-                </div>
-                <Link href="#">
+              <div className="flex justify-between lg:pt-6 pt-4">
+                <div></div>
+                <Link href="/auth/forgot-password">
                   <h4 className="text-xs lg:text-sm">Forgot Password?</h4>
-                </Link>{" "}
+                </Link>
               </div>
-              <div className="pt-8">
+              <div className="lg:pt-6 pt-4">
                 <button
                   onClick={handleSubmit}
-                  className="bg-dimeblue   w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
+                  className="bg-purple500   w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
                 >
                   {isLoading ? (
                     <span className="loader small"></span>
@@ -109,12 +116,10 @@ export default function Login() {
                 </button>
               </div>
               <div className="flex gap-2 pt-8 justify-center items-center">
-                <p className="text-xs font-medium text-dimegrey ">
-                  Are you new here?
-                </p>
+                <p className="text-dimegrey text-sm">Are you new here?</p>
                 <Link href="/auth/signup">
                   <h4>Create Account</h4>
-                </Link>{" "}
+                </Link>
               </div>
             </form>
           </div>

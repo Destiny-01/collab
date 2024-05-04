@@ -19,9 +19,6 @@ const login = async (credentials: Record<any, string>) => {
     const isCorrect = await bcrypt.compare(credentials.password, user.password);
     if (!isCorrect) throw new Error("Wrong credentials");
 
-    user.details = credentials.details as any;
-    await user.save();
-
     return user;
   } catch (err: any) {
     throw new Error(err);
@@ -54,31 +51,36 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: any) {
-      if (user) {
-        token.username = user.username;
-        token.name = user.name;
-        token.email = user.email;
-        token.details = user.details;
-        token.avatar = user.avatar;
-        token.isVerified = user.isVerified;
-        token.groups = user.groups;
-        token.id = user._id;
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
       }
+      return { ...token, user };
+      // if (user) {
+      //   token.username = user.username;
+      //   token.name = user.name;
+      //   token.email = user.email;
+      //   token.details = user.details;
+      //   token.avatar = user.avatar;
+      //   token.isVerified = user.isVerified;
+      //   token.groups = user.groups;
+      //   token.id = user._id;
+      // }
 
       return token;
     },
-    async session({ session, token }: any) {
-      if (token) {
-        session.user.username = token.username;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.id = token.id;
-        session.user.details = token.details;
-        session.user.avatar = token.avatar;
-        session.user.groups = token.groups;
-        session.user.isVerified = token.isVerified;
-      }
+    async session({ session, token }) {
+      // if (token) {
+      //   session.user.username = token.username;
+      //   session.user.name = token.name;
+      //   session.user.email = token.email;
+      //   session.user.id = token.id;
+      //   session.user.details = token.details;
+      //   session.user.avatar = token.avatar;
+      //   session.user.groups = token.groups;
+      //   session.user.isVerified = token.isVerified;
+      // }
+      session.user = token;
 
       return session;
     },

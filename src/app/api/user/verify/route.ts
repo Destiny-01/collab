@@ -1,11 +1,11 @@
 import User from "@/models/User";
-import { NextRequest } from "next/server";
+import { NextApiRequest } from "next";
 
-export const GET = async (req: NextRequest, res: Response) => {
+export const GET = async (req: NextApiRequest, res: Response) => {
   try {
-    const email = req.nextUrl.searchParams.get("email");
-    const email_verification =
-      req.nextUrl.searchParams.get("email_verification");
+    const { searchParams } = new URL(req.url || "");
+    const email = searchParams.get("email");
+    const email_verification = searchParams.get("email_verification");
 
     const user = await User.findOne({ email, email_verification });
     if (!user) {
@@ -18,7 +18,7 @@ export const GET = async (req: NextRequest, res: Response) => {
     user.email_verification = "";
     await user.save();
 
-    return Response.redirect("/auth/login");
+    return Response.redirect(`${process.env.BASE_URL}/auth/verified`);
   } catch (err) {
     console.log(err);
     return new Response("An error occured", {

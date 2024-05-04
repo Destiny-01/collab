@@ -1,3 +1,4 @@
+import options from "@/data/options";
 import API from "@/utils/api";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -10,17 +11,6 @@ export default function Modal({
   setShowModal,
   selectedCategory = "design",
 }: any) {
-  const options = [
-    { value: "design", label: "Design" },
-    { value: "software_development", label: "Software Development" },
-    { value: "science", label: "Science/Tech" },
-    { value: "human_rights", label: "Human Rights" },
-    { value: "education", label: "Education" },
-    { value: "business", label: "Business" },
-    { value: "media", label: "Media" },
-    { value: "environment", label: "Environment" },
-    { value: "sociology", label: "Sociology" },
-  ];
   const router = useRouter();
   const [data, setData] = useState({
     idea: "",
@@ -83,7 +73,8 @@ export default function Modal({
                   <div>
                     <label htmlFor="">Category</label>
                     <ReactSelect
-                      defaultValue={options[0]}
+                      // defaultValue={options[0]}
+                      value={selectedOption}
                       onChange={(newVal) =>
                         setSelectedOption(newVal || options[0])
                       }
@@ -93,14 +84,14 @@ export default function Modal({
                         colors: {
                           ...theme.colors,
                           primary25: "#F9FAFB",
-                          primary: "white",
+                          primary: "hsl(0, 0%, 90%)",
                         },
                         borderRadius: 8,
                       })}
                       styles={{
                         option: (styles) => ({
                           ...styles,
-                          color: "#98A2B3",
+                          color: "#101928",
                         }),
                         input: (styles) => ({
                           ...styles,
@@ -109,7 +100,7 @@ export default function Modal({
                         }),
                         singleValue: (styles) => ({
                           ...styles,
-                          color: "#98A2B3",
+                          color: "#101928",
                           paddingLeft: "8px",
                         }),
                       }}
@@ -121,7 +112,7 @@ export default function Modal({
                       name="idea"
                       id="idea"
                       onChange={handleChange}
-                      className="border h-18 text-[#98A2B3] w-full border-[#D0D5DD] px-4 py-5 outline-none rounded-md"
+                      className="border h-28 placeholder:text-[#98A2B3] text-[#101928] w-full border-[#D0D5DD] px-3 py-3 outline-none rounded-md"
                       placeholder="What direction do you have in mind"
                     ></textarea>
                   </div>
@@ -132,7 +123,7 @@ export default function Modal({
                         name="bio"
                         id="bio"
                         onChange={handleChange}
-                        className="border h-18 text-[#98A2B3] w-full border-[#D0D5DD] px-4 py-5 outline-none rounded-md"
+                        className="border h-28 placeholder:text-[#98A2B3] text-[#101928] w-full border-[#D0D5DD] px-3 py-3 outline-none rounded-md"
                         placeholder="A brief description about you. This would help us match you with teammates. Keep it simple"
                       ></textarea>
                     </div>
@@ -148,7 +139,7 @@ export default function Modal({
                   </button>
                   <button
                     onClick={handleSubmit}
-                    className="rounded-lg bg-[#353799] w-full px-6 py-4 text-white font-semibold"
+                    className="rounded-lg bg-purple500 w-full px-6 py-4 text-white font-semibold"
                   >
                     {isLoading ? (
                       <span className="loader small"></span>
