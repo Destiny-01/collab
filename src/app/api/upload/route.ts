@@ -44,16 +44,18 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get("file") as unknown as File;
 
-    // const data = await uploadImage(file, "collab-avatars");
+    const data = await uploadImage(file, "collab-avatars");
 
     return Response.json(
       {
         success: true,
         message: "File(s) uploaded successfully",
-        // data: data,
         data: {
-          url: "http://res.cloudinary.com/destiny01/image/upload/v1714130375/collab-avatars/cfqewkjdysfrmxrwv3mk.png",
+          url: data?.url,
         },
+        // data: {
+        //   url: "http://res.cloudinary.com/destiny01/image/upload/v1714130375/collab-avatars/cfqewkjdysfrmxrwv3mk.png",
+        // },
       },
       { status: 200 }
     );

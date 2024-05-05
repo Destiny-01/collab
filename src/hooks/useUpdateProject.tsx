@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export function useCreateProject() {
   return useMutation({
     mutationKey: ["create-project"],
-    mutationFn: (data) => API.post(`/groups/query`, data),
+    mutationFn: (data) => API.post(`/groups/query`, data, { timeout: 90000 }),
     onSuccess: ({ data }) => {
       toast.success("Project created successfully");
     },

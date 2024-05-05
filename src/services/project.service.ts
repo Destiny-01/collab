@@ -3,7 +3,7 @@ import { queryChatGPT } from "../utils/openai";
 export const generateProjectIdeas = async (
   category: string,
   idea: string,
-  bio: string
+  bio: string | undefined
 ) => {
   try {
     const prompt = `

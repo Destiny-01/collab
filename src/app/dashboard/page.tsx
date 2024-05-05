@@ -5,7 +5,7 @@ import Image from "next/image";
 import React from "react";
 import DashboardImage from "@/assets/dashboard-image.png";
 import StarDestroyer from "@/assets/star-destroyer.png";
-import Pic from "@/assets/original-0e5c617878edab087b0de31de9396844.png";
+import Pic from "@/assets/avatar.jpeg";
 import Link from "next/link";
 import { useGetAllGroups, useGetMyGroups } from "@/hooks/useCurrentProject";
 import { Group } from "@/models/Group";
@@ -66,7 +66,9 @@ function Dashboard() {
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="lg:h-[118px] h-[187px] mb-2">
                       <Image
-                        src={Pic}
+                        src={group.photo || Pic}
+                        width="0"
+                        height="0"
                         alt="banner"
                         className="h-full w-full rounded-lg object-cover object-top overflow-hidden"
                       />
@@ -126,7 +128,9 @@ function Dashboard() {
                 >
                   <div className="min-h-[118px] lg:min-w-[125px] min-w-[118px]">
                     <Image
-                      src={Pic}
+                      src={group.photo || Pic}
+                      width="0"
+                      height="0"
                       alt="banner"
                       className="lg:h-full h-[125px] w-[125px] rounded-lg object-cover object-top overflow-hidden"
                     />

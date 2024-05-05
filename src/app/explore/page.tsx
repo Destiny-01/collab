@@ -13,10 +13,13 @@ import Pic from "@/assets/avatar.jpeg";
 import Loader from "@/components/Loader";
 import options from "@/data/options";
 import "@/app/globals.css";
+import { useSearchParams } from "next/navigation";
 
 function Projects() {
+  const searchParams = useSearchParams();
+  const search_query = searchParams.get("search_query");
   const [filter, setFilter] = useState("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(search_query || "");
   const { data, isLoading } = useGetAllGroups();
   const groups: Group[] = data?.data?.data || [];
   const searchedGroups =
@@ -48,6 +51,7 @@ function Projects() {
             type="text"
             className="pl-10 pr-4 w-full text-gray900 placeholder:text-gray600 text-sm py-2 bg-white border border-borderColor rounded-lg"
             placeholder="Search Projects"
+            value={search ?? ""}
             onChange={(e) => setSearch(e.target.value)}
           />
           <div className="absolute focus:outline-none inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

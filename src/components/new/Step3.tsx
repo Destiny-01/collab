@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import ReactSelect from "react-select";
 import { toast } from "react-toastify";
-import options from "@/data/options";
 import Divider from "../Divider";
-import { Group } from "@/models/Group";
 import { underscoreToCapital } from "@/utils";
-import Pic from "@/assets/original-0e5c617878edab087b0de31de9396844.png";
+import Pic from "@/assets/avatar.jpeg";
 import { ChevronLeft, RefreshCw } from "react-feather";
 import Image from "next/image";
 import { UserDocument } from "@/models/User";

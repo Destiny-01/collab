@@ -1,4 +1,4 @@
-import Group from "@/models/Group";
+import Group, { Group as GroupType } from "@/models/Group";
 import getCurrentUser from "@/utils/getCurrentUser";
 
 export const PUT = async (
@@ -17,7 +17,6 @@ export const PUT = async (
 
     const group = await Group.findOne({
       uuid: params.id,
-      owner: currentUser._id,
     });
     if (!group) {
       return new Response("Group not found", {
@@ -25,7 +24,9 @@ export const PUT = async (
       });
     }
     if (
-      !group.members.includes(currentUser._id) &&
+      !group.members.some(
+        (member: { email: string }) => member.email === currentUser.email
+      ) &&
       group.owner.toString() !== currentUser._id.toString()
     ) {
       return new Response("Not a part of this group", {

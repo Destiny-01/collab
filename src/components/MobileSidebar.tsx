@@ -47,7 +47,7 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
         label: "Projects",
       },
       {
-        id: "Explore",
+        id: "explore",
         link: "/explore",
         icon: <Box size={20} color="#667185" />,
         label: "Explore",

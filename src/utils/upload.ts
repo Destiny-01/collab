@@ -1,6 +1,9 @@
 import cloudinary from "./cloudinary";
 
-export const uploadImage = async (file: File, folder: string) => {
+export const uploadImage = async (
+  file: File,
+  folder: string
+): Promise<cloudinary.UploadApiResponse | undefined> => {
   const buffer = await file.arrayBuffer();
   const bytes = Buffer.from(buffer);
 

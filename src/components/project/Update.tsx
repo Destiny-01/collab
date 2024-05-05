@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../Button";
-import Pic from "@/assets/original-0e5c617878edab087b0de31de9396844.png";
+import Pic from "@/assets/avatar.jpeg";
 import Image from "next/image";
 import NewUpdate from "../NewUpdate";
 import { Group } from "@/models/Group";

@@ -2,7 +2,7 @@ import Group from "@/models/Group";
 import getCurrentUser from "@/utils/getCurrentUser";
 import sendEmail from "@/utils/sendMail";
 
-export const GET = async (
+export const POST = async (
   req: Request,
   { params }: { params: { id: string } }
 ) => {
@@ -29,7 +29,8 @@ export const GET = async (
     const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
     const content = `<h3>${currentUser.name} has asked to join your group</h3>
       <p>Accept his request now</p>
-      <a href="${BASE_URL}/api/groups/respond?response=Accept&incoming_user_id=${currentUser._id}><button>Accept</button></a>`;
+      <a href="${BASE_URL}/api/groups/${group.uuid}/respond?response=Accept&incoming_user_id=${currentUser._id}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Accept</a>
+      `;
 
     const isMailSent = await sendEmail(
       group.owner.email,

@@ -44,8 +44,8 @@ export const POST = async (
     const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
     const content = `<h3>${currentUser.name} has asked you to join his group</h3>
       <p>Accept his invitation</p>
-      <a href="${BASE_URL}/api/groups/respond?response=Accept><button>Accept</button></a>`;
-
+      <a href="${BASE_URL}/api/groups/${group.uuid}/respond?response=Accept" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Accept</a>
+      `;
     const isMailSent = await sendEmail(
       email,
       "Someone has invited you to join their group",

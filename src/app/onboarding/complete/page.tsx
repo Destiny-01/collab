@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Pic from "@/assets/original-0e5c617878edab087b0de31de9396844.png";
+import Pic from "@/assets/avatar.jpeg";
 import LogoText from "@/assets/LogoText.png";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
@@ -55,7 +55,9 @@ export default function Onboarding() {
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="h-[162px]">
                       <Image
-                        src={Pic}
+                        src={group.photo || Pic}
+                        width="0"
+                        height="0"
                         alt="banner"
                         className="h-full w-full rounded-t-[10px] object-cover object-top overflow-hidden"
                       />

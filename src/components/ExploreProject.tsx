@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import Pic from "@/assets/avatar.jpeg";
-import EmptyState from "@/assets/empty-update.png";
-import { useEffect, useState } from "react";
 import API from "@/utils/api";
 import { Group } from "@/models/Group";
 import { toast } from "react-toastify";
@@ -14,12 +12,17 @@ import { useApplyToProject, useUpvoteProject } from "@/hooks/useUpdateProject";
 import { ThumbsUp } from "react-feather";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import moment from "moment";
+import Link from "next/link";
 
 export default function ExploreProject({ params }: { params: { id: string } }) {
   const { data } = useGetSingleProject(params.id);
   const group: Group | null = data?.data?.data;
   const user = useCurrentUser();
-  const { mutate, isPending: isUpvotePending } = useUpvoteProject(params.id);
+  const {
+    mutate,
+    isPending: isUpvotePending,
+    isSuccess,
+  } = useUpvoteProject(params.id);
   const { mutate: apply, isPending: isApplyPending } = useApplyToProject(
     params.id
   );
@@ -49,20 +52,19 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
           <h5 className="font-medium mb-2 text-lg">Team members</h5>
           <div className="flex gap-4">
             {group?.members?.map((member, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-10 w-1/3 p-4 border border-milk"
-              >
-                <Image
-                  src={member.avatar || Pic}
-                  alt="logo"
-                  height="0"
-                  width="0"
-                  className="object-cover rounded-lg w-full h-[190px] object-center"
-                />
-                <p className="mt-4 mb-1 text-gray900">{member.name}</p>
-                <p className="text-xs">{member.title}</p>
-              </div>
+              <Link key={i} href={`/profile/${member._id}`} className="w-1/3">
+                <div className="bg-white rounded-10 p-4 border border-milk">
+                  <Image
+                    src={member.avatar || Pic}
+                    alt="logo"
+                    height="0"
+                    width="0"
+                    className="object-cover rounded-lg w-full h-[190px] object-center"
+                  />
+                  <p className="mt-4 mb-1 text-gray900">{member.name}</p>
+                  <p className="text-xs">{member.title}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -83,12 +85,16 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
             <div className="flex gap-1 mt-6 justify-center text-nowrap">
               <button
                 onClick={() => mutate()}
-                disabled={user?.votedProjects?.includes(group?.uuid ?? "null")}
+                disabled={
+                  isSuccess ||
+                  user?.votedProjects?.includes(group?.uuid ?? "null")
+                }
                 className="border rounded-lg disabled:opacity-35 disabled:cursor-not-allowed border-[#D0D5DD] px-8 py-3 text-[#344054] bg-transparent font-semibold text-sm"
               >
                 {isUpvotePending ? (
                   <span className="loader dark small"></span>
-                ) : user?.votedProjects?.includes(group?.uuid ?? "null") ? (
+                ) : isSuccess ||
+                  user?.votedProjects?.includes(group?.uuid ?? "null") ? (
                   "Voted"
                 ) : (
                   <div className="flex items-center gap-2">

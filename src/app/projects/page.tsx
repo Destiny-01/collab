@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
-import { useGetAllGroups } from "@/hooks/useCurrentProject";
+import { useGetAllGroups, useGetMyGroups } from "@/hooks/useCurrentProject";
 import MainLayout from "@/layouts/MainLayout";
 import { Group } from "@/models/Group";
 import { underscoreToCapital } from "@/utils";
@@ -13,7 +13,7 @@ import Pic from "@/assets/avatar.jpeg";
 import Loader from "@/components/Loader";
 
 function Projects() {
-  const { data, isLoading } = useGetAllGroups();
+  const { data, isLoading } = useGetMyGroups();
   const groups: Group[] = data?.data?.data || [];
 
   return (

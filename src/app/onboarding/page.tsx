@@ -23,8 +23,7 @@ export default function Onboarding() {
   const { isMobile } = useResponsive();
   const [step, setStep] = useState(1);
   const [data, setData] = useState({
-    avatar:
-      "http://res.cloudinary.com/destiny01/image/upload/v1714130375/collab-avatars/cfqewkjdysfrmxrwv3mk.png",
+    avatar: "",
     username: "",
     name: "",
     country: "",

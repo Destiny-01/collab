@@ -1,7 +1,5 @@
 "use client";
 
-import Button from "@/components/Button";
-import { useGetAllGroups } from "@/hooks/useCurrentProject";
 import MainLayout from "@/layouts/MainLayout";
 import { Group } from "@/models/Group";
 import { underscoreToCapital } from "@/utils";
