@@ -1,12 +1,10 @@
 import User from "@/models/User";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export const GET = async (req: NextApiRequest, res: Response) => {
+export const GET = async (req: NextRequest, res: Response) => {
   try {
-    const { searchParams } = new URL(req.url || "");
-    const email = searchParams.get("email");
-    const email_verification = searchParams.get("email_verification");
-
+    const { email, email_verification } = req.nextUrl.searchParams;
+    
     const user = await User.findOne({ email, email_verification });
     if (!user) {
       return new Response("Invalid or expired verification", {
