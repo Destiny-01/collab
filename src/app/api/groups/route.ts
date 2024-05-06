@@ -37,7 +37,9 @@ export const POST = async (req: Request, res: Response) => {
 
 export const GET = async (req: NextRequest, res: Response) => {
   try {
-    const { user } = req.nextUrl.searchParams;
+    const { searchParams } = req.nextUrl;
+    const user = searchParams.get("user");
+  
     const { currentUser } = await getCurrentUser();
 
     const allGroups = await Group.find({
