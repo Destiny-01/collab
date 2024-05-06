@@ -43,7 +43,7 @@ export const GET = async (req: NextApiRequest, res: Response) => {
     const allGroups = await Group.find({
       members: { $nin: [currentUser?._id] },
       visibility: "Public",
-      "project.complexity": { $exists: true },
+      "project.name": { $exists: true },
     })
       .populate("members")
       .populate("updates.author");

@@ -10,6 +10,7 @@ import { CheckSquare, File, Star, UserPlus } from "react-feather";
 import { Group } from "@/models/Group";
 import { useCreateProject, useUpdateProject } from "@/hooks/useUpdateProject";
 import { toast } from "react-toastify";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 function NewProject() {
   const {
@@ -19,6 +20,7 @@ function NewProject() {
     isSuccess,
     error,
   } = useCreateProject();
+  const user = useCurrentUser();
   const { isPending: isUpdatePending, mutate: updateMutate } =
     useUpdateProject();
 
@@ -64,7 +66,7 @@ function NewProject() {
 
   return (
     <MainLayout>
-      <div className="lg:px-8 px-4 py-6">
+      <div className={`lg:px-8 ${!user && "mx-32"}  px-4 py-6`}>
         <div className="mb-8">
           <h2 className="mb-1 lg:text-2xl text-xl text-black">
             Create New Project

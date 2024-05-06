@@ -13,11 +13,16 @@ import { ThumbsUp } from "react-feather";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import moment from "moment";
 import Link from "next/link";
+import { renderList } from "./project/Details";
+import NotLoggedInModal from "./NotLoggedInModal";
+import { useState } from "react";
 
 export default function ExploreProject({ params }: { params: { id: string } }) {
   const { data } = useGetSingleProject(params.id);
   const group: Group | null = data?.data?.data;
   const user = useCurrentUser();
+  const [showModal, setShowModal] = useState(false);
+
   const {
     mutate,
     isPending: isUpvotePending,
@@ -29,7 +34,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
   const isDisabled = group?.invitations?.pending?.includes(user?._id);
 
   return (
-    <div>
+    <div className="mx-32">
       <div className="lg:px-8 px-4 lg:pt-8 pt-4">
         <p className="text-xs">{underscoreToCapital(group?.category)}</p>
         <h2 className="mb-6 lg:text-2xl text-xl text-black">
@@ -42,12 +47,41 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
             src={group?.photo || Pic}
             width="0"
             height="0"
+            unoptimized
             className="lg:h-[360px] h-[240px] w-full rounded-lg"
             alt="banner"
           />
-          <div className="my-8">
-            <h5 className="font-medium mb-2 text-lg">About Project</h5>
-            <p className="text-sm">{group?.project?.shortDescription}</p>
+          <div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">About Project</h5>
+              <p className="text-sm">{group?.project?.short_description}</p>
+            </div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">Project Brief</h5>
+              <p className="text-sm">{group?.project?.description}</p>
+            </div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">Impact</h5>
+              <p className="text-sm">{group?.project?.impact}</p>
+            </div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">Problem</h5>
+              <p className="text-sm">{group?.project?.problem}</p>
+            </div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">Solution</h5>
+              <p className="text-sm">{group?.project?.solution}</p>
+            </div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">Estimated Timeline</h5>
+              <p className="text-sm">{group?.project?.estimated_timeline}</p>
+            </div>
+            <div className="mt-8">
+              <h5 className="font-medium mb-2 text-lg">Key Features</h5>
+              <p className="text-sm">
+                {renderList(group?.project?.key_features)}
+              </p>
+            </div>
           </div>
           <h5 className="font-medium mb-2 text-lg">Team members</h5>
           <div className="flex gap-4">
@@ -59,6 +93,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
                     alt="logo"
                     height="0"
                     width="0"
+                    unoptimized
                     className="object-cover rounded-lg w-full h-[190px] object-center"
                   />
                   <p className="mt-4 mb-1 text-gray900">{member.name}</p>
@@ -68,6 +103,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
             ))}
           </div>
         </div>
+        {showModal && <NotLoggedInModal onClose={() => setShowModal(false)} />}
         <div className="lg:w-[350px]">
           <div className="bg-white border border-borderColor p-6 rounded-xl min-w-fit h-fit">
             <div className="flex gap-12 justify-center">
@@ -84,7 +120,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
             </div>
             <div className="flex gap-1 mt-6 justify-center text-nowrap">
               <button
-                onClick={() => mutate()}
+                onClick={() => (user ? mutate() : setShowModal(true))}
                 disabled={
                   isSuccess ||
                   user?.votedProjects?.includes(group?.uuid ?? "null")
@@ -104,7 +140,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
                 )}
               </button>
               <button
-                onClick={() => apply()}
+                onClick={() => (user ? apply() : setShowModal(true))}
                 disabled={isDisabled}
                 className="bg-purple500 disabled:bg-gray600 disabled:opacity-40 text-white flex items-center gap-1 py-3 px-6 rounded-lg"
               >

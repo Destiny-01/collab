@@ -63,6 +63,7 @@ function People() {
                       alt="banner"
                       width="0"
                       height="0"
+                      unoptimized
                       sizes="100vw"
                       className="h-full w-full rounded-[10px] object-cover object-top"
                     />

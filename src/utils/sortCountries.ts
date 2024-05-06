@@ -1,7 +1,19 @@
 import { getDistance } from "geolib";
 import CountryJson from "../data/country-lat.json";
-import { User } from "../models/User";
+import { UserDocument } from "../models/User";
+import axios from "axios";
 
+export async function synonyms(word1: string) {
+  const apiUrl = `https://api.datamuse.com/words?ml=${word1}&max=25`;
+
+  try {
+    const response = await axios.get(apiUrl);
+
+    return response.data.map((entry: any) => entry.word);
+  } catch (error) {
+    return false;
+  }
+}
 interface CountryJSONType {
   ref_country_codes: [
     {
@@ -17,23 +29,24 @@ interface CountryJSONType {
 
 export const sortUserByCountries = (
   selectCountry: string | undefined,
-  users: User[]
+  users: UserDocument[]
 ) => {
   const { ref_country_codes } = CountryJson as CountryJSONType;
+  console.log(selectCountry, ref_country_codes && ref_country_codes[0]);
   const selectCountryCoordinates = ref_country_codes.find(
     (code) => code.country === selectCountry
   );
 
   if (!selectCountryCoordinates) {
-    return null;
+    return users;
   }
 
   const sortedUsers = users.sort((userA, userB) => {
     const coordinatesA = ref_country_codes.find(
-      (code) => code.country === userA?.details?.country
+      (code) => code.country === userA?.country
     );
     const coordinatesB = ref_country_codes.find(
-      (code) => code.country === userB?.details?.country
+      (code) => code.country === userB?.country
     );
 
     if (!coordinatesA || !coordinatesB) {
@@ -53,6 +66,46 @@ export const sortUserByCountries = (
     return distanceB - distanceA; // Sorting in descending order
   });
 
-  console.log(sortedUsers);
+  console.log(sortedUsers, "lolkjui");
   return sortedUsers;
 };
+
+export const sortByInterests = async (
+  interests: string[] | undefined,
+  users: UserDocument[]
+) => {
+  if (!interests) {
+    return null;
+  }
+  const interestSynonyms: string[] = [];
+  for (const interest of interests) {
+    const synonymsForInterest = await synonyms(interest);
+    interestSynonyms.push(...synonymsForInterest);
+  }
+
+  users.sort((a, b) => {
+    const aScore = calculateInterestMatchScore(a, interestSynonyms);
+    const bScore = calculateInterestMatchScore(b, interestSynonyms);
+
+    return bScore - aScore; // Sorting in descending order of score
+  });
+
+  console.log("users", users);
+  return users;
+};
+
+function calculateInterestMatchScore(
+  user: UserDocument,
+  interestSynonyms: string[]
+): number {
+  const userInterests = user.interests; // Assuming you have an array of interests in your user document
+
+  let score = 0;
+  for (const interest of userInterests) {
+    if (interestSynonyms.includes(interest)) {
+      score += 1; // Synonym match
+    }
+  }
+
+  return score;
+}

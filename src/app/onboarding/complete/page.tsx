@@ -58,6 +58,7 @@ export default function Onboarding() {
                         src={group.photo || Pic}
                         width="0"
                         height="0"
+                        unoptimized
                         alt="banner"
                         className="h-full w-full rounded-t-[10px] object-cover object-top overflow-hidden"
                       />
@@ -77,6 +78,7 @@ export default function Onboarding() {
                               src={member.avatar || Pic}
                               height={32}
                               width={32}
+                              unoptimized
                               alt="avatar"
                               key={i}
                             />

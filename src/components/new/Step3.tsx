@@ -1,20 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Divider from "../Divider";
 import { underscoreToCapital } from "@/utils";
 import Pic from "@/assets/avatar.jpeg";
 import { ChevronLeft, RefreshCw } from "react-feather";
 import Image from "next/image";
-import { UserDocument } from "@/models/User";
 import { useGetAllUsers } from "@/hooks/useGetUser";
 import Loader from "../Loader";
 import Link from "next/link";
 import { useInviteToProject } from "@/hooks/useUpdateProject";
+import { sortByInterests, sortUserByCountries } from "@/utils/sortCountries";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { UserDocument } from "@/models/User";
 
 function Step3({ data, setStep, group }: any) {
   const { data: userData, isLoading } = useGetAllUsers();
+  const user = useCurrentUser();
+  const [users, setUsers] = useState<UserDocument[] | null>([]);
   const { mutate, isPending } = useInviteToProject(group?.uuid);
-  const users: UserDocument[] = userData?.data?.data || [];
+
+  useEffect(() => {
+    console.log(data, userData);
+    sortByInterests(
+      [...data?.project?.interests, ...data?.project?.core_skills],
+      userData?.data.data
+    ).then((users) =>
+      setUsers(sortUserByCountries(user?.country, users ?? []))
+    );
+  }, [data, user?.country, userData]);
+
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -50,44 +64,40 @@ function Step3({ data, setStep, group }: any) {
               key={i}
               className="bg-white cursor-pointer max-w-[50%] lg:max-w-[20%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[33%]"
             >
-              <Link href={`/profile/${user._id}`}>
-                <div className="h-[180px] relative overflow-hidden p-4">
-                  <Image
-                    src={user.avatar || Pic}
-                    alt="banner"
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    className="h-full w-full rounded-[10px] object-cover object-top"
-                  />
+              <div className="h-[180px] relative overflow-hidden p-4">
+                <Image
+                  src={user.avatar || Pic}
+                  alt="banner"
+                  width="0"
+                  unoptimized
+                  height="0"
+                  sizes="100vw"
+                  className="h-full w-full rounded-[10px] object-cover object-top"
+                />
+              </div>
+              <div className="p-4 pt-0">
+                <h6>{user.name}</h6>
+                <p className="text-[#667185] text-xs">{user.title}</p>
+                <div className="flex flex-wrap max-h-[60px] overflow-hidden gap-2 my-3">
+                  {user.interests?.map((interest, i) => (
+                    <div key={i} className="bg-[#D7D7EB] px-2 py-1 rounded-3xl">
+                      <p className="text-[#232566] capitalize text-xs font-medium">
+                        {underscoreToCapital(interest)}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-                <div className="p-4 pt-0">
-                  <h6>{user.name}</h6>
-                  <p className="text-[#667185] text-xs">{user.title}</p>
-                  <div className="flex flex-wrap max-h-[60px] overflow-hidden gap-2 my-3">
-                    {user.interests?.map((interest, i) => (
-                      <div
-                        key={i}
-                        className="bg-[#D7D7EB] px-2 py-1 rounded-3xl"
-                      >
-                        <p className="text-[#232566] capitalize text-xs font-medium">
-                          {underscoreToCapital(interest)}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex mt-4 pt-4 justify-between border-t border-[#F0F2F5] items-center">
-                    <p className="text-xs">{user.groups.length} Projects</p>
-                    <a
-                      href="#"
-                      onClick={() => mutate(user.email)}
-                      className="text-sm"
-                    >
-                      Invite
-                    </a>
-                  </div>
+                <div className="flex mt-4 pt-4 justify-between border-t border-[#F0F2F5] items-center">
+                  <p className="text-xs">{user.groups.length} Projects</p>
+                  <a
+                    href="#"
+                    onClick={() => mutate(user.email)}
+                    className="text-sm"
+                  >
+                    Invite
+                  </a>
                 </div>
-              </Link>
+              </div>
             </div>
           ))
         )}

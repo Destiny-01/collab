@@ -15,8 +15,13 @@ import options from "@/data/options";
 import "@/app/globals.css";
 import { useSearchParams } from "next/navigation";
 import EmptyState from "@/assets/empty-project.png";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useResponsive from "@/hooks/useResponsive";
+import DashboardImage from "@/assets/dashboard-image.png";
 
 function Projects() {
+  const user = useCurrentUser();
+  const { isMobile } = useResponsive();
   const searchParams = useSearchParams();
   const search_query = searchParams.get("search_query");
   const [filter, setFilter] = useState("all");
@@ -38,14 +43,33 @@ function Projects() {
 
   return (
     <MainLayout>
-      <div className="my-6 lg:px-8 px-4">
+      <div className={`${!user && "mx-32"} my-6 lg:px-8 px-4`}>
         <div className="lg:max-w-[60%] break-word">
-          <h2 className="mb-1 lg:text-2xl text-xl text-black">
+          <h2 className="mb-1 mt-6 lg:text-2xl text-xl text-black">
             Explore Projects
           </h2>
           <p className="text-sm mb-2 lg:mb-0 ">
             Discover projects you might be interested in
           </p>
+        </div>
+        <div className="bg-card-bg mt-6 rounded-xl h-fit w-full lg:p-8 p-6 relative">
+          <h5 className="text-white text-lg">Need a brand new idea?</h5>
+          <p className="text-milk text-sm">
+            Get a brand new real-world problem with the help of AI or use your
+            idea
+          </p>
+          <Link href="/projects/new">
+            <button className="text-purple700 mt-4 text-sm bg-white flex items-center gap-1 py-3 px-4 rounded-lg">
+              Create Project
+            </button>
+          </Link>
+          {!isMobile && (
+            <Image
+              src={DashboardImage}
+              className="absolute right-0 -bottom-6"
+              alt="image"
+            />
+          )}
         </div>
         <div className="relative my-6 max-w-[80%] lg:max-w-[50%]">
           <input
@@ -118,6 +142,7 @@ function Projects() {
                       src={group.photo || Pic}
                       alt="banner"
                       width="0"
+                      unoptimized
                       height="0"
                       className="h-full w-full rounded-lg object-cover object-top overflow-hidden"
                     />
@@ -138,6 +163,7 @@ function Projects() {
                             }`}
                             src={member.avatar || Pic}
                             height={32}
+                            unoptimized
                             width={32}
                             alt="avatar"
                             key={i}

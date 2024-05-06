@@ -14,6 +14,8 @@ const config: Config = {
       },
       boxShadow: {
         "card-shadow": "0px 1.5px 4px -1px #10192812",
+        "modal-shadow":
+          "box-shadow: 0px 8px 8px -4px #0000000A, 0px 20px 24px -4px #0000001A",
       },
       backgroundImage: {
         "home-gradient":

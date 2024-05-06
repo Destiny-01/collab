@@ -136,7 +136,7 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
       </div>
       <div className="my-8">
         <h5 className="font-medium mb-2 text-lg">About Project</h5>
-        <p className="text-sm">{data.project.shortDescription}</p>
+        <p className="text-sm">{data.project.short_description}</p>
       </div>
       <div className="mb-8">
         <h5 className="font-medium mb-2 text-lg">Project Brief</h5>

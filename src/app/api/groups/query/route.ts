@@ -22,7 +22,8 @@ export const POST = async (req: Request, res: Response) => {
         status: 400,
       });
     }
-    const jsonString = result.replace(/'/g, '"');
+    const jsonString = result.replace(/'(?![^{]*})/g, '"');
+    console.log(jsonString);
     const { projects } = JSON.parse(jsonString);
     // const { projects } = {
     //   projects: [

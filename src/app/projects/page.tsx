@@ -56,9 +56,10 @@ function Projects() {
                 <Link href={`/projects/${group.uuid}`}>
                   <div className="lg:h-[200px] h-[187px] mb-2">
                     <Image
-                      src={group.photo}
+                      src={group.photo || Pic}
                       alt="banner"
                       width="0"
+                      unoptimized
                       height="0"
                       className="h-full w-full rounded-lg object-cover object-top overflow-hidden"
                     />
@@ -80,6 +81,7 @@ function Projects() {
                             src={member.avatar || Pic}
                             height={32}
                             width={32}
+                            unoptimized
                             alt="avatar"
                             key={i}
                           />

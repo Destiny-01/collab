@@ -28,6 +28,7 @@ function Conversation({ group }: { group: Group }) {
           alt="avatar"
           width="0"
           height="0"
+          unoptimized
         />
         <h5 className="font-semibold text-xl text-center my-6">
           {group?.project?.name}
@@ -53,6 +54,7 @@ function Conversation({ group }: { group: Group }) {
               src={member.avatar || Pic}
               height={40}
               width={40}
+              unoptimized
               alt="avatar"
             />
             <div>

@@ -82,6 +82,7 @@ function Dashboard() {
                       <Image
                         src={group.photo || Pic}
                         width="0"
+                        unoptimized
                         height="0"
                         alt="banner"
                         className="h-full w-full rounded-lg object-cover object-top overflow-hidden"
@@ -103,6 +104,7 @@ function Dashboard() {
                               }`}
                               src={member.avatar || Pic}
                               height={32}
+                              unoptimized
                               width={32}
                               alt="avatar"
                               key={i}
@@ -158,6 +160,7 @@ function Dashboard() {
                       src={group.photo || Pic}
                       width="0"
                       height="0"
+                      unoptimized
                       alt="banner"
                       className="lg:h-full h-[125px] w-[125px] rounded-lg object-cover object-top overflow-hidden"
                     />
@@ -180,6 +183,7 @@ function Dashboard() {
                             height={32}
                             width={32}
                             alt="avatar"
+                            unoptimized
                             key={i}
                           />
                         ))}

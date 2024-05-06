@@ -19,18 +19,12 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function Navbar({
-  isWhite = false,
-  isLoggedIn = false,
-  setIsOpen,
-}: any) {
+export default function Navbar({ isWhite = false, setIsOpen }: any) {
   const user = useCurrentUser();
   const router = useRouter();
-  const asPath = usePathname();
   const searchParams = useSearchParams();
   const search_query = searchParams.get("search_query");
   const [search, setSearch] = useState(search_query);
-  const [showModal, setShowModal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isMobile } = useResponsive();
 
@@ -46,7 +40,7 @@ export default function Navbar({
     router.push("/explore?search_query=" + e.target.value);
   };
 
-  return isLoggedIn ? (
+  return user ? (
     isMobile ? (
       <nav className="bg-white border-b border-[#E4E7EC] sticky top-0 z-10 p-4 flex justify-between items-center w-full">
         <Link href="/dashboard">
@@ -156,16 +150,14 @@ export default function Navbar({
             <Image
               className="rounded-full h-10 w-10 border border-white"
               src={user?.avatar || Picc}
+              unoptimized
               height={40}
               width={40}
               alt="avatar"
             />
           </Link>
           <Link href="/projects/new">
-            <button
-              onClick={() => setShowModal(true)}
-              className="border rounded-lg border-[#D0D5DD] px-3 py-2 text-[#344054] bg-transparent font-semibold text-sm"
-            >
+            <button className="border rounded-lg border-[#D0D5DD] px-3 py-2 text-[#344054] bg-transparent font-semibold text-sm">
               Start Project
             </button>
           </Link>
@@ -177,20 +169,12 @@ export default function Navbar({
       <Link href="/dashboard">
         <Image src={Logo} height={28} alt="logo" />
       </Link>
-      <div className="flex items-center gap-4">
-        <Link href="/explore">
-          <Search color="#344054" size={20} />
-        </Link>
-        <Link href="/projects/new">
-          <Plus color="#344054" size={20} />
-        </Link>
-        <Menu onClick={() => setIsOpen(true)} color="#344054" size={20} />
-      </div>
+      <Menu onClick={() => setIsOpen(true)} color="#344054" size={20} />
     </nav>
   ) : (
     <nav
       className={`flex ${
-        isWhite ? "bg-white" : "bg-[#F3F3FA]"
+        isWhite ? "bg-white" : "bg-[#F9FAFB] border-b border-[#D0D5DD]"
       } items-center px-32 py-6 justify-between`}
     >
       <Image src={Logo} alt="logo" height={32} />

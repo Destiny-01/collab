@@ -2,6 +2,19 @@ import React from "react";
 import Button from "../Button";
 import { Group } from "@/models/Group";
 
+export const renderList = (listItems: string[] | undefined) => {
+  return (
+    <ul className="ml-4">
+      {Array.isArray(listItems) &&
+        listItems?.map((item, index) => (
+          <li key={index} className="list-disc">
+            {item}
+          </li>
+        ))}
+    </ul>
+  );
+};
+
 function Details({ group }: { group: Group }) {
   return (
     <div className="lg:p-8 p-4">
@@ -14,13 +27,34 @@ function Details({ group }: { group: Group }) {
         </div>
         <Button>Edit Details</Button>
       </div>
-      <div className="my-8">
+
+      <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">About Project</h5>
-        <p className="text-sm">{group.project?.shortDescription}</p>
+        <p className="text-sm">{group.project?.short_description}</p>
       </div>
-      <div>
+      <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">Project Brief</h5>
         <p className="text-sm">{group.project?.description}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Impact</h5>
+        <p className="text-sm">{group.project?.impact}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Problem</h5>
+        <p className="text-sm">{group.project?.problem}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Solution</h5>
+        <p className="text-sm">{group.project?.solution}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Estimated Timeline</h5>
+        <p className="text-sm">{group.project?.estimated_timeline}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Key Features</h5>
+        <p className="text-sm">{renderList(group.project?.key_features)}</p>
       </div>
     </div>
   );

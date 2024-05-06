@@ -277,6 +277,7 @@ export default function Home() {
                       src={group.photo || Pic}
                       alt="banner"
                       width="0"
+                      unoptimized
                       height="0"
                       className="h-full w-full rounded-lg object-cover object-top overflow-hidden"
                     />
@@ -299,6 +300,7 @@ export default function Home() {
                             height={32}
                             width={32}
                             alt="avatar"
+                            unoptimized
                             key={i}
                           />
                         ))}

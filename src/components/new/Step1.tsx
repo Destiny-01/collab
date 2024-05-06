@@ -9,7 +9,7 @@ function Step1({ data, handleChange, isPending, mutate }: any) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    if (!data.category || !data.idea) {
+    if (!data.category) {
       console.log("err");
       toast.error("All fields are required");
       return;

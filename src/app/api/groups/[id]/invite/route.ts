@@ -22,7 +22,7 @@ export const POST = async (
         status: 400,
       });
     }
-    if (group.owner !== currentUser._id) {
+    if (group.owner._id.toString() !== currentUser._id.toString()) {
       return new Response("Not the group admin. Can't add people", {
         status: 400,
       });

@@ -7,6 +7,7 @@ import { NextApiHandler } from "next";
 export const GET = async (req: Request, res: Response) => {
   try {
     const { currentUser } = await getCurrentUser();
+    console.log("route");
 
     const users = await User.aggregate([
       {
@@ -14,7 +15,7 @@ export const GET = async (req: Request, res: Response) => {
           _id: { $ne: currentUser?._id },
         },
       },
-      { $sample: { size: 10 } },
+      { $sample: { size: 20 } },
     ]);
     if (!currentUser) {
       return Response.json({ success: true, users });
@@ -24,6 +25,7 @@ export const GET = async (req: Request, res: Response) => {
     // if (!matchedUsers) {
     //   return Response.json({ success: true, users });
     // }
+    console.log(users, "ll");
 
     const sortedUsers = sortUserByCountries(currentUser?.country, users);
 

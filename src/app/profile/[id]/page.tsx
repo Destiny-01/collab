@@ -38,6 +38,7 @@ function UserProfile({ params }: { params: { id: string } }) {
           src={user?.avatar || Pic}
           alt="banner"
           width={130}
+          unoptimized
           height={130}
           sizes="100vw"
           className="h-[130px] w-[130px] rounded-[10px] object-cover object-top"
@@ -115,6 +116,7 @@ function UserProfile({ params }: { params: { id: string } }) {
                         src={group.photo || Pic}
                         alt="banner"
                         width="0"
+                        unoptimized
                         height="0"
                         className="h-full w-full rounded-lg object-cover object-top overflow-hidden"
                       />
@@ -134,6 +136,7 @@ function UserProfile({ params }: { params: { id: string } }) {
                                 i > 0 && "-ml-3"
                               }`}
                               src={member.avatar || Pic}
+                              unoptimized
                               height={32}
                               width={32}
                               alt="avatar"

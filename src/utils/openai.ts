@@ -9,7 +9,7 @@ export const queryChatGPT = async (prompt: string) => {
   const response = await openai.completions.create({
     model: model,
     prompt,
-    max_tokens: 999,
+    max_tokens: 1999,
   });
 
   console.log(response);

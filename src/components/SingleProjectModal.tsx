@@ -10,6 +10,7 @@ export default function SingleProjectModal({
   const [showModal, setShowModal] = useState(false);
 
   const renderList = (listItems: string[]) => {
+    console.log(listItems, project, "list");
     return (
       <ul className="ml-4">
         {listItems.map((item, index) => (
@@ -33,12 +34,12 @@ export default function SingleProjectModal({
       {showModal ? (
         <>
           <div className="justify-center cursor-default items-center flex overflow-clip fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-[620px] my-6 mx-auto h-4/5 overflow-scroll max-w-3xl">
+            <div className="relative w-[620px] my-6 mx-auto h-4/5 overflow-scroll no-scrollbar max-w-3xl">
               {/*content*/}
               <div className="border border-[#E4E7EC] rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="p-5 border-b text-center">
-                  <h3 className="text-3xl font-semibold text-gray900">
+                  <h3 className="text-2xl font-semibold text-gray900">
                     Project Details
                   </h3>
                   <p className="text-xs">
@@ -46,13 +47,13 @@ export default function SingleProjectModal({
                   </p>
                 </div>
                 {/*body*/}
-                <div className="relative p-6">
+                <div className="relative p-6 pt-2">
                   {project &&
                     Object.entries(project).map(
                       ([key, value]) =>
                         key !== "_id" && (
                           <div key={key}>
-                            <h2 className="text-xl mt-8 mb-2 capitalize">
+                            <h2 className="text-lg font-medium mt-4 mb-0 capitalize">
                               {underscoreToCapital(key)}
                             </h2>
                             <p className="text-[#667185]">

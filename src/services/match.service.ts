@@ -1,19 +1,8 @@
 import axios from "axios";
-import UserModel, { User } from "@/models/User";
+import UserModel, { User, UserDocument } from "@/models/User";
 import Group from "../models/Group";
 import { queryChatGPT } from "../utils/openai";
-
-async function synonyms(word1: string) {
-  const apiUrl = `https://api.datamuse.com/words?ml=${word1}&max=25`;
-
-  try {
-    const response = await axios.get(apiUrl);
-
-    return response.data.map((entry: any) => entry.word);
-  } catch (error) {
-    return false;
-  }
-}
+import { synonyms } from "@/utils/sortCountries";
 
 function parseFeedbackString(feedbackString: string) {
   // Split the string by newline character and filter out empty strings
@@ -60,9 +49,9 @@ const rateCandidatesWithGPT = async (user: User, applicants: User[]) => {
         .filter(Boolean);
 
       const prompt = `This document outlines a user profile with a bio "${
-        user?.details?.bio
+        user?.bio
       }".
-            The other necessary details of the users are ${user.details}
+            The other necessary details of the users are ${user}
             The document includes details about potential candidates (${JSON.stringify(
               applicantsForThisBatch
             )}).
