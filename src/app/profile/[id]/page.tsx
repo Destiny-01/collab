@@ -21,6 +21,7 @@ import Link from "next/link";
 import { Group } from "@/models/Group";
 import { useGetAllGroups } from "@/hooks/useCurrentProject";
 import useResponsive from "@/hooks/useResponsive";
+import EmptyState from "@/assets/empty-project.png";
 
 function UserProfile({ params }: { params: { id: string } }) {
   const { isMobile } = useResponsive();
@@ -89,6 +90,19 @@ function UserProfile({ params }: { params: { id: string } }) {
           <div className="lg:flex flex-wrap gap-4">
             {isLoading ? (
               <Loader />
+            ) : groups.length === 0 ? (
+              <div className="bg-white min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+                <Image src={EmptyState} className="mx-auto" alt="empty" />
+                <h6 className="mt-2 mb-1">
+                  Projects you create or join will appear here
+                </h6>
+                <p className="text-xs mb-2">
+                  Create a new project or join a project now
+                </p>
+                <Link href="/projects/new" className="text-sm">
+                  Create
+                </Link>
+              </div>
             ) : (
               groups.slice(0, 2)?.map((group, i) => (
                 <div

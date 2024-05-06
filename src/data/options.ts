@@ -8,6 +8,7 @@ const options = [
   { value: "media", label: "Media" },
   { value: "environment", label: "Environment" },
   { value: "sociology", label: "Sociology" },
+  { value: "crafts", label: "Crafts/Handiwork" },
 ];
 
 export default options;

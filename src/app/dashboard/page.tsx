@@ -6,6 +6,7 @@ import React from "react";
 import DashboardImage from "@/assets/dashboard-image.png";
 import StarDestroyer from "@/assets/star-destroyer.png";
 import Pic from "@/assets/avatar.jpeg";
+import EmptyState from "@/assets/empty-project.png";
 import Link from "next/link";
 import { useGetAllGroups, useGetMyGroups } from "@/hooks/useCurrentProject";
 import { Group } from "@/models/Group";
@@ -57,6 +58,19 @@ function Dashboard() {
           <div className="lg:flex flex-wrap gap-4">
             {isLoading ? (
               <Loader />
+            ) : myGroups.length === 0 ? (
+              <div className="bg-white min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+                <Image src={EmptyState} className="mx-auto" alt="empty" />
+                <h6 className="mt-2 mb-1">
+                  Projects you create or join will appear here
+                </h6>
+                <p className="text-xs mb-2">
+                  Create a new project or join a project now
+                </p>
+                <Link href="/projects/new" className="text-sm">
+                  Create
+                </Link>
+              </div>
             ) : (
               myGroups.slice(0, 2)?.map((group, i) => (
                 <div
@@ -116,6 +130,19 @@ function Dashboard() {
           </div>
           {isLoading ? (
             <Loader />
+          ) : groups.length === 0 ? (
+            <div className="bg-white mb-4 min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+              <Image src={EmptyState} className="mx-auto" alt="empty" />
+              <h6 className="mt-2">
+                Projects you create or join will appear here
+              </h6>
+              <p className="text-xs mt-1 mb-2">
+                Create a new project or join a project now
+              </p>
+              <Link href="/projects/new" className="text-sm">
+                Create
+              </Link>
+            </div>
           ) : (
             groups.slice(0, 2)?.map((group, i) => (
               <div

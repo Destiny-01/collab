@@ -83,6 +83,13 @@ textarea:focus-visible {
   scrollbar-width: none;
 }
 
+.features {
+  display: grid;
+  grid-template-areas:
+    "solution growth solving"
+    "expertise expertise collaboration";
+}
+
 @layer base {
   a {
     @apply text-purple600 lg:text-base text-sm;
@@ -106,6 +113,6 @@ textarea:focus-visible {
     @apply font-semibold text-gray900;
   }
   h6 {
-    @apply font-medium text-[#101928] text-base;
+    @apply font-medium text-gray900 text-base;
   }
 }

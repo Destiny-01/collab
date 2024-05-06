@@ -13,7 +13,6 @@ import Picc from "@/assets/avatar.jpeg";
 import UsFlag from "@/assets/us-flag.png";
 import Image from "next/image";
 import Link from "next/link";
-import Modal from "./Modal";
 import useResponsive from "@/hooks/useResponsive";
 import Logo from "@/assets/LogoText.png";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -170,7 +169,6 @@ export default function Navbar({
               Start Project
             </button>
           </Link>
-          <Modal showModal={showModal} setShowModal={setShowModal} />
         </div>
       </nav>
     )

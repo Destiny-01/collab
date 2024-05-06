@@ -14,6 +14,7 @@ import Loader from "@/components/Loader";
 import options from "@/data/options";
 import "@/app/globals.css";
 import { useSearchParams } from "next/navigation";
+import EmptyState from "@/assets/empty-project.png";
 
 function Projects() {
   const searchParams = useSearchParams();
@@ -94,6 +95,17 @@ function Projects() {
         <div className="lg:flex gap-4">
           {isLoading ? (
             <Loader />
+          ) : filteredGroups.length === 0 ? (
+            <div className="bg-white mx-auto min-w-[100%] min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+              <Image src={EmptyState} className="mx-auto" alt="empty" />
+              <h6 className="mt-2 mb-1">No projects found</h6>
+              <p className="text-xs mb-2">
+                Try checking out other tags or create your own project
+              </p>
+              <Link href="/projects/new" className="text-sm">
+                Create
+              </Link>
+            </div>
           ) : (
             filteredGroups?.map((group, i) => (
               <div

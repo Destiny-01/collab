@@ -11,6 +11,7 @@ import React from "react";
 import { MessageSquare } from "react-feather";
 import Pic from "@/assets/avatar.jpeg";
 import Loader from "@/components/Loader";
+import EmptyState from "@/assets/empty-project.png";
 
 function Projects() {
   const { data, isLoading } = useGetMyGroups();
@@ -33,6 +34,19 @@ function Projects() {
         <div className="lg:flex gap-4">
           {isLoading ? (
             <Loader />
+          ) : groups.length === 0 ? (
+            <div className="bg-white mx-auto min-w-[400px] min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+              <Image src={EmptyState} className="mx-auto" alt="empty" />
+              <h6 className="mt-2 mb-1">
+                Projects you create or join will appear here
+              </h6>
+              <p className="text-xs mb-2">
+                Create a new project or join a project now
+              </p>
+              <Link href="/projects/new" className="text-sm">
+                Create
+              </Link>
+            </div>
           ) : (
             groups?.map((group, i) => (
               <div
