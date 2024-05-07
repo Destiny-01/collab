@@ -15,9 +15,11 @@ app.on(
         status: 400,
       });
     }
+
     const jsonString = result.replace(/'(?![^{]*})/g, '"');
-    console.log(jsonString);
-    const { projects } = JSON.parse(jsonString);
+    const final = jsonString.slice(jsonString.indexOf("{"));
+    const { projects } = final ? JSON.parse(final) : { projects: [] };
+    console.log(projects, uuid);
 
     await GroupModel.findOneAndUpdate({ uuid }, { suggestedTopics: projects });
   }

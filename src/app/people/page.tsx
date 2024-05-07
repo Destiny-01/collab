@@ -13,23 +13,26 @@ import options from "@/data/options";
 import "@/app/globals.css";
 import { useGetAllUsers } from "@/hooks/useGetUser";
 import { User, UserDocument } from "@/models/User";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 function People() {
   const [search, setSearch] = useState("");
+  const currentUser = useCurrentUser();
   const { data, isLoading } = useGetAllUsers();
-  const users: UserDocument[] = data?.data?.data || [];
+  const users: UserDocument[] = data?.data?.users || [];
   const searchedUsers =
     search.length > 0
       ? users?.filter((user) =>
           user?.name?.toLowerCase()?.startsWith(search.trim().toLowerCase())
         )
       : users;
+  console.log(data);
 
   return (
     <MainLayout>
-      <div className="my-6 lg:px-8 px-4">
+      <div className={`${!currentUser && "lg:mx-32 mx-4"} "py-6 lg:px-8 px-4"`}>
         <div className="lg:max-w-[60%] break-word">
-          <h2 className="mb-1 lg:text-2xl text-xl text-black">
+          <h2 className="mb-1 mt-6 lg:text-2xl text-xl text-black">
             Discover people
           </h2>
           <p className="text-sm mb-2 lg:mb-0 ">
@@ -54,7 +57,7 @@ function People() {
             searchedUsers?.map((user, i) => (
               <div
                 key={i}
-                className="bg-white cursor-pointer max-w-[50%] lg:max-w-[20%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[33%]"
+                className="bg-white cursor-pointer max-w-[50%] lg:max-w-[20%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[20%]"
               >
                 <Link href={`/profile/${user._id}`}>
                   <div className="h-[180px] relative overflow-hidden p-4">

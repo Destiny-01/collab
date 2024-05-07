@@ -62,7 +62,7 @@ function Step3({ data, setStep, group }: any) {
           users?.map((user, i) => (
             <div
               key={i}
-              className="bg-white cursor-pointer max-w-[50%] lg:max-w-[20%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[33%]"
+              className="bg-white cursor-pointer max-w-[50%] lg:max-w-[33%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[33%]"
             >
               <div className="h-[180px] relative overflow-hidden p-4">
                 <Image
@@ -91,7 +91,10 @@ function Step3({ data, setStep, group }: any) {
                   <p className="text-xs">{user.groups.length} Projects</p>
                   <a
                     href="#"
-                    onClick={() => mutate(user.email)}
+                    onClick={() => {
+                      toast.success("Invite request sent successfully");
+                      mutate(user.email);
+                    }}
                     className="text-sm"
                   >
                     Invite

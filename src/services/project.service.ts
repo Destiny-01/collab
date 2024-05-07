@@ -9,7 +9,7 @@ export const generateProjectIdeas = async (
     const prompt = `
             ---IDEA--- : ${idea}
             I want you to generate 3 well written project ideas under the ${category} category for a person with bio ${bio}
-            NO TEXT, JUST JSON. Return only JSON
+            NO TEXT, JUST JSON. Return only JSON. Nothing apart from the JSON
             Your response type should be strictly JSON, no javascript code or any code. Just a valid json of an array containing 3 objects {projects: []}. Return nothing more
             ${
               idea &&
@@ -29,7 +29,8 @@ export const generateProjectIdeas = async (
             Based on the project, generate an attribute "interests" that'll be an array of 5 interests to look out for in a user I want to invite
             Repeat those steps for the three projects and put the 3 project objects in an array, and output the array "projects"
 
-            Return just the valid json object ONLY, and nothing more. MAKE SURE THE JSON IS VALID`;
+            Return just the valid json object ONLY in double quote pairs, and nothing more.
+            No example, no test. JUST MAKE SURE THE JSON IS VALID and return just that`;
 
     const result = await queryChatGPT(prompt);
 

@@ -33,7 +33,9 @@ function Conversation({ group }: { group: Group }) {
         <h5 className="font-semibold text-xl text-center my-6">
           {group?.project?.name}
         </h5>
-        <p className="text-sm text-center">{group?.project?.description}</p>
+        <p className="text-sm text-center">
+          {group?.project?.short_description}
+        </p>
         <div className="mt-8 mb-4 flex items-center justify-between">
           <div>
             <p className="text-lg font-semibold text-gray900">

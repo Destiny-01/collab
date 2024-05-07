@@ -11,9 +11,9 @@ import API from "@/utils/api";
 import Loader from "../Loader";
 
 function Step2({ data, setStep, handleChange, group }: any) {
-  const [suggestedTopics, setSuggestedTopics] = useState<Group["project"][]>(
-    []
-  );
+  const [suggestedTopics, setSuggestedTopics] =
+    useState<Group["suggestedTopics"]>();
+  const [retryCount, setRetryCount] = useState(0);
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -24,28 +24,36 @@ function Step2({ data, setStep, handleChange, group }: any) {
     }
     setStep(3);
   };
+  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await API.post(`/groups/${group.uuid}`);
+        const response = await API.get(`/groups/${group.uuid}`);
         const suggestions = response.data?.data?.suggestedTopics;
 
         // Check if the fetched data meets your condition to stop
         if (suggestions.length > 0) {
           setSuggestedTopics(suggestions);
           clearInterval(intervalId); // Stop the interval
+        } else {
+          if (retryCount === 10) {
+            clearInterval(intervalId);
+            toast.error("An error occurred while querying data");
+            setStep(1);
+          }
+          setRetryCount(retryCount + 1);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    const intervalId = setInterval(fetchData, 5000); // Call fetchData every 5 seconds
+    const intervalId = setInterval(fetchData, 4000); // Call fetchData every 5 seconds
 
     // Cleanup function to clear the interval when component unmounts
     return () => clearInterval(intervalId);
-  }, [group.uuid]);
+  }, [group.uuid, retryCount, setStep]);
 
   return (
     <div className="bg-white w-full rounded-10 border border-milk px-6 py-8">
@@ -54,12 +62,18 @@ function Step2({ data, setStep, handleChange, group }: any) {
         Here are the project ideas we generated for you
       </p>
       <div className="my-8">
-        {suggestedTopics.length > 0 ? (
+        {suggestedTopics ? (
           suggestedTopics?.map((project, i) => {
-            const activeProject = group.suggestedTopics.findIndex(
-              (topic: any) => topic.name === data.project?.name
+            const activeProject = suggestedTopics.findIndex(
+              (topic: any) => topic._id === data.project?._id
             );
-            console.log(activeProject);
+            console.log(
+              activeProject,
+              data.project,
+              suggestedTopics,
+              suggestedTopics[2]?._id,
+              data.project?._id
+            );
             return (
               <div
                 key={i}

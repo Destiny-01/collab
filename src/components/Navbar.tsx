@@ -165,7 +165,11 @@ export default function Navbar({ isWhite = false, isOpen, setIsOpen }: any) {
       </nav>
     )
   ) : isMobile ? (
-    <nav className="bg-white lg:border-b border-[#E4E7EC] sticky top-0 z-10 p-4 flex justify-between items-center w-full">
+    <nav
+      className={`${
+        isWhite ? "bg-white" : "bg-[#F9FAFB]"
+      } lg:border-b border-[#E4E7EC] sticky top-0 z-10 p-4 flex justify-between items-center w-full`}
+    >
       <Link href="/dashboard">
         <Image src={Logo} height={28} alt="logo" />
       </Link>
@@ -189,12 +193,6 @@ export default function Navbar({ isWhite = false, isOpen, setIsOpen }: any) {
         </Link>
         <Link href="/people">
           <p className="text-gray900 font-semibold">People</p>
-        </Link>
-        <Link href="/#about">
-          <p className="text-gray900 font-semibold">About</p>
-        </Link>
-        <Link href="/#contact-us">
-          <p className="text-gray900 font-semibold">Contact Us</p>
         </Link>
       </div>
       <div className="flex items-center gap-6">

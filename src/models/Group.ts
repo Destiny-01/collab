@@ -37,6 +37,7 @@ export interface Group extends Document {
     date: Date;
   }[];
   suggestedTopics?: {
+    _id?: string;
     name?: string;
     problem?: string;
     solution?: string;

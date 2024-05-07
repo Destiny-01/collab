@@ -88,7 +88,6 @@ export function useInviteToProject(id: string) {
     mutationFn: (email: string) => API.post(`/groups/${id}/invite`, { email }),
     onSuccess: ({ data }) => {
       console.log(data);
-      toast.success("Invite request sent successfully");
       queryClient.invalidateQueries({
         queryKey: [`group-${data.data.uuid}`],
       });

@@ -52,8 +52,8 @@ export default function Home() {
   return (
     <MainLayout isWhite>
       <div className="bg-white">
-        <div className="lg:flex items-center gap-[72px] mt-10 lg:mt-0 lg:mx-32 mx-4">
-          <div className="text-center">
+        <div className="lg:flex items-center gap-[72px] mt-10  lg:mx-32 mx-4">
+          <div className="text-center lg:text-start">
             <h1 className="lg:text-[56px] text-[36px] text-[#2E2E33] leading-tight font-bold">
               Where diverse minds {!isMobile && <br />} unite to solve real
               problems

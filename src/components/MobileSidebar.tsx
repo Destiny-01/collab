@@ -186,13 +186,11 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
   ) : (
     isOpen && (
       <div className="relative">
-        <div className="absolute top-16 w-[-webkit-fill-available] py-3 px-4 bg-white border mx-4 border-milk shadow-card-shadow rounded-lg">
+        <div className="absolute z-10 top-16 w-[-webkit-fill-available] py-3 px-4 bg-white border mx-4 border-milk shadow-card-shadow rounded-lg">
           <div className="">
             <Link href="/explore">
               <div
-                className={`flex mt-1 cursor-pointer items-center mb-8 gap-3 ${
-                  path === "/explore" ? "bg-[#F1E9FD] rounded-[4px]" : ""
-                }`}
+                className={`flex mt-1 cursor-pointer items-center mb-8 gap-3`}
               >
                 <p
                   className={`text-sm ${
@@ -207,9 +205,7 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
             </Link>
             <Link href="/people">
               <div
-                className={`flex mt-1 cursor-pointer mb-8 items-center gap-3 ${
-                  path === "/people" ? "bg-[#F1E9FD] rounded-[4px]" : ""
-                }`}
+                className={`flex mt-1 cursor-pointer mb-8 items-center gap-3`}
               >
                 <p
                   className={`text-sm ${
@@ -224,9 +220,7 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
             </Link>
             <Link href="/auth/login">
               <div
-                className={`flex mt-1 cursor-pointer mb-8 items-center gap-3 ${
-                  path === "/auth/login" ? "bg-[#F1E9FD] rounded-[4px]" : ""
-                }`}
+                className={`flex mt-1 cursor-pointer mb-8 items-center gap-3`}
               >
                 <p
                   className={`text-sm ${

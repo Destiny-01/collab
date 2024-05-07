@@ -13,7 +13,7 @@ function ProjectHeader({ group }: Props) {
 
   return (
     <div className="lg:p-8 p-4 lg:pb-0 bg-white pb-0 flex items-center justify-between">
-      <div>
+      <div className="w-full">
         <div className="flex gap-1">
           <Link className="lg:text-sm text-xs" href={`/projects`}>
             Project
