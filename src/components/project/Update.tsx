@@ -26,7 +26,7 @@ function Update({ updates }: { updates: Group["updates"] }) {
       </div>
       <div>
         {updates?.length === 0 ? (
-          <div className="bg-white max-w-[70%] mx-auto min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+          <div className="bg-white w-full mx-auto min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
             <Image src={EmptyState} className="mx-auto" alt="empty" />
             <h6 className="mt-2 mb-1">Projects updates will appear here</h6>
             <p className="text-xs mb-2">
