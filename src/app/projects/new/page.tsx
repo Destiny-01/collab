@@ -66,7 +66,7 @@ function NewProject() {
 
   return (
     <MainLayout>
-      <div className={`lg:px-8 ${!user && "mx-32"}  px-4 py-6`}>
+      <div className={`lg:px-8 ${!user && "lg:mx-32"}  px-4 py-6`}>
         <div className="mb-8">
           <h2 className="mb-1 lg:text-2xl text-xl text-black">
             Create New Project

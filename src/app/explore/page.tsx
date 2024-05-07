@@ -43,7 +43,9 @@ function Projects() {
 
   return (
     <MainLayout>
-      <div className={`${!user && "mx-32"} my-6 lg:px-8 px-4`}>
+      <div
+        className={`${!user && "lg:mx-32 bg-[#F9FAFB] mx-0"} my-6 lg:px-8 px-4`}
+      >
         <div className="lg:max-w-[60%] break-word">
           <h2 className="mb-1 mt-6 lg:text-2xl text-xl text-black">
             Explore Projects

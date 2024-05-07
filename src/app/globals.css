@@ -83,11 +83,39 @@ textarea:focus-visible {
   scrollbar-width: none;
 }
 
-.features {
+.solutions-container {
   display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 24px;
   grid-template-areas:
     "solution growth solving"
     "expertise expertise collaboration";
+}
+
+@media only screen and (max-width: 768px) {
+  .solutions-container {
+    display: block;
+  }
+}
+
+.solutions {
+  grid-area: solution;
+}
+
+.growth {
+  grid-area: growth;
+}
+
+.expertise {
+  grid-area: expertise;
+}
+
+.solving {
+  grid-area: solving;
+}
+
+.collaboration {
+  grid-area: collaboration;
 }
 
 @layer base {

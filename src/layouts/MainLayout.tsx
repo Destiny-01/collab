@@ -7,24 +7,36 @@ import React, { Fragment, useState } from "react";
 
 type Props = {
   children: React.ReactNode;
+  isWhite?: boolean;
 };
 
-function MainLayout({ children }: Props) {
+function MainLayout({ children, isWhite = false }: Props) {
   const user = useCurrentUser();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { isMobile } = useResponsive();
   console.log(isMobile, isSidebarOpen);
 
-  return (
-    <div className="flex bg-[#F9FAFB] min-h-screen w-full">
-      {user && (
-        <Fragment>
-          <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-          <Sidebar />
-        </Fragment>
-      )}
+  return user ? (
+    <div
+      className={`flex ${
+        isWhite ? "bg-white" : "bg-[#F9FAFB]"
+      } min-h-screen w-full`}
+    >
+      <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Sidebar />
+
       <div className={`w-full ${isSidebarOpen ? "hidden" : "block"}`}>
-        <Navbar setIsOpen={setIsSidebarOpen} isLoggedIn={true} />
+        <Navbar setIsOpen={setIsSidebarOpen} />
+        {children}
+      </div>
+    </div>
+  ) : (
+    <div
+      className={`${isWhite ? "bg-white" : "bg-[#F9FAFB]"} min-h-screen w-full`}
+    >
+      <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <div className={`w-full ${isSidebarOpen ? "hidden" : "block"}`}>
+        <Navbar isWhite={isWhite} setIsOpen={setIsSidebarOpen} />
         {children}
       </div>
     </div>

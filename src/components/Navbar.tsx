@@ -165,11 +165,11 @@ export default function Navbar({ isWhite = false, setIsOpen }: any) {
       </nav>
     )
   ) : isMobile ? (
-    <nav className="bg-white border-b border-[#E4E7EC] sticky top-0 z-10 p-4 flex justify-between items-center w-full">
+    <nav className="bg-white lg:border-b border-[#E4E7EC] sticky top-0 z-10 p-4 flex justify-between items-center w-full">
       <Link href="/dashboard">
         <Image src={Logo} height={28} alt="logo" />
       </Link>
-      <Menu onClick={() => setIsOpen(true)} color="#344054" size={20} />
+      <Menu onClick={() => setIsOpen(true)} color="#344054" size={24} />
     </nav>
   ) : (
     <nav
@@ -177,7 +177,9 @@ export default function Navbar({ isWhite = false, setIsOpen }: any) {
         isWhite ? "bg-white" : "bg-[#F9FAFB] border-b border-[#D0D5DD]"
       } items-center px-32 py-6 justify-between`}
     >
-      <Image src={Logo} alt="logo" height={32} />
+      <Link href="/">
+        <Image src={Logo} alt="logo" height={32} />
+      </Link>
       <div className="flex items-center gap-6">
         <Link href="/">
           <p className="text-gray900 font-semibold">Home</p>

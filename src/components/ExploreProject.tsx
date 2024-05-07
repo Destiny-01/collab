@@ -34,7 +34,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
   const isDisabled = group?.invitations?.pending?.includes(user?._id);
 
   return (
-    <div className="mx-32">
+    <div className={!user ? "bg-[#F9FAFB] lg:mx-32" : ""}>
       <div className="lg:px-8 px-4 lg:pt-8 pt-4">
         <p className="text-xs">{underscoreToCapital(group?.category)}</p>
         <h2 className="mb-6 lg:text-2xl text-xl text-black">

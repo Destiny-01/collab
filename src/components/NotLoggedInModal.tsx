@@ -32,10 +32,10 @@ function NotLoggedInModal({ onClose }: { onClose: () => void }) {
       <div className="absolute inset-0 bg-black bg-opacity-10 backdrop-blur-md"></div>
       <div
         ref={modalRef}
-        className="relative py-8 rounded-10 px-7 shadow-modal-shadow border border-milk bg-white w-[450px] max-w-md text-center"
+        className="relative mx-4 lg:py-8 py-4 rounded-10 lg:px-7 px-3 shadow-modal-shadow border border-milk bg-white w-[450px] max-w-md text-center"
       >
         <Image src={VerifyImage} alt="verify" className="mx-auto" />
-        <h2 className="text-gray900 mt-6 mb-2 text-[28px]">
+        <h2 className="text-gray900 mt-6 mb-2 text-2xl lg:text-[28px]">
           You must login to proceed from here
         </h2>
         <p>
