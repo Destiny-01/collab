@@ -3,8 +3,10 @@ import ReactSelect from "react-select";
 import { toast } from "react-toastify";
 import options from "@/data/options";
 import Divider from "../Divider";
+import NotLoggedInModal from "../NotLoggedInModal";
 
-function Step1({ data, handleChange, isPending, mutate }: any) {
+function Step1({ data, handleChange, isPending, mutate, user }: any) {
+  const [showModal, setShowModal] = useState(false);
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -12,6 +14,10 @@ function Step1({ data, handleChange, isPending, mutate }: any) {
     if (!data.category) {
       console.log("err");
       toast.error("All fields are required");
+      return;
+    }
+    if (!user) {
+      setShowModal(true);
       return;
     }
     mutate({ category: data.category.value, idea: data.idea });
@@ -88,6 +94,7 @@ function Step1({ data, handleChange, isPending, mutate }: any) {
             </button>
           </div>
         </div>
+        {showModal && <NotLoggedInModal onClose={() => setShowModal(false)} />}
       </div>
     </div>
   );

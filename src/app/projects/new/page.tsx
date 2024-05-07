@@ -79,6 +79,7 @@ function NewProject() {
           {activeTab === 1 ? (
             <Step1
               data={data}
+              user={user}
               setStep={setActiveTab}
               handleChange={handleChange}
               isPending={isPending}
