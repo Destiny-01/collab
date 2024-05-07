@@ -1,9 +1,9 @@
 import User from "@/models/User";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export const GET = async (req: NextApiRequest, res: Response) => {
+export const GET = async (req: NextRequest, res: Response) => {
   try {
-    const { searchParams } = new URL(req.url || "");
+    const { searchParams } = req.nextUrl;
     const email = searchParams.get("email");
     const email_verification = searchParams.get("email_verification");
 

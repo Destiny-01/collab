@@ -1,6 +1,6 @@
 import getCurrentUser from "@/utils/getCurrentUser";
 import Group from "@/models/Group";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
 export const POST = async (req: Request, res: Response) => {
   try {
@@ -35,9 +35,11 @@ export const POST = async (req: Request, res: Response) => {
   }
 };
 
-export const GET = async (req: NextApiRequest, res: Response) => {
+export const GET = async (req: NextRequest, res: Response) => {
   try {
-    const user = req.query?.user;
+    const { searchParams } = req.nextUrl;
+    const user = searchParams.get("user");
+  
     const { currentUser } = await getCurrentUser();
 
     const allGroups = await Group.find({
