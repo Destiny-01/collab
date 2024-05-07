@@ -19,7 +19,7 @@ function People() {
   const [search, setSearch] = useState("");
   const currentUser = useCurrentUser();
   const { data, isLoading } = useGetAllUsers();
-  const users: UserDocument[] = data?.data?.users || [];
+  const users: UserDocument[] = data?.data?.data || [];
   const searchedUsers =
     search.length > 0
       ? users?.filter((user) =>
