@@ -35,7 +35,7 @@ function Projects() {
           {isLoading ? (
             <Loader />
           ) : groups.length === 0 ? (
-            <div className="bg-white mx-auto min-w-[400px] min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+            <div className="bg-white mb-4 w-full min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
               <Image src={EmptyState} className="mx-auto" alt="empty" />
               <h6 className="mt-2 mb-1">
                 Projects you create or join will appear here

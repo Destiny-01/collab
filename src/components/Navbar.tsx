@@ -19,7 +19,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function Navbar({ isWhite = false, setIsOpen }: any) {
+export default function Navbar({ isWhite = false, isOpen, setIsOpen }: any) {
   const user = useCurrentUser();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -169,7 +169,7 @@ export default function Navbar({ isWhite = false, setIsOpen }: any) {
       <Link href="/dashboard">
         <Image src={Logo} height={28} alt="logo" />
       </Link>
-      <Menu onClick={() => setIsOpen(true)} color="#344054" size={24} />
+      <Menu onClick={() => setIsOpen(!isOpen)} color="#344054" size={24} />
     </nav>
   ) : (
     <nav

@@ -53,12 +53,12 @@ function Step2({ handleChange, setStep, data }: any) {
           onChange={handleChange}
         ></input> */}
         <Select
-          value={data.interests}
+          value={data.interests.length > 0 ? data.interests : undefined}
           closeMenuOnSelect={false}
           isMulti
           onChange={handleSelectChange}
           options={options}
-          placeholder="Select interests"
+          placeholder="What are you interested in"
           theme={(theme) => ({
             ...theme,
             colors: {

@@ -24,7 +24,9 @@ function Projects() {
   const { isMobile } = useResponsive();
   const searchParams = useSearchParams();
   const search_query = searchParams.get("search_query");
-  const [filter, setFilter] = useState("all");
+  const category = searchParams.get("category");
+
+  const [filter, setFilter] = useState(category ?? "all");
   const [search, setSearch] = useState(search_query || "");
   const { data, isLoading } = useGetAllGroups();
   const groups: Group[] = data?.data?.data || [];

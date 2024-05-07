@@ -59,7 +59,7 @@ function Dashboard() {
             {isLoading ? (
               <Loader />
             ) : myGroups.length === 0 ? (
-              <div className="bg-white min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
+              <div className="bg-white mb-4 min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
                 <Image src={EmptyState} className="mx-auto" alt="empty" />
                 <h6 className="mt-2 mb-1">
                   Projects you create or join will appear here

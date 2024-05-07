@@ -31,7 +31,7 @@ export default function Home() {
   const router = useRouter();
   const { data, status } = useSession();
   const { isMobile } = useResponsive();
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState<any>(undefined);
   const [filter, setFilter] = useState("all");
   const { data: groupsData, isLoading } = useGetAllGroups();
 
@@ -52,8 +52,8 @@ export default function Home() {
   return (
     <MainLayout isWhite>
       <div className="bg-white">
-        <div className="lg:flex min-h-screen items-center gap-[72px] mt-10 lg:mt-0 lg:mx-32 mx-4">
-          <div>
+        <div className="lg:flex items-center gap-[72px] mt-10 lg:mt-0 lg:mx-32 mx-4">
+          <div className="text-center">
             <h1 className="lg:text-[56px] text-[36px] text-[#2E2E33] leading-tight font-bold">
               Where diverse minds {!isMobile && <br />} unite to solve real
               problems
@@ -62,9 +62,10 @@ export default function Home() {
               Get project recommendations that interests you, build a team that
               complements your skills, break down barriers, build up solutions.
             </p>
-            <div className="lg:flex gap-2 items-center">
+            <div className="lg:flex text-start gap-2 items-center">
               <Select
                 value={selectedOption}
+                placeholder="What are you interested in"
                 onChange={(newVal) => setSelectedOption(newVal || options[0])}
                 options={options}
                 theme={(theme) => ({
@@ -93,9 +94,8 @@ export default function Home() {
                   }),
                 }}
               />
-              <Link href="/projects/new">
-                {" "}
-                <button className="bg-purple500 my-3 lg:my-0 text-white flex items-center gap-1 py-3 px-6 rounded-lg">
+              <Link href={`/explore?category=${selectedOption}`}>
+                <button className="bg-purple500 my-3 lg:my-0 text-white w-full justify-center flex items-center gap-1 py-3 px-6 rounded-lg">
                   Get Started
                 </button>
               </Link>

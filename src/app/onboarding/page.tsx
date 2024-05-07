@@ -4,7 +4,7 @@ import Image from "next/image";
 import LogoFull from "@/assets/logo-full.png";
 import LogoText from "@/assets/LogoText.png";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";

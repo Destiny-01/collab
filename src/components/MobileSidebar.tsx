@@ -185,18 +185,12 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
     </div>
   ) : (
     isOpen && (
-      <div className="h-screen p-4 justify-between flex flex-col w-screen bg-white border-r border-[#E4E7EC]">
-        <div>
-          <div className="flex justify-between mb-12">
-            <Link href="/dashboard">
-              <Image src={Logo} height={28} alt="logo" />
-            </Link>
-            <X onClick={() => setIsOpen(false)} color="#000000" />
-          </div>
-          <div className="pb-3">
+      <div className="relative">
+        <div className="absolute top-16 w-[-webkit-fill-available] py-3 px-4 bg-white border mx-4 border-milk shadow-card-shadow rounded-lg">
+          <div className="">
             <Link href="/explore">
               <div
-                className={`flex mt-1 cursor-pointer items-center gap-3 px-4 py-3 ${
+                className={`flex mt-1 cursor-pointer items-center mb-8 gap-3 ${
                   path === "/explore" ? "bg-[#F1E9FD] rounded-[4px]" : ""
                 }`}
               >
@@ -213,7 +207,7 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
             </Link>
             <Link href="/people">
               <div
-                className={`flex mt-1 cursor-pointer items-center gap-3 px-4 py-3 ${
+                className={`flex mt-1 cursor-pointer mb-8 items-center gap-3 ${
                   path === "/people" ? "bg-[#F1E9FD] rounded-[4px]" : ""
                 }`}
               >
@@ -227,6 +221,28 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
                   People
                 </p>
               </div>
+            </Link>
+            <Link href="/auth/login">
+              <div
+                className={`flex mt-1 cursor-pointer mb-8 items-center gap-3 ${
+                  path === "/auth/login" ? "bg-[#F1E9FD] rounded-[4px]" : ""
+                }`}
+              >
+                <p
+                  className={`text-sm ${
+                    path === "/auth/login"
+                      ? "text-gray900 font-medium"
+                      : "text-gray700"
+                  }`}
+                >
+                  Login
+                </p>
+              </div>
+            </Link>
+            <Link href="/auth/signup">
+              <button className="bg-purple500 text-white w-full justify-center flex items-center gap-1 py-3 font-medium px-4 rounded-lg">
+                Get Started
+              </button>
             </Link>
           </div>
         </div>

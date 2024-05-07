@@ -164,7 +164,7 @@ function Step1({ handleChange, setStep, data: values }: any) {
         ></input> */}
         <Select
           options={options}
-          placeholder={<div>Select your country</div>}
+          placeholder="Select your country"
           theme={(theme) => ({
             ...theme,
             colors: {
@@ -193,10 +193,14 @@ function Step1({ handleChange, setStep, data: values }: any) {
               paddingLeft: "8px",
             }),
           }}
-          value={{
-            value: countryList().getValue(values?.country),
-            label: values?.country,
-          }}
+          value={
+            values?.country
+              ? {
+                  value: countryList().getValue(values?.country),
+                  label: values?.country,
+                }
+              : undefined
+          }
           onChange={changeHandler}
         />
         <div className="flex justify-end mt-6 items-center">

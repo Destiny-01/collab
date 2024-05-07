@@ -35,6 +35,7 @@ function Step1({ data, handleChange, isPending, mutate, user }: any) {
           <ReactSelect
             // defaultValue={options[0]}
             value={data?.category}
+            placeholder="Choose a category"
             onChange={(newVal) =>
               handleChange({ target: { name: "category", value: newVal } })
             }

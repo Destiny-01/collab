@@ -2,7 +2,8 @@ import { NextApiHandler } from "next";
 import getCurrentUser from "@/utils/getCurrentUser";
 import Group from "@/models/Group";
 import { generateProjectIdeas } from "@/services/project.service";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
+import { app } from "@/utils/application";
 
 export const POST = async (req: Request, res: Response) => {
   try {
@@ -15,16 +16,9 @@ export const POST = async (req: Request, res: Response) => {
 
     const { category, idea } = await req.json();
     console.log(category, idea);
+    const uuid = uuidv4();
 
-    const result = await generateProjectIdeas(category, idea, currentUser?.bio);
-    if (!result) {
-      return new Response("An error occurred while generating project ideas", {
-        status: 400,
-      });
-    }
-    const jsonString = result.replace(/'(?![^{]*})/g, '"');
-    console.log(jsonString);
-    const { projects } = JSON.parse(jsonString);
+    app.emit("query", category, idea, currentUser?.bio, uuid);
     // const { projects } = {
     //   projects: [
     //     {
@@ -105,11 +99,10 @@ export const POST = async (req: Request, res: Response) => {
     // };
 
     const group = await Group.create({
-      uuid: uuid(),
+      uuid,
       category,
       owner: currentUser._id,
       members: [currentUser._id],
-      suggestedTopics: projects,
     });
     currentUser.groups.push(group._id);
     await currentUser.save();

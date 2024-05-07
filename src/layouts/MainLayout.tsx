@@ -35,8 +35,12 @@ function MainLayout({ children, isWhite = false }: Props) {
       className={`${isWhite ? "bg-white" : "bg-[#F9FAFB]"} min-h-screen w-full`}
     >
       <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      <div className={`w-full ${isSidebarOpen ? "hidden" : "block"}`}>
-        <Navbar isWhite={isWhite} setIsOpen={setIsSidebarOpen} />
+      <div className={`w-full`}>
+        <Navbar
+          isWhite={isWhite}
+          isOpen={isSidebarOpen}
+          setIsOpen={setIsSidebarOpen}
+        />
         {children}
       </div>
     </div>

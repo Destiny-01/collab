@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactSelect from "react-select";
 import { toast } from "react-toastify";
 import options from "@/data/options";
@@ -7,8 +7,13 @@ import { Group } from "@/models/Group";
 import { underscoreToCapital } from "@/utils";
 import SingleProjectModal from "../SingleProjectModal";
 import { ChevronLeft } from "react-feather";
+import API from "@/utils/api";
+import Loader from "../Loader";
 
 function Step2({ data, setStep, handleChange, group }: any) {
+  const [suggestedTopics, setSuggestedTopics] = useState<Group["project"][]>(
+    []
+  );
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -20,6 +25,28 @@ function Step2({ data, setStep, handleChange, group }: any) {
     setStep(3);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await API.post(`/groups/${group.uuid}`);
+        const suggestions = response.data?.data?.suggestedTopics;
+
+        // Check if the fetched data meets your condition to stop
+        if (suggestions.length > 0) {
+          setSuggestedTopics(suggestions);
+          clearInterval(intervalId); // Stop the interval
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const intervalId = setInterval(fetchData, 5000); // Call fetchData every 5 seconds
+
+    // Cleanup function to clear the interval when component unmounts
+    return () => clearInterval(intervalId);
+  }, [group.uuid]);
+
   return (
     <div className="bg-white w-full rounded-10 border border-milk px-6 py-8">
       <p className="font-medium text-lg text-[#1A1A21]">Select refined ideas</p>
@@ -27,42 +54,48 @@ function Step2({ data, setStep, handleChange, group }: any) {
         Here are the project ideas we generated for you
       </p>
       <div className="my-8">
-        {group.suggestedTopics?.map((project: Group["project"], i: number) => {
-          const activeProject = group.suggestedTopics.findIndex(
-            (topic: any) => topic.name === data.project?.name
-          );
-          console.log(activeProject);
-          return (
-            <div
-              key={i}
-              onClick={() =>
-                handleChange({ target: { name: "project", value: project } })
-              }
-              className={`border flex gap-3 mb-4 lg:gap-2 ${
-                activeProject === i
-                  ? "border-purple500 bg-white"
-                  : "border-[#D0D5DD] bg-white"
-              } rounded-10 p-4 cursor-pointer`}
-            >
+        {suggestedTopics.length > 0 ? (
+          suggestedTopics?.map((project, i) => {
+            const activeProject = group.suggestedTopics.findIndex(
+              (topic: any) => topic.name === data.project?.name
+            );
+            console.log(activeProject);
+            return (
               <div
-                className={`w-5 h-5 flex mt-0.5 flex-shrink-0 items-center justify-center rounded-full border ${
-                  activeProject === i ? "border-purple400" : "border-[#D0D5DD]"
-                }`}
+                key={i}
+                onClick={() =>
+                  handleChange({ target: { name: "project", value: project } })
+                }
+                className={`border flex gap-3 mb-4 lg:gap-2 ${
+                  activeProject === i
+                    ? "border-purple500 bg-white"
+                    : "border-[#D0D5DD] bg-white"
+                } rounded-10 p-4 cursor-pointer`}
               >
-                {activeProject === i && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-purple400"></div>
-                )}
+                <div
+                  className={`w-5 h-5 flex mt-0.5 flex-shrink-0 items-center justify-center rounded-full border ${
+                    activeProject === i
+                      ? "border-purple400"
+                      : "border-[#D0D5DD]"
+                  }`}
+                >
+                  {activeProject === i && (
+                    <div className="w-2.5 h-2.5 rounded-full bg-purple400"></div>
+                  )}
+                </div>
+                <div>
+                  <p className="font-medium text-gray900">{project?.name}</p>
+                  <p className="text-sm text-gray600 mb-2 mt-1">
+                    {project?.description}
+                  </p>
+                  <SingleProjectModal project={project} />
+                </div>
               </div>
-              <div>
-                <p className="font-medium text-gray900">{project?.name}</p>
-                <p className="text-sm text-gray600 mb-2 mt-1">
-                  {project?.description}
-                </p>
-                <SingleProjectModal project={project} />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <Loader />
+        )}
       </div>
       <Divider />
       <div className="flex mt-6 justify-between items-center">

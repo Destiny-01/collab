@@ -46,6 +46,7 @@ function HelpCenter() {
               <ReactSelect
                 // defaultValue={options[0]}
                 value={type}
+                placeholder="Type of feedback"
                 onChange={(newVal) => setType(newVal)}
                 options={options}
                 theme={(theme) => ({
