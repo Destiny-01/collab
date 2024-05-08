@@ -10,7 +10,7 @@ import { ChevronLeft } from "react-feather";
 import API from "@/utils/api";
 import Loader from "../Loader";
 
-function Step2({ data, setStep, handleChange, group }: any) {
+function Step2({ data, setStep, handleChange, group, mutate }: any) {
   const [suggestedTopics, setSuggestedTopics] =
     useState<Group["suggestedTopics"]>();
   const [retryCount, setRetryCount] = useState(0);
@@ -29,7 +29,7 @@ function Step2({ data, setStep, handleChange, group }: any) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await API.get(`/groups/${group.uuid}`);
+        const response = await API.get(`/groups/${group?.uuid}`);
         const suggestions = response.data?.data?.suggestedTopics;
 
         // Check if the fetched data meets your condition to stop
@@ -53,7 +53,7 @@ function Step2({ data, setStep, handleChange, group }: any) {
 
     // Cleanup function to clear the interval when component unmounts
     return () => clearInterval(intervalId);
-  }, [group.uuid, retryCount, setStep]);
+  }, [group?.uuid, retryCount, setStep, suggestedTopics]);
 
   return (
     <div className="bg-white w-full rounded-10 border border-milk px-6 py-8">
@@ -109,6 +109,26 @@ function Step2({ data, setStep, handleChange, group }: any) {
           })
         ) : (
           <Loader />
+        )}
+        {suggestedTopics && (
+          <div className="mt-4">
+            <p>
+              Not Satisfied?{" "}
+              <a
+                href="#"
+                onClick={() => {
+                  setSuggestedTopics(undefined);
+                  mutate({ category: data.category.value, idea: data.idea });
+                }}
+              >
+                Generate more
+              </a>{" "}
+              or{" "}
+              <a href="#" onClick={() => setStep(1)}>
+                Refine Prompt
+              </a>
+            </p>
+          </div>
         )}
       </div>
       <Divider />

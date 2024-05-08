@@ -18,6 +18,19 @@ function Step3({ data, setStep, group }: any) {
   const user = useCurrentUser();
   const [users, setUsers] = useState<UserDocument[] | null>([]);
   const { mutate, isPending } = useInviteToProject(group?.uuid);
+  const [disabledMap, setDisabledMap] = useState<any>({});
+
+  const handleClick = (email: string) => {
+    if (disabledMap[email]) {
+      return;
+    }
+    toast.success("Invite request sent successfully");
+    mutate(email);
+    setDisabledMap((prevState: any) => ({
+      ...prevState,
+      [email]: true, // Set the disabled state for the specific email to true
+    }));
+  };
 
   useEffect(() => {
     console.log(data, userData);
@@ -91,13 +104,14 @@ function Step3({ data, setStep, group }: any) {
                   <p className="text-xs">{user.groups.length} Projects</p>
                   <a
                     href="#"
-                    onClick={() => {
-                      toast.success("Invite request sent successfully");
-                      mutate(user.email);
-                    }}
-                    className="text-sm"
+                    onClick={() => handleClick(user.email)}
+                    className={
+                      disabledMap[user.email]
+                        ? "text-gray700 opacity-60 cursor-not-allowed"
+                        : "text-sm"
+                    }
                   >
-                    Invite
+                    {disabledMap[user.email] ? "Invited" : "Invite"}
                   </a>
                 </div>
               </div>

@@ -1,14 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Bell,
-  ChevronDown,
-  Lock,
-  LogOut,
-  Menu,
-  Plus,
-  Search,
-} from "react-feather";
+import { ChevronDown, Lock, LogOut, Menu, Plus, Search } from "react-feather";
 import Picc from "@/assets/avatar.jpeg";
 import UsFlag from "@/assets/us-flag.png";
 import Image from "next/image";
@@ -132,9 +124,6 @@ export default function Navbar({ isWhite = false, isOpen, setIsOpen }: any) {
                 ))}
               </div>
             )}
-          </div>
-          <div className="h-10 w-10 flex justify-center items-center bg-[#F0F2F5] rounded-full">
-            <Bell size={20} color="#344054" />
           </div>
           <div
             className="cursor-pointer"

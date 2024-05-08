@@ -12,7 +12,6 @@ import {
   LogOut,
   X,
   ChevronRight,
-  Bell,
 } from "react-feather";
 import Avatar from "@/assets/avatar.jpeg";
 import React, {
@@ -27,6 +26,7 @@ import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import useResponsive from "@/hooks/useResponsive";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { copyToClipboard } from "@/utils";
 
 function MobileSidebar({ isOpen, setIsOpen }: any) {
   const path = usePathname();
@@ -70,12 +70,6 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
         link: "/help-center",
         label: "Help Center",
       },
-      {
-        id: "notifications",
-        icon: <Bell size={20} color="#667185" />,
-        link: "/notifications",
-        label: "Notifications",
-      },
     ],
     []
   );
@@ -88,6 +82,11 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
       }
     });
   }, [menuItems, path]);
+  const handleCopy = () => {
+    copyToClipboard(`${user?.name} has invited you to come collaborate with him on collabo
+               Join him now ${process.env.NEXT_PUBLIC_BASE_URL}
+               `);
+  };
 
   return user && isOpen ? (
     <div className="h-screen p-4 justify-between flex flex-col w-screen bg-white border-r border-[#E4E7EC]">
@@ -156,31 +155,13 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
               </p>
             </div>
           </div>
-          <button className="text-purple700 w-full mt-3 mx-auto text-sm bg-white flex justify-center items-center gap-1 py-3 px-4 rounded-lg">
+          <button
+            onClick={handleCopy}
+            className="text-purple700 w-full mt-3 mx-auto text-sm bg-white flex justify-center items-center gap-1 py-3 px-4 rounded-lg"
+          >
             Share with friends
           </button>
         </div>
-        {/* <Image
-          className="rounded-full h-10 w-10 border border-white"
-          src={Pic}
-          height={40}
-          width={40}
-          alt="avatar"
-        />
-        <div className="flex flex-col ml-3">
-          <p className="text-[#101928] font-semibold">{data?.user?.name}</p>
-          <p>{data?.user?.email}</p>
-        </div>
-        <div
-          className="ml-auto cursor-pointer"
-          onClick={() =>
-            signOut({
-              redirect: false,
-            }).then(() => router.push("/"))
-          }
-        >
-          <LogOut size={20} color="#000000" />
-        </div> */}
       </div>
     </div>
   ) : (

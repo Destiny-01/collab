@@ -32,6 +32,7 @@ function NewProject() {
     project: {},
     photo: "",
   });
+  console.log({ group });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prevData) => ({
       ...prevData,
@@ -87,6 +88,7 @@ function NewProject() {
             />
           ) : activeTab === 2 ? (
             <Step2
+              mutate={mutate}
               data={data}
               group={group}
               setStep={setActiveTab}

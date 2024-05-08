@@ -16,11 +16,19 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import useResponsive from "@/hooks/useResponsive";
+import { copyToClipboard } from "@/utils";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 function Sidebar() {
   const path = usePathname();
+  const user = useCurrentUser();
   const router = useRouter();
   const { data } = useSession();
+  const handleCopy = () => {
+    copyToClipboard(`${user?.name} has invited you to come collaborate with him on collabo
+               Join him now ${process.env.NEXT_PUBLIC_BASE_URL}
+               `);
+  };
   const menuItems = useMemo(
     () => [
       {
@@ -113,7 +121,10 @@ function Sidebar() {
           <p className="text-xs text-milk">
             Love using Collabo? Invite your friends today
           </p>
-          <button className="text-purple700 mt-3 mx-auto text-sm bg-white flex items-center gap-1 py-3 px-4 rounded-lg">
+          <button
+            onClick={handleCopy}
+            className="text-purple700 mt-3 mx-auto text-sm bg-white flex items-center gap-1 py-3 px-4 rounded-lg"
+          >
             Share with friends
           </button>
         </div>

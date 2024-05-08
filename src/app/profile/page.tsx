@@ -63,6 +63,7 @@ export default function Profile() {
         toast.error("File exceeds 2mb");
         return;
       }
+      const loadingToastId = toast.loading("Uploading file....");
 
       console.log(file);
       const formData = new FormData();
@@ -84,6 +85,7 @@ export default function Profile() {
         },
       });
       console.log(data);
+      toast.dismiss(loadingToastId);
       if (!data?.success) {
         toast.error("An error occurred while uploading file");
       }

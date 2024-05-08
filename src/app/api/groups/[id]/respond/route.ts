@@ -53,7 +53,9 @@ export const GET = async (
     });
     await group.save();
 
-    return Response.redirect(`${process.env.BASE_URL}/projects/${group.uuid}`);
+    return Response.redirect(
+      `${process.env.BASE_URL}/projects/${group.uuid}/joined`
+    );
   } catch (err) {
     console.log(err);
     return new Response("An error occurred", {

@@ -67,6 +67,7 @@ function Step1({ handleChange, setStep, data: values }: any) {
         return;
       }
 
+      const loadingToastId = toast.loading("Uploading file....");
       console.log(file);
       const formData = new FormData();
       formData.set("file", file);
@@ -87,6 +88,7 @@ function Step1({ handleChange, setStep, data: values }: any) {
         },
       });
       console.log(data);
+      toast.dismiss(loadingToastId);
       if (!data?.success) {
         toast.error("An error occurred while uploading file");
       }

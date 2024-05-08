@@ -28,7 +28,7 @@ export default function NewUpdate({ showModal, setShowModal }: any) {
           <div className="justify-center items-center flex overflow-clip fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-[620px] my-6 mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border border-[#E4E7EC] rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border mx-4 border-[#E4E7EC] rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="p-5 border-b text-center">
                   <h3 className="text-3xl text-gray900 font-semibold">

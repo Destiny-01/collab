@@ -1,5 +1,6 @@
 import useResponsive from "@/hooks/useResponsive";
 import { Group } from "@/models/Group";
+import { copyToClipboard } from "@/utils";
 import Link from "next/link";
 import React from "react";
 import { Settings, Share2 } from "react-feather";
@@ -33,7 +34,7 @@ function ProjectHeader({ group }: Props) {
           <Settings size={18} color="#344054" />
         </button>
         <button
-          // onClick={() => setShowModal(true)}
+          onClick={() => copyToClipboard(window.location.href)}
           className="border rounded-lg flex gap-2 items-center border-borderColor px-3 py-2 text-[#344054] bg-transparent font-semibold text-sm"
         >
           <Share2 size={18} color="#344054" />

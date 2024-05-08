@@ -4,9 +4,11 @@ import Divider from "../Divider";
 import { ChevronLeft, Edit, UploadCloud } from "react-feather";
 import Image from "next/image";
 import API from "@/utils/api";
+import { renderList } from "../project/Details";
+import EditProjectModal from "../EditProjectModal";
 
 function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
-  const users: any[] = [{}, {}];
+  const [showModal, setShowModal] = useState(false);
   const [previewURL, setPreviewURL] = useState<string | undefined>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,10 +29,6 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
       toast.error("Please choose a project");
       return;
     }
-    console.log(data, {
-      id: group.uuid,
-      data: { ...data, category: data.category.value },
-    });
     mutate({
       id: group.uuid,
       data: { ...data, category: data.category.value },
@@ -52,11 +50,12 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
         );
         return;
       }
-      if (file && file.size > 2 * 1024 * 1024) {
-        toast.error("File exceeds 2mb");
+      if (file && file.size > 5 * 1024 * 1024) {
+        toast.error("File exceeds 5mb");
         return;
       }
 
+      const loadingToastId = toast.loading("Uploading file....");
       console.log(file);
       const formData = new FormData();
       formData.set("file", file);
@@ -77,12 +76,13 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
         },
       });
       console.log(data);
+      toast.dismiss(loadingToastId);
       if (!data?.success) {
         toast.error("An error occurred while uploading file");
       }
 
       handleChange({ target: { name: "photo", value: data?.data?.url } });
-      toast.success("Avatar Upload Success");
+      toast.success("File Upload Successful");
     }
   };
 
@@ -97,11 +97,14 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
             Take one more look at your project before publishing
           </p>
         </div>
-        <div className="bg-milk rounded-full h-10 w-10 p-2.5">
+        <div
+          onClick={() => setShowModal(true)}
+          className="bg-milk cursor-pointer rounded-full h-10 w-10 p-2.5"
+        >
           <Edit color="#334054" size={20} />
         </div>
       </div>
-      <label className="text-lg">Profile photo</label>
+      <label className="text-lg">Project Cover</label>
       <div className="flex gap-4 my-4 items-center">
         <div className="h-16 w-16 flex justify-center rounded-lg items-center bg-milk">
           {previewURL ? (
@@ -129,18 +132,42 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
           >
             Upload Image
           </button>
-          <p className="text-dimegrey text-sm">
-            Square photo recommended &#x2022; Max. 2MB
-          </p>
+          <p className="text-dimegrey text-sm">Max. 5MB</p>
         </div>
       </div>
-      <div className="my-8">
+      <EditProjectModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        project={data.project}
+        handleChange={handleChange}
+      />
+      <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">About Project</h5>
-        <p className="text-sm">{data.project.short_description}</p>
+        <p className="text-sm">{data.project?.short_description}</p>
       </div>
-      <div className="mb-8">
+      <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">Project Brief</h5>
-        <p className="text-sm">{data.project.description}</p>
+        <p className="text-sm">{data.project?.description}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Impact</h5>
+        <p className="text-sm">{data.project?.impact}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Problem</h5>
+        <p className="text-sm">{data.project?.problem}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Solution</h5>
+        <p className="text-sm">{data.project?.solution}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Estimated Timeline</h5>
+        <p className="text-sm">{data.project?.estimated_timeline}</p>
+      </div>
+      <div className="mt-8">
+        <h5 className="font-medium mb-2 text-lg">Key Features</h5>
+        <p className="text-sm">{renderList(data.project?.key_features)}</p>
       </div>
       <Divider />
       <div className="flex justify-between mt-6 items-center">

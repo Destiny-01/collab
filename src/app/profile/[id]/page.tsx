@@ -15,7 +15,7 @@ import {
   ThumbsUp,
 } from "react-feather";
 import moment from "moment";
-import { underscoreToCapital } from "@/utils";
+import { copyToClipboard, underscoreToCapital } from "@/utils";
 import Loader from "@/components/Loader";
 import Link from "next/link";
 import { Group } from "@/models/Group";
@@ -71,7 +71,7 @@ function UserProfile({ params }: { params: { id: string } }) {
         </div>
         {!isMobile && (
           <button
-            // onClick={() => setShowModal(true)}
+            onClick={() => copyToClipboard(window.location.href)}
             className="border h-fit lg:ml-auto rounded-lg flex gap-2 items-center border-borderColor px-3 py-2 text-[#344054] bg-transparent font-semibold text-sm"
           >
             <Share2 size={18} color="#344054" />

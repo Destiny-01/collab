@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import { Group } from "@/models/Group";
+import EditProjectModal from "../EditProjectModal";
+import { useUpdateProject } from "@/hooks/useUpdateProject";
 
 export const renderList = (listItems: string[] | undefined) => {
   return (
@@ -16,6 +18,12 @@ export const renderList = (listItems: string[] | undefined) => {
 };
 
 function Details({ group }: { group: Group }) {
+  const [showModal, setShowModal] = useState(false);
+  const { mutate } = useUpdateProject();
+  const handleChange = (e: any) => {
+    mutate({ id: group.uuid, data: e.target.value });
+  };
+
   return (
     <div className="lg:p-8 p-4">
       <div className="flex items-end justify-between">
@@ -27,7 +35,12 @@ function Details({ group }: { group: Group }) {
         </div>
         <Button>Edit Details</Button>
       </div>
-
+      <EditProjectModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        project={group.project}
+        handleChange={handleChange}
+      />
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">About Project</h5>
         <p className="text-sm">{group.project?.short_description}</p>
