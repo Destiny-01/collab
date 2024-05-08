@@ -9,7 +9,9 @@ export const app = new ApplicationEmitter();
 app.on(
   "query",
   async function (category: string, idea: string, bio: string, uuid: string) {
+    console.log("tsart");
     const result = await generateProjectIdeas(category, idea, bio);
+
     if (!result) {
       return new Response("An error occurred while generating project ideas", {
         status: 400,
