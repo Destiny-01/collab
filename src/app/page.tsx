@@ -94,7 +94,7 @@ export default function Home() {
                   }),
                 }}
               />
-              <Link href={`/explore?category=${selectedOption}`}>
+              <Link href={`/explore?category=${selectedOption?.value}`}>
                 <button className="bg-purple500 my-3 lg:my-0 text-white w-full justify-center flex items-center gap-1 py-3 px-6 rounded-lg">
                   Get Started
                 </button>
@@ -218,7 +218,6 @@ export default function Home() {
               share their expertise, ideas, and perspectives.
             </p>
             <Link href="/auth/signup">
-              {" "}
               <button className="bg-purple500 text-white flex items-center gap-1 py-3 px-6 rounded-lg">
                 Get Started
               </button>

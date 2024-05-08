@@ -13,7 +13,7 @@ export const generateProjectIdeas = async (
             {
              projects: [
                {
-                 name:"", problem:  "", solution:,  "", impact:,  "", keyFeatures: [],, complexity:"", timeline:"", description:,  "", shortDescription:"", coreSkills: [], interests: []
+                 name:"", problem: "", solution: "", impact: "", keyFeatures: [], timeline:"", description: "", shortDescription:"", coreSkills: [], interests: []
                }
               ]}
             ${
