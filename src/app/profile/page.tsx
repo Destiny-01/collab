@@ -32,7 +32,9 @@ export default function Profile() {
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   };
 
@@ -186,14 +188,12 @@ export default function Profile() {
                 onChange={handleChange}
               ></input>
               <label>Bio</label>
-              <input
-                className="bg-shade w-full  rounded-md border-1 py-2 px-4 lg:py-3 text-sm mt-1 text-[#101928] placeholder:text-dimegrey border-solid border-scolor"
-                placeholder="I am a fun..."
+              <textarea
+                className="border h-28 mb-1 text-sm placeholder:text-[#98A2B3] text-[#101928] w-full border-[#D0D5DD] px-3 py-3 outline-none rounded-md"
                 name="bio"
-                type="text"
                 value={data.bio}
                 onChange={handleChange}
-              ></input>
+              ></textarea>
               <label>Country</label>
               <input
                 className="bg-shade w-full  rounded-md border-1 py-2 px-4 lg:py-3 text-sm mt-1 text-[#101928] placeholder:text-dimegrey border-solid border-scolor"

@@ -10,6 +10,8 @@ export const queryChatGPT = async (prompt: string) => {
     model: model,
     prompt,
     max_tokens: 3000,
+    temperature: 0.2,
+    frequency_penalty: -1,
   });
 
   console.log(response);
