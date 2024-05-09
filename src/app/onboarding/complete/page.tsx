@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Pic from "@/assets/avatar.jpeg";
-import LogoText from "@/assets/LogoText.png";
+import LogoText from "@/assets/LogoText.svg";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -46,12 +46,12 @@ export default function Onboarding() {
             Projects that might interest you
           </h5>
           <p>We have handpicked some projects that might interest you</p>
-          <div className="flex gap-4 my-8">
+          <div className="flex flex-wrap gap-4 my-8">
             {isLoading ? (
               <Loader />
             ) : (
-              groups?.map((group, i) => (
-                <div className="w-[33%] text-start" key={i}>
+              groups.slice(0, 6)?.map((group, i) => (
+                <div className="w-[32%] text-start" key={i}>
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="h-[162px]">
                       <Image
@@ -70,7 +70,7 @@ export default function Onboarding() {
                       <h2>{group.project?.name}</h2>
                       <div className="flex mt-2 pt-2 justify-between border-t border-[#F0F2F5] items-center">
                         <div className="flex">
-                          {group?.members?.slice(0, 2).map((member, i) => (
+                          {group?.members?.slice(0, 3).map((member, i) => (
                             <Image
                               className={`rounded-full h-8 w-8 border border-white ${
                                 i > 0 && "-ml-3"

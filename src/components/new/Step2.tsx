@@ -24,7 +24,6 @@ function Step2({ data, setStep, handleChange, group, mutate }: any) {
     }
     setStep(3);
   };
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,13 +66,7 @@ function Step2({ data, setStep, handleChange, group, mutate }: any) {
             const activeProject = suggestedTopics.findIndex(
               (topic: any) => topic._id === data.project?._id
             );
-            console.log(
-              activeProject,
-              data.project,
-              suggestedTopics,
-              suggestedTopics[2]?._id,
-              data.project?._id
-            );
+
             return (
               <div
                 key={i}

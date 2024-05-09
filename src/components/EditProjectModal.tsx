@@ -19,19 +19,14 @@ export default function EditProjectModal({
   const [data, setData] = useState<{
     [key: string]: string | string[] | undefined;
   }>({
-    ...project,
+    name: project?.name,
+    problem: project?.problem,
+    impact: project?.impact,
+    estimated_timeline: project?.estimated_timeline,
+    description: project?.description,
+    shortDescription: project?.shortDescription,
+    solution: project?.solution,
   });
-  console.log(data, project);
-  const initialObject = {
-    name: "",
-    problem: "",
-    solution: "",
-    impact: "",
-    complexity: "",
-    estimated_timeline: "",
-    description: "",
-    short_description: "",
-  };
 
   useEffect(() => {
     project && setData(project);
@@ -62,36 +57,71 @@ export default function EditProjectModal({
                 </div>
                 {/*body*/}
                 <div className="relative p-6">
-                  {project &&
-                    Object.entries(project).map(
-                      ([key, value], i) =>
-                        key !== "_id" &&
-                        typeof value === "string" && (
-                          <div key={key}>
-                            <h2 className="text-lg font-medium mt-4 mb-0 capitalize">
-                              {underscoreToCapital(key)}
-                            </h2>
-                            {key === "description" ? (
-                              <textarea
-                                name="description"
-                                id="description"
-                                value={data.description}
-                                onChange={handleChange}
-                                className="border h-28 placeholder:text-[#98A2B3] text-[#101928] w-full border-[#D0D5DD] px-3 py-3 outline-none rounded-md"
-                              ></textarea>
-                            ) : (
-                              <input
-                                className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
-                                name={key}
-                                value={data[key]}
-                                onChange={handleChange}
-                              ></input>
-                            )}
-                          </div>
-                        )
-                    )}
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Name
+                  </h2>
+                  <input
+                    className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
+                    name={"name"}
+                    value={data.name}
+                    onChange={handleChange}
+                  />
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Short Description
+                  </h2>
+                  <input
+                    className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
+                    name={"shortDescription"}
+                    value={data.shortDescription}
+                    onChange={handleChange}
+                  />
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Description
+                  </h2>
+                  <textarea
+                    name="description"
+                    id="description"
+                    value={data.description}
+                    onChange={handleChange}
+                    className="border h-28 placeholder:text-[#98A2B3] text-[#101928] w-full border-[#D0D5DD] px-3 py-3 outline-none rounded-md"
+                  ></textarea>
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Problem
+                  </h2>
+                  <input
+                    className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
+                    name={"problem"}
+                    value={data.problem}
+                    onChange={handleChange}
+                  />
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Solution
+                  </h2>
+                  <input
+                    className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
+                    name={"solution"}
+                    value={data.solution}
+                    onChange={handleChange}
+                  />
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Impact
+                  </h2>
+                  <input
+                    className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
+                    name={"impact"}
+                    value={data.impact}
+                    onChange={handleChange}
+                  />
+                  <h2 className="text-base font-medium mt-4 mb-0 capitalize">
+                    Estimated Timeline
+                  </h2>
+                  <input
+                    className=" bg-shade rounded-md lg:mb-2 border-1 w-full  p-3 lg:p-4 text-sm  text-[#101928] placeholder:text-dimegrey  border-solid border-scolor"
+                    name={"estimated_timeline"}
+                    value={data.estimated_timeline}
+                    onChange={handleChange}
+                  />
                 </div>
-                {/*footer*/}
                 <div className="flex items-center gap-8 p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     onClick={() => setShowModal(false)}
@@ -112,6 +142,7 @@ export default function EditProjectModal({
                   </button>
                 </div>
               </div>
+              {/*footer*/}
             </div>
           </div>
           <div className="opacity-20 fixed inset-0 filter blur-sm z-40 bg-black"></div>

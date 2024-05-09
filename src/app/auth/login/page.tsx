@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import LogoFull from "@/assets/logo-full.png";
-import LogoText from "@/assets/LogoText.png";
+import LogoText from "@/assets/LogoText.svg";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -33,24 +33,21 @@ export default function Login() {
       e.preventDefault();
       setIsLoading(true);
       await signOut({ redirect: false });
-      console.log(data);
       const res = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
       });
-      console.log(res);
+
       setIsLoading(false);
       if (res?.ok) {
         toast.success("Login successful");
-        router.push("/");
+        router.push("/dashboard");
       } else {
-        console.log("kkkkkkk", res?.error);
         toast.error(res?.error);
       }
     } catch (err: any) {
       setIsLoading(false);
-      console.log("kkkk");
       console.log(err);
       toast.error(err.response?.data || err.message);
     }
@@ -106,7 +103,7 @@ export default function Login() {
               <div className="lg:pt-6 pt-4">
                 <button
                   onClick={handleSubmit}
-                  className="bg-purple500   w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
+                  className="bg-purple500 text-white  w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
                 >
                   {isLoading ? (
                     <span className="loader small"></span>

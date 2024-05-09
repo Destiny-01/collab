@@ -1,4 +1,5 @@
 import mongoose, { Types, Document, Model } from "mongoose";
+import { Group } from "./Group";
 
 export interface User {
   username?: string;
@@ -9,7 +10,7 @@ export interface User {
   email_verification?: string;
   isVerified: boolean;
   isProfileCompleted: boolean;
-  groups: Types.ObjectId[];
+  groups: Group[];
   invitations: Types.ObjectId[];
   bio?: string;
   company?: string;

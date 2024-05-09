@@ -13,7 +13,6 @@ function Step1({ handleChange, setStep, data: values }: any) {
   const options = useMemo(() => countryList().getData(), []) as any;
 
   const changeHandler = (value: any) => {
-    console.log(value);
     value && handleChange({ target: { name: "country", value: value.label } });
   };
   const currentUser: UserDocument | null | undefined = sessionData?.user as any;
@@ -35,12 +34,7 @@ function Step1({ handleChange, setStep, data: values }: any) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    if (
-      !values?.avatar ||
-      !values.name ||
-      !values.username ||
-      !values.country
-    ) {
+    if (!values.name || !values.username || !values.country) {
       toast.error("All fields are required");
       return;
     }
@@ -68,13 +62,8 @@ function Step1({ handleChange, setStep, data: values }: any) {
       }
 
       const loadingToastId = toast.loading("Uploading file....");
-      console.log(file);
       const formData = new FormData();
       formData.set("file", file);
-
-      for (let key of Array.from(formData.entries())) {
-        console.log(key[0] + ", " + key[1]);
-      }
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -87,7 +76,6 @@ function Step1({ handleChange, setStep, data: values }: any) {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(data);
       toast.dismiss(loadingToastId);
       if (!data?.success) {
         toast.error("An error occurred while uploading file");

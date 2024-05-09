@@ -18,8 +18,6 @@ function SingleProject({ params }: { params: { id: string } }) {
   const currentUser = useCurrentUser();
   const { data, isLoading } = useGetSingleProject(params.id);
   const group: Group | null = data?.data?.data;
-  const project = group?.project;
-  console.log(group);
   const isGroupMember = group?.members?.some(
     (member) => member._id === currentUser?._id
   );

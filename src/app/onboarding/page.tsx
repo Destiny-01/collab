@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import LogoFull from "@/assets/logo-full.png";
-import LogoText from "@/assets/LogoText.png";
+import LogoText from "@/assets/LogoText.svg";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -33,7 +33,6 @@ export default function Onboarding() {
     bio: "",
   });
 
-  console.log(data);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   };

@@ -6,7 +6,7 @@ import UsFlag from "@/assets/us-flag.png";
 import Image from "next/image";
 import Link from "next/link";
 import useResponsive from "@/hooks/useResponsive";
-import Logo from "@/assets/LogoText.png";
+import Logo from "@/assets/LogoText.svg";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -39,9 +39,6 @@ export default function Navbar({ isWhite = false, isOpen, setIsOpen }: any) {
           <Image src={Logo} height={28} alt="logo" />
         </Link>
         <div className="flex items-center gap-4">
-          <Link href="/explore">
-            <Search color="#344054" size={20} />
-          </Link>
           <div
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="px-1 py-1 cursor-pointer relative flex justify-center items-center bg-[#F0F2F5] rounded-3xl"
@@ -159,7 +156,7 @@ export default function Navbar({ isWhite = false, isOpen, setIsOpen }: any) {
         isWhite ? "bg-white" : "bg-[#F9FAFB]"
       } lg:border-b border-[#E4E7EC] sticky top-0 z-10 p-4 flex justify-between items-center w-full`}
     >
-      <Link href="/dashboard">
+      <Link href="/">
         <Image src={Logo} height={28} alt="logo" />
       </Link>
       <Menu onClick={() => setIsOpen(!isOpen)} color="#344054" size={24} />

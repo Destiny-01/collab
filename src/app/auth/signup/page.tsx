@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import LogoFull from "@/assets/logo-full.png";
-import LogoText from "@/assets/LogoText.png";
+import LogoText from "@/assets/LogoText.svg";
 import React, { useState } from "react";
 import API from "@/utils/api";
 import { toast } from "react-toastify";
@@ -33,9 +33,7 @@ export default function Signup() {
     try {
       e.preventDefault();
       setIsLoading(true);
-      console.log(data);
       const res = await API.post("/auth/register", data);
-      console.log(res);
       if (res.status === 200) {
         router.push(`/auth/verify?email=${encodeURIComponent(data.email)}`);
       }
@@ -91,7 +89,7 @@ export default function Signup() {
               <div className="pt-8">
                 <button
                   onClick={handleSubmit}
-                  className="bg-purple600 w-full px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
+                  className="bg-purple500 text-white w-full px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
                 >
                   {isLoading ? (
                     <span className="loader small"></span>

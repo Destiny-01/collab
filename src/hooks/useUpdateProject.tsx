@@ -24,11 +24,10 @@ export function useUpdateProject() {
   return useMutation({
     mutationKey: ["update-group"],
     mutationFn: ({ id, data }: any) => {
-      console.log(data, "qery");
       return API.put(`/groups/${id}`, data);
     },
     onSuccess: ({ data }) => {
-      toast.success("Project created successfully");
+      toast.success("Project updated successfully");
       queryClient.invalidateQueries({ queryKey: [`group-${data.data.uuid}`] });
       router.push(`/projects/${data.data.uuid}`);
     },
@@ -45,11 +44,9 @@ export function useCreateUpdate(id: string | string[]) {
   return useMutation({
     mutationKey: ["new-update"],
     mutationFn: (data: any) => {
-      console.log(data, "qery");
       return API.put(`/groups/${id}/new-update`, data);
     },
     onSuccess: ({ data }) => {
-      console.log(data);
       toast.success("Update created successfully");
       queryClient.invalidateQueries({ queryKey: [`group-${data.data.uuid}`] });
     },
@@ -67,7 +64,6 @@ export function useApplyToProject(id: string) {
     mutationKey: [`apply-to-${id}`],
     mutationFn: () => API.post(`/groups/${id}/apply`),
     onSuccess: ({ data }) => {
-      console.log(data);
       toast.success("Apply request sent, look out for your mail");
       queryClient.invalidateQueries({
         queryKey: [`group-${data.data.uuid}`],
@@ -87,7 +83,6 @@ export function useInviteToProject(id: string) {
     mutationKey: [`invite-to-${id}`],
     mutationFn: (email: string) => API.post(`/groups/${id}/invite`, { email }),
     onSuccess: ({ data }) => {
-      console.log(data);
       queryClient.invalidateQueries({
         queryKey: [`group-${data.data.uuid}`],
       });
@@ -106,7 +101,6 @@ export function useUpvoteProject(id: string) {
     mutationKey: ["upvote-project"],
     mutationFn: () => API.post(`/groups/${id}/upvote`),
     onSuccess: ({ data }) => {
-      console.log(data);
       toast.success("Voted successfully");
       queryClient.invalidateQueries({
         queryKey: [`group-${data.data.uuid}`],

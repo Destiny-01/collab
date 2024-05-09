@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import LogoFull from "@/assets/logo-full.png";
-import LogoText from "@/assets/LogoText.png";
+import LogoText from "@/assets/LogoText.svg";
 import Link from "next/link";
 import { useState } from "react";
 import verifyImage from "@/assets/verify-image.png";
@@ -90,7 +90,7 @@ export default function ForgotPassword() {
                 <div className="pt-6">
                   <button
                     onClick={handleSubmit}
-                    className="bg-purple500  w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
+                    className="bg-purple500 text-white w-full  px-6 py-4 text-base font-semibold rounded-lg flex justify-center items-center"
                   >
                     {isPending ? (
                       <span className="loader small"></span>

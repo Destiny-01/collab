@@ -14,7 +14,6 @@ function MainLayout({ children, isWhite = false }: Props) {
   const user = useCurrentUser();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { isMobile } = useResponsive();
-  console.log(isMobile, isSidebarOpen);
 
   return user ? (
     <div

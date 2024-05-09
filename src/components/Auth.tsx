@@ -33,6 +33,9 @@ export default function AuthContext({ children }: AuthContextProps) {
   );
 
   useEffect(() => {
+    if (status === "loading") {
+      return;
+    }
     if (
       currentUser?.isVerified &&
       !currentUser?.isProfileCompleted &&

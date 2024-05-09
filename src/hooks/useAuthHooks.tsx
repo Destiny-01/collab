@@ -53,7 +53,6 @@ export function useUpvoteProject(id: string) {
     mutationKey: ["upvote-project"],
     mutationFn: () => API.post(`/groups/${id}/upvote`),
     onSuccess: ({ data }) => {
-      console.log(data);
       toast.success("Voted successfully");
     },
     onError: (error: any) => {

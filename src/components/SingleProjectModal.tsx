@@ -10,7 +10,6 @@ export default function SingleProjectModal({
   const [showModal, setShowModal] = useState(false);
 
   const renderList = (listItems: string[]) => {
-    console.log(listItems, project, "list");
     return (
       <ul className="ml-4">
         {listItems.map((item, index) => (

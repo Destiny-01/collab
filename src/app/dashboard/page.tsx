@@ -72,7 +72,7 @@ function Dashboard() {
                 </Link>
               </div>
             ) : (
-              myGroups.slice(0, 2)?.map((group, i) => (
+              myGroups.slice(0, 3)?.map((group, i) => (
                 <div
                   className="lg:w-[calc(33.33%-12px)] mb-4 lg:mb-0 w-full p-4 rounded-xl border-milk border bg-white text-start"
                   key={i}
@@ -97,7 +97,7 @@ function Dashboard() {
                       </h2>
                       <div className="flex mt-2 pt-2 justify-between border-t border-[#F0F2F5] items-center">
                         <div className="flex">
-                          {group?.members?.slice(0, 2).map((member, i) => (
+                          {group?.members?.slice(0, 3).map((member, i) => (
                             <Image
                               className={`rounded-full h-8 w-8 border border-white ${
                                 i > 0 && "-ml-3"
@@ -146,7 +146,7 @@ function Dashboard() {
               </Link>
             </div>
           ) : (
-            groups.slice(0, 2)?.map((group, i) => (
+            groups.slice(0, 3)?.map((group, i) => (
               <div
                 className="w-full mb-4 p-4 rounded-xl border-milk border bg-white text-start"
                 key={i}
@@ -174,7 +174,7 @@ function Dashboard() {
                     </p>
                     <div className="flex mt-4 justify-between items-center">
                       <div className="flex">
-                        {group?.members?.slice(0, 2).map((member, i) => (
+                        {group?.members?.slice(0, 3).map((member, i) => (
                           <Image
                             className={`rounded-full h-8 w-8 border border-white ${
                               i > 0 && "-ml-3"

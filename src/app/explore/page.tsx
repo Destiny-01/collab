@@ -120,7 +120,7 @@ function Projects() {
             </div>
           ))}
         </div>
-        <div className="lg:flex gap-4">
+        <div className="lg:flex flex-wrap gap-4">
           {isLoading ? (
             <Loader />
           ) : filteredGroups.length === 0 ? (
@@ -137,7 +137,7 @@ function Projects() {
           ) : (
             filteredGroups?.map((group, i) => (
               <div
-                className="lg:w-[33%] mb-4 lg:mb-0 w-full p-4 rounded-xl border-milk border bg-white text-start"
+                className="lg:w-[32%] mb-4 lg:mb-0 w-full p-4 rounded-xl border-milk border bg-white text-start"
                 key={i}
               >
                 <Link href={`/projects/${group.uuid}`}>
@@ -160,7 +160,7 @@ function Projects() {
                     </p>
                     <div className="flex mt-2 pt-2 justify-between border-t border-[#F0F2F5] items-center">
                       <div className="flex">
-                        {group?.members?.slice(0, 2).map((member, i) => (
+                        {group?.members?.slice(0, 3).map((member, i) => (
                           <Image
                             className={`rounded-full h-8 w-8 border border-white ${
                               i > 0 && "-ml-3"

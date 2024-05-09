@@ -3,7 +3,7 @@ import { Group } from "@/models/Group";
 import { copyToClipboard } from "@/utils";
 import Link from "next/link";
 import React from "react";
-import { Settings, Share2 } from "react-feather";
+import { Share2 } from "react-feather";
 
 type Props = {
   group: Group | null;
@@ -27,12 +27,6 @@ function ProjectHeader({ group }: Props) {
         </h5>
       </div>
       <div className="flex items-center gap-4">
-        <button
-          // onClick={() => setShowModal(true)}
-          className="border rounded-full flex items-center border-borderColor p-2.5 text-[#344054] bg-transparent font-semibold text-sm"
-        >
-          <Settings size={18} color="#344054" />
-        </button>
         <button
           onClick={() => copyToClipboard(window.location.href)}
           className="border rounded-lg flex gap-2 items-center border-borderColor px-3 py-2 text-[#344054] bg-transparent font-semibold text-sm"

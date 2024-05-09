@@ -9,7 +9,7 @@ import Session from "../components/Session";
 
 export const metadata: Metadata = {
   title: "Collabo",
-  description: "One-stop collbaoration hub",
+  description: "Where diverse minds unite to solve real problems",
 };
 
 export default function RootLayout({

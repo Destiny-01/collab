@@ -5,10 +5,8 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get("file") as unknown as File;
-    console.log(file, "ff");
 
     const data = await uploadImage(file, "collab-avatars");
-    console.log(data);
 
     return Response.json(
       {

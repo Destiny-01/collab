@@ -32,7 +32,6 @@ function NewProject() {
     project: {},
     photo: "",
   });
-  console.log({ group });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prevData) => ({
       ...prevData,
@@ -41,10 +40,8 @@ function NewProject() {
   };
   useEffect(() => {
     isSuccess && setActiveTab(2);
-    console.log(error);
     error && toast.error(error.message);
   }, [isSuccess, error]);
-  console.log(group);
   const steps = [
     {
       icon: File,

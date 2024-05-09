@@ -3,6 +3,7 @@ import Button from "../Button";
 import { Group } from "@/models/Group";
 import EditProjectModal from "../EditProjectModal";
 import { useUpdateProject } from "@/hooks/useUpdateProject";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 export const renderList = (listItems: string[] | undefined) => {
   return (
@@ -19,6 +20,7 @@ export const renderList = (listItems: string[] | undefined) => {
 
 function Details({ group }: { group: Group }) {
   const [showModal, setShowModal] = useState(false);
+  const user = useCurrentUser();
   const { mutate } = useUpdateProject();
   const handleChange = (e: any) => {
     mutate({ id: group.uuid, data: e.target.value });
@@ -33,17 +35,19 @@ function Details({ group }: { group: Group }) {
           </p>
           <p className="text-sm">An overview of your project</p>
         </div>
-        <Button>Edit Details</Button>
+        <Button onClick={() => setShowModal(true)}>Edit Details</Button>
       </div>
-      <EditProjectModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        project={group.project}
-        handleChange={handleChange}
-      />
+      {user?._id === group.owner && (
+        <EditProjectModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          project={group.project}
+          handleChange={handleChange}
+        />
+      )}
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">About Project</h5>
-        <p className="text-sm">{group.project?.short_description}</p>
+        <p className="text-sm">{group.project?.shortDescription}</p>
       </div>
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">Project Brief</h5>
@@ -67,7 +71,7 @@ function Details({ group }: { group: Group }) {
       </div>
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">Key Features</h5>
-        <p className="text-sm">{renderList(group.project?.key_features)}</p>
+        <p className="text-sm">{renderList(group.project?.keyFeatures)}</p>
       </div>
     </div>
   );

@@ -1,19 +1,11 @@
 import User from "@/models/User";
-import getCurrentUser from "@/utils/getCurrentUser";
-import { NextApiHandler } from "next";
 
-export const GET = async (req: Request, res: Response) => {
+export const GET = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
   try {
-    const { currentUser } = await getCurrentUser();
-    if (!currentUser) {
-      return new Response("Invalid authentication", {
-        status: 401,
-      });
-    }
-    const email = currentUser.email;
-
-    const userDetails = await User.findOne({ email });
-
+    const userDetails = await User.findById(params.id).populate("groups");
     if (!userDetails) {
       return new Response("User not found", {
         status: 400,

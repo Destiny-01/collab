@@ -54,7 +54,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
           <div>
             <div className="mt-8">
               <h5 className="font-medium mb-2 text-lg">About Project</h5>
-              <p className="text-sm">{group?.project?.short_description}</p>
+              <p className="text-sm">{group?.project?.shortDescription}</p>
             </div>
             <div className="mt-8">
               <h5 className="font-medium mb-2 text-lg">Project Brief</h5>
@@ -79,28 +79,34 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
             <div className="mt-8">
               <h5 className="font-medium mb-2 text-lg">Key Features</h5>
               <p className="text-sm">
-                {renderList(group?.project?.key_features)}
+                {renderList(group?.project?.keyFeatures)}
               </p>
             </div>
           </div>
-          <h5 className="font-medium mb-2 text-lg">Team members</h5>
-          <div className="flex gap-4">
-            {group?.members?.map((member, i) => (
-              <Link key={i} href={`/profile/${member._id}`} className="w-1/3">
-                <div className="bg-white rounded-10 p-4 border border-milk">
-                  <Image
-                    src={member.avatar || Pic}
-                    alt="logo"
-                    height="0"
-                    width="0"
-                    unoptimized
-                    className="object-cover rounded-lg w-full h-[190px] object-center"
-                  />
-                  <p className="mt-4 mb-1 text-gray900">{member.name}</p>
-                  <p className="text-xs">{member.title}</p>
-                </div>
-              </Link>
-            ))}
+          <div className="my-6">
+            <h5 className="font-medium mb-2 text-lg">Team members</h5>
+            <div className="flex flex-wrap gap-4">
+              {group?.members?.map((member, i) => (
+                <Link
+                  key={i}
+                  href={`/profile/${member._id}`}
+                  className="lg:w-1/3 w-full"
+                >
+                  <div className="bg-white rounded-10 p-4 border border-milk">
+                    <Image
+                      src={member.avatar || Pic}
+                      alt="logo"
+                      height="0"
+                      width="0"
+                      unoptimized
+                      className="object-cover rounded-lg w-full h-[190px] object-center"
+                    />
+                    <p className="mt-4 mb-1 text-gray900">{member.name}</p>
+                    <p className="text-xs">{member.title}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
         {showModal && <NotLoggedInModal onClose={() => setShowModal(false)} />}

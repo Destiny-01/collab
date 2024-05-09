@@ -56,13 +56,8 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
       }
 
       const loadingToastId = toast.loading("Uploading file....");
-      console.log(file);
       const formData = new FormData();
       formData.set("file", file);
-
-      for (let key of Array.from(formData.entries())) {
-        console.log(key[0] + ", " + key[1]);
-      }
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -75,7 +70,6 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(data);
       toast.dismiss(loadingToastId);
       if (!data?.success) {
         toast.error("An error occurred while uploading file");
@@ -143,7 +137,7 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
       />
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">About Project</h5>
-        <p className="text-sm">{data.project?.short_description}</p>
+        <p className="text-sm">{data.project?.shortDescription}</p>
       </div>
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">Project Brief</h5>
@@ -167,7 +161,7 @@ function Step4({ data, setStep, group, handleChange, mutate, isPending }: any) {
       </div>
       <div className="mt-8">
         <h5 className="font-medium mb-2 text-lg">Key Features</h5>
-        <p className="text-sm">{renderList(data.project?.key_features)}</p>
+        <p className="text-sm">{renderList(data.project?.keyFeatures)}</p>
       </div>
       <Divider />
       <div className="flex justify-between mt-6 items-center">

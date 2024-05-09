@@ -1,6 +1,7 @@
 import React from "react";
 import TaskImage from "@/assets/task.png";
 import Image from "next/image";
+import Link from "next/link";
 
 function Tasks() {
   return (
@@ -15,7 +16,10 @@ function Tasks() {
           <p>
             Assign, manage and build your project with an effective task
             manager. With Drag and Drop, Story creation and many more, our
-            easy-to-use task manager would help you mange your tasks effectively
+            easy-to-use task manager would help you mange your tasks
+            effectively. We recommend using{" "}
+            <Link href="https://www.atlassian.com/software/jira">Jira</Link> for
+            your collaboration for now
           </p>
         </div>
       </div>

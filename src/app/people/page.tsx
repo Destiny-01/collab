@@ -26,7 +26,6 @@ function People() {
           user?.name?.toLowerCase()?.startsWith(search.trim().toLowerCase())
         )
       : users;
-  console.log(data);
 
   return (
     <MainLayout>

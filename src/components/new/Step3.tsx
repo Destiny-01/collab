@@ -33,9 +33,8 @@ function Step3({ data, setStep, group }: any) {
   };
 
   useEffect(() => {
-    console.log(data, userData);
     sortByInterests(
-      [...data?.project?.interests, ...data?.project?.core_skills],
+      [...data?.project?.interests, ...data?.project?.coreSkills],
       userData?.data.data
     ).then((users) =>
       setUsers(sortUserByCountries(user?.country, users ?? []))
@@ -68,14 +67,14 @@ function Step3({ data, setStep, group }: any) {
           <RefreshCw color="#334054" size={20} />
         </div>
       </div>
-      <div className="flex gap-4 my-8">
+      <div className="flex flex-wrap gap-4 my-8">
         {isLoading ? (
           <Loader />
         ) : (
-          users?.map((user, i) => (
+          users?.slice(0, 6)?.map((user, i) => (
             <div
               key={i}
-              className="bg-white cursor-pointer max-w-[50%] lg:max-w-[33%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[33%]"
+              className="bg-white cursor-pointer max-w-[50%] lg:max-w-[32%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[32%]"
             >
               <div className="h-[180px] relative overflow-hidden p-4">
                 <Image

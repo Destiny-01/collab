@@ -15,7 +15,6 @@ export const POST = async (req: Request, res: Response) => {
     }
 
     const { category, idea } = await req.json();
-    console.log(category, idea);
     const uuid = uuidv4();
 
     app.emit("query", category, idea, currentUser?.bio, uuid);

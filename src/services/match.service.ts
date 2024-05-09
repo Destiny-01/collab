@@ -88,10 +88,10 @@ export const getMatchesForGroup = async (id: string, isGroup: boolean) => {
       ? await Group.findById(id)
       : await UserModel.findById(id);
 
-    const core_skills: any[] = await Promise.all([
-      await synonyms(group.core_skills[0]),
-      await synonyms(group.core_skills[1]),
-      await synonyms(group.core_skills[2]),
+    const coreSkills: any[] = await Promise.all([
+      await synonyms(group.coreSkills[0]),
+      await synonyms(group.coreSkills[1]),
+      await synonyms(group.coreSkills[2]),
       await synonyms(group.interests[0]),
       await synonyms(group.interests[1]),
     ]);
@@ -99,7 +99,7 @@ export const getMatchesForGroup = async (id: string, isGroup: boolean) => {
     const escapeRegExp = (str: string) => {
       return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     };
-    const searchRegexes = core_skills.map(
+    const searchRegexes = coreSkills.map(
       (word: string) => new RegExp(escapeRegExp(word), "i")
     );
 
@@ -107,7 +107,7 @@ export const getMatchesForGroup = async (id: string, isGroup: boolean) => {
       _id: { $ne: isGroup ? id : { $in: group.members } },
       niche: group.category,
       $or: [
-        { "details.bio": { $regex: new RegExp(core_skills.join("|"), "i") } },
+        { "details.bio": { $regex: new RegExp(coreSkills.join("|"), "i") } },
         { "details.interests": { $in: searchRegexes } },
         { "details.skills": { $in: searchRegexes } },
       ],

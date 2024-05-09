@@ -2,7 +2,7 @@
 
 import { useGetUser } from "@/hooks/useGetUser";
 import MainLayout from "@/layouts/MainLayout";
-import { User, UserDocument } from "@/models/User";
+import { UserDocument } from "@/models/User";
 import Image from "next/image";
 import React from "react";
 import Pic from "@/assets/avatar.jpeg";
@@ -18,22 +18,19 @@ import moment from "moment";
 import { copyToClipboard, underscoreToCapital } from "@/utils";
 import Loader from "@/components/Loader";
 import Link from "next/link";
-import { Group } from "@/models/Group";
-import { useGetAllGroups } from "@/hooks/useCurrentProject";
 import useResponsive from "@/hooks/useResponsive";
 import EmptyState from "@/assets/empty-project.png";
 
 function UserProfile({ params }: { params: { id: string } }) {
   const { isMobile } = useResponsive();
-  const { data } = useGetUser(params.id);
+  const { data, isLoading } = useGetUser(params.id);
   const user: UserDocument | null = data?.data?.data;
-  const { data: groupsData, isLoading } = useGetAllGroups(params.id);
 
-  const groups: Group[] = groupsData?.data?.data || [];
-
-  return (
+  return isLoading ? (
+    <Loader isFull />
+  ) : (
     <MainLayout>
-      <div className="bg-white items-center lg:flex border-b gap-4 border-borderColor p-8">
+      <div className="bg-white items-center lg:flex border-b gap-4 border-borderColor lg:p-8 p-4">
         <Image
           src={user?.avatar || Pic}
           alt="banner"
@@ -44,9 +41,9 @@ function UserProfile({ params }: { params: { id: string } }) {
           className="h-[130px] w-[130px] rounded-[10px] object-cover object-top"
         />
         <div>
-          <h2>{user?.name}</h2>
+          <h2 className="mt-2">{user?.name}</h2>
           <p className="text-sm">{user?.title}</p>
-          <div className="my-4 flex gap-6">
+          <div className="mt-2 mb-1 flex-wrap gap-y-2 flex gap-x-6">
             <p> @{user?.username}</p>
             <div className="flex items-center gap-1">
               <Calendar size={20} color="#667185" />
@@ -59,7 +56,7 @@ function UserProfile({ params }: { params: { id: string } }) {
               <p className="text-sm">{user?.country}</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 my-3">
+          <div className="flex flex-wrap gap-2 mt-5 mb-3">
             {user?.interests?.map((interest, i) => (
               <div key={i} className="bg-[#D7D7EB] px-2 py-1 rounded-3xl">
                 <p className="text-[#232566] capitalize text-xs font-medium">
@@ -79,19 +76,17 @@ function UserProfile({ params }: { params: { id: string } }) {
           </button>
         )}
       </div>
-      <div className="p-8 lg:flex gap-8">
+      <div className="lg:p-8 p-4 lg:flex gap-8">
         <div className="w-full">
           <div className="mb-8">
             <h5 className="font-medium mb-2 text-xl">About Me</h5>
-            <p className="text-sm">{user?.bio}</p>
+            <p className="text-sm max-w-xs break-words">{user?.bio}</p>
           </div>
           <div className="flex justify-between mb-4 items-center">
             <h2 className="text-black text-xl font-medium"> Projects</h2>
           </div>
           <div className="lg:flex flex-wrap gap-4">
-            {isLoading ? (
-              <Loader />
-            ) : groups.length === 0 ? (
+            {user?.groups.length === 0 ? (
               <div className="bg-white w-full min-h-[240px] border border-milk shadow-card-shadow text-center rounded-xl p-4">
                 <Image src={EmptyState} className="mx-auto" alt="empty" />
                 <h6 className="mt-2 mb-1">
@@ -105,7 +100,7 @@ function UserProfile({ params }: { params: { id: string } }) {
                 </Link>
               </div>
             ) : (
-              groups.slice(0, 2)?.map((group, i) => (
+              user?.groups.slice(0, 3)?.map((group, i) => (
                 <div
                   className="lg:w-[calc(33.33%-12px)] mb-4 lg:mb-0 w-full p-4 rounded-xl border-milk border bg-white text-start"
                   key={i}
@@ -130,7 +125,7 @@ function UserProfile({ params }: { params: { id: string } }) {
                       </h2>
                       <div className="flex mt-2 pt-2 justify-between border-t border-[#F0F2F5] items-center">
                         <div className="flex">
-                          {group?.members?.slice(0, 2).map((member, i) => (
+                          {group?.members?.slice(0, 3).map((member, i) => (
                             <Image
                               className={`rounded-full h-8 w-8 border border-white ${
                                 i > 0 && "-ml-3"
@@ -156,13 +151,13 @@ function UserProfile({ params }: { params: { id: string } }) {
             )}
           </div>
         </div>
-        <div className="min-w-[350px]">
-          <div className="bg-white border border-borderColor p-6 rounded-xl min-w-fit h-fit">
+        <div className="lg:min-w-[350px] mt-8 lg:mt-0">
+          <div className="bg-white border border-borderColor p-6 rounded-xl lg:min-w-fit h-fit">
             <h2 className="text-xl mb-8">Contact Details</h2>
             <p className="uppercase text-sm">Email Address</p>
             <p className="text-gray900">{user?.email}</p>
           </div>
-          <div className="bg-white border border-borderColor mt-8 p-6 rounded-xl min-w-fit h-fit">
+          <div className="bg-white border border-borderColor mt-8 p-6 rounded-xl lg:min-w-fit h-fit">
             <h2 className="text-xl mb-8">Stats</h2>
             <div className="flex gap-4">
               <div className="bg-[#f9fafb] w-full rounded-lg p-3 items-center flex gap-4 border border-milk">

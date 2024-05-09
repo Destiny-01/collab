@@ -20,7 +20,7 @@ export const PUT = async (
       owner: currentUser._id,
     });
     if (!group) {
-      return new Response("Group not found", {
+      return new Response("Group not found or not the owner", {
         status: 400,
       });
     }

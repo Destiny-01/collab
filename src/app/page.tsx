@@ -1,20 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import Solutions from "@/assets/dashboard/solutions.png";
-import Growth from "@/assets/dashboard/growth.png";
-import Solving from "@/assets/dashboard/solving.png";
-import Expertise from "@/assets/dashboard/expertise.png";
-import Collaboration from "@/assets/dashboard/collaboration.png";
+import Solutions from "@/assets/dashboard/solutions.svg";
+import Growth from "@/assets/dashboard/growth.svg";
+import Solving from "@/assets/dashboard/solving.svg";
+import Expertise from "@/assets/dashboard/expertise.svg";
+import Collaboration from "@/assets/dashboard/collaboration.svg";
 import Select from "react-select";
 // import "@/app/globals.css";
 import { useLayoutEffect, useState } from "react";
 import HomeImage from "@/assets/home-image.png";
 import GlobalCollab from "@/assets/global-collab.png";
-import HomeCollab from "@/assets/home-collab.png";
+import HomeCollab from "@/assets/home-collab.svg";
 import Pic from "@/assets/avatar.jpeg";
 import EmptyState from "@/assets/empty-project.png";
-import Logo from "@/assets/LogoText.png";
+import Logo from "@/assets/LogoText.svg";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import options from "@/data/options";
@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <MainLayout isWhite>
       <div className="bg-white">
-        <div className="lg:flex items-center gap-[72px] mt-10  lg:mx-32 mx-4">
+        <div className="lg:flex items-center gap-[72px] mt10  lg:mx-32 mx-4">
           <div className="text-center lg:text-start">
             <h1 className="lg:text-[56px] text-[36px] text-[#2E2E33] leading-tight font-bold">
               Where diverse minds {!isMobile && <br />} unite to solve real
@@ -101,7 +101,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <Image className="my-16 lg:my-0" src={HomeImage} alt="globe" />
+          <Image className="my-16 lg:my-10" src={HomeImage} alt="globe" />
         </div>
         <div className="bg-[#F9FAFB] lg:px-32 px-4 lg:py-16 py-10">
           <h2 className="lg:text-[40px] text-[28px] text-center text-[#2E2E33] max-w-[600px] mx-auto mb-8 lg:leading-10 leading-8">
@@ -109,12 +109,14 @@ export default function Home() {
           </h2>
           <div className="solutions-container">
             <div className="flex-grow solutions h-full">
-              <Image
-                src={Solutions}
-                alt="solution"
-                height={232}
-                className="max-h-[232px] rounded-t-xl w-full"
-              />
+              <div className="overflow-hidden max-h-[232px] w-full h-full">
+                <Image
+                  src={Solutions}
+                  alt="solution"
+                  height={232}
+                  className="object-cover rounded-t-xl w-full"
+                />
+              </div>
               <div className="bg-white lg:min-h-[190px] rounded-b-xl lg:p-8 p-6 mb-6 lg:mb-0">
                 <p className="text-gray900 text-xl font-medium mb-1">
                   Innovative Solutions
@@ -127,12 +129,15 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-grow growth h-full">
-              <Image
-                src={Growth}
-                alt="solution"
-                height={232}
-                className="max-h-[232px] rounded-t-xl w-full"
-              />
+              <div className="overflow-hidden max-h-[232px] w-full h-full">
+                <Image
+                  src={Growth}
+                  alt="solution"
+                  height={232}
+                  unoptimized={false}
+                  className="object-cover rounded-t-xl w-full"
+                />
+              </div>
               <div className="bg-white lg:min-h-[190px] rounded-b-xl lg:p-8 p-6 mb-6 lg:mb-0">
                 <p className="text-gray900 text-xl font-medium mb-1">
                   Personal and Professional Growth
@@ -144,12 +149,14 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-grow solving h-full">
-              <Image
-                src={Solving}
-                alt="solution"
-                height={232}
-                className="max-h-[232px] rounded-t-xl w-full"
-              />
+              <div className="overflow-hidden max-h-[232px] w-full h-full">
+                <Image
+                  src={Solving}
+                  alt="solution"
+                  height={232}
+                  className="object-cover rounded-t-xl w-full"
+                />
+              </div>
               <div className="bg-white lg:min-h-[190px] rounded-b-xl lg:p-8 p-6 mb-6 lg:mb-0">
                 <p className="text-gray900 text-xl font-medium mb-1">
                   Efficient Problem-Solving
@@ -161,12 +168,14 @@ export default function Home() {
               </div>
             </div>
             <div className="expertise h-full">
-              <Image
-                src={Expertise}
-                alt="solution"
-                height={232}
-                className="max-h-[232px] h-[232px] lg:h-auto object-cover lg:object-fill rounded-t-xl w-full"
-              />
+              <div className="overflow-hidden max-h-[232px] w-full h-full">
+                <Image
+                  src={Expertise}
+                  alt="solution"
+                  height={232}
+                  className="lg:h-auto object-cover lg:object-fill rounded-t-xl w-full"
+                />
+              </div>
               <div className="bg-white lg:min-h-[190px] rounded-b-xl lg:p-8 p-6 mb-6 lg:mb-0">
                 <p className="text-gray900 text-xl font-medium mb-1">
                   Access to Diverse Expertise
@@ -181,12 +190,14 @@ export default function Home() {
               </div>
             </div>
             <div className="collaboration h-full">
-              <Image
-                src={Collaboration}
-                alt="solution"
-                height={232}
-                className="max-h-[232px] rounded-t-xl w-full"
-              />
+              <div className="overflow-hidden max-h-[232px] w-full h-full">
+                <Image
+                  src={Collaboration}
+                  alt="solution"
+                  height={232}
+                  className="object-cover rounded-t-xl w-full"
+                />
+              </div>
               <div className="bg-white lg:min-h-[190px] rounded-b-xl lg:p-8 p-6 mb-6 lg:mb-0">
                 <p className="text-gray900 text-xl font-medium mb-1">
                   AI-Enhanced Collaboration
@@ -261,7 +272,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="lg:flex mx-auto gap-4">
+          <div className="lg:flex flex-wrap mx-auto gap-4">
             {isLoading ? (
               <Loader />
             ) : filteredGroups.length === 0 ? (
@@ -276,9 +287,9 @@ export default function Home() {
                 </Link>
               </div>
             ) : (
-              filteredGroups?.slice(0, 2).map((group, i) => (
+              filteredGroups?.slice(0, 3).map((group, i) => (
                 <div
-                  className="lg:w-[33%] mb-4 lg:mb-0 w-full p-4 rounded-xl border-milk border bg-white text-start"
+                  className="lg:w-[32%] mb-4 lg:mb-0 w-full p-4 rounded-xl border-milk border bg-white text-start"
                   key={i}
                 >
                   <Link href={`/projects/${group.uuid}`}>
@@ -301,7 +312,7 @@ export default function Home() {
                       </p>
                       <div className="flex mt-2 pt-2 justify-between border-t border-[#F0F2F5] items-center">
                         <div className="flex">
-                          {group?.members?.slice(0, 2).map((member, i) => (
+                          {group?.members?.slice(0, 3).map((member, i) => (
                             <Image
                               className={`rounded-full h-8 w-8 border border-white ${
                                 i > 0 && "-ml-3"
@@ -327,7 +338,6 @@ export default function Home() {
             )}
           </div>
           <Link href="/explore">
-            {" "}
             <button className="bg-purple500 mx-auto mt-6 text-white flex items-center gap-1 py-3 px-6 rounded-lg">
               See More
             </button>

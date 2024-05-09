@@ -12,7 +12,6 @@ function Step1({ data, handleChange, isPending, mutate, user }: any) {
   ) => {
     e.preventDefault();
     if (!data.category) {
-      console.log("err");
       toast.error("All fields are required");
       return;
     }

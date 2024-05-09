@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Logo from "@/assets/LogoText.png";
+import Logo from "@/assets/LogoText.svg";
 import Medal from "@/assets/medal.png";
 import {
   Home,

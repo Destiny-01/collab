@@ -65,13 +65,8 @@ export default function Profile() {
       }
       const loadingToastId = toast.loading("Uploading file....");
 
-      console.log(file);
       const formData = new FormData();
       formData.set("file", file);
-
-      for (let key of Array.from(formData.entries())) {
-        console.log(key[0] + ", " + key[1]);
-      }
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -84,7 +79,6 @@ export default function Profile() {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(data);
       toast.dismiss(loadingToastId);
       if (!data?.success) {
         toast.error("An error occurred while uploading file");

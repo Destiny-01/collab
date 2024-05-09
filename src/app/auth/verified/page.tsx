@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import verifiedImage from "@/assets/verified-image.png";
-import LogoText from "@/assets/LogoText.png";
+import LogoText from "@/assets/LogoText.svg";
 import Link from "next/link";
 import "@/app/globals.css";
 import { ChevronLeft } from "react-feather";

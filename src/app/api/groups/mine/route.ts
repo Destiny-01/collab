@@ -21,7 +21,6 @@ export const GET = async (req: Request, res: Response) => {
         .populate("members")
         .populate("updates.author");
       const groups = foundGroups.filter((group) => !!group.project.name);
-      console.log({ currentUser, foundGroups });
 
       return Response.json({ success: true, data: groups });
     }

@@ -11,12 +11,12 @@ export interface Group extends Document {
     problem?: string;
     solution?: string;
     impact?: string;
-    key_features?: string[];
+    keyFeatures?: string[];
     complexity?: string;
     estimated_timeline?: string;
     description?: string;
-    short_description?: string;
-    core_skills?: string[];
+    shortDescription?: string;
+    coreSkills?: string[];
     interests?: string[];
   };
   messages?: Types.ObjectId[];
@@ -42,12 +42,12 @@ export interface Group extends Document {
     problem?: string;
     solution?: string;
     impact?: string;
-    key_features?: string[];
+    keyFeatures?: string[];
     complexity?: string;
     estimated_timeline?: string;
     description?: string;
-    short_description?: string;
-    core_skills?: string[];
+    shortDescription?: string;
+    coreSkills?: string[];
     interests?: string[];
   }[];
   visibility?: "Private" | "Public";
@@ -76,12 +76,12 @@ const groupSchema = new mongoose.Schema(
       problem: String,
       solution: String,
       impact: String,
-      key_features: [String],
+      keyFeatures: [String],
       complexity: String,
       timeline: String,
       description: String,
-      short_description: String,
-      core_skills: [String],
+      shortDescription: String,
+      coreSkills: [String],
       interests: [String],
     },
     updates: [
@@ -137,12 +137,12 @@ const groupSchema = new mongoose.Schema(
         problem: String,
         solution: String,
         impact: String,
-        key_features: [String],
+        keyFeatures: [String],
         complexity: String,
         description: String,
-        short_description: String,
+        shortDescription: String,
         estimated_timeline: String,
-        core_skills: [String],
+        coreSkills: [String],
         interests: [String],
       },
     ],

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Logo from "@/assets/LogoText.png";
+import Logo from "@/assets/LogoText.svg";
 import Medal from "@/assets/medal.png";
 import {
   Home,
@@ -73,7 +73,6 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
     ],
     []
   );
-  console.log(isOpen, "lll");
 
   const getActiveTab = useCallback(() => {
     return menuItems.find((item) => {
