@@ -27,11 +27,13 @@ import { usePathname, useRouter } from "next/navigation";
 import useResponsive from "@/hooks/useResponsive";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { copyToClipboard } from "@/utils";
+import FeedbackModal from "./FeedbackModal";
 
 function MobileSidebar({ isOpen, setIsOpen }: any) {
   const path = usePathname();
-  const router = useRouter();
   const user = useCurrentUser();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const menuItems = useMemo(
     () => [
       {
@@ -81,10 +83,9 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
       }
     });
   }, [menuItems, path]);
-  const handleCopy = () => {
-    copyToClipboard(`${user?.name} has invited you to come collaborate with him on collabo
-               Join him now ${process.env.NEXT_PUBLIC_BASE_URL}
-               `);
+
+  const handleSubmit = () => {
+    setIsModalOpen(true);
   };
 
   return user && isOpen ? (
@@ -155,12 +156,13 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
             </div>
           </div>
           <button
-            onClick={handleCopy}
+            onClick={handleSubmit}
             className="text-purple700 w-full mt-3 mx-auto text-sm bg-white flex justify-center items-center gap-1 py-3 px-4 rounded-lg"
           >
             Share with friends
           </button>
         </div>
+        <FeedbackModal showModal={isModalOpen} setShowModal={setIsModalOpen} />
       </div>
     </div>
   ) : (

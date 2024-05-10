@@ -104,7 +104,7 @@ function Step2({ data, setStep, handleChange, group, mutate }: any) {
           <Loader />
         )}
         {suggestedTopics && (
-          <div className="mt-4">
+          <div className="mt-4 text-center">
             <p>
               Not Satisfied?{" "}
               <a

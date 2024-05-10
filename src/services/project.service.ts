@@ -33,6 +33,8 @@ export const generateProjectIdeas = async (
             Return just the valid json object ONLY in double quote pairs, and nothing more.
             No example, no test. JUST MAKE SURE THE JSON IS VALID and return just that`;
 
+    console.log(prompt);
+
     const result = await queryChatGPT(prompt);
 
     return result;

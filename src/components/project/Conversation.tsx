@@ -19,9 +19,10 @@ function Conversation({ group }: { group: Group }) {
           <p>
             Collaborate, brainstorm, connect and plan the project details. In
             the mean time, we advice primary means of communication like{" "}
-            <Link href="whatsapp.com">Whatsapp</Link>,{" "}
-            <Link href="discord.com">Discord</Link>,{" "}
-            <Link href="slack.com">Slack</Link> and other major mainstream media
+            <Link href="https://whatsapp.com">Whatsapp</Link>,{" "}
+            <Link href="https://discord.com">Discord</Link>,{" "}
+            <Link href="https://slack.com">Slack</Link> and other major
+            mainstream media
           </p>
         </div>
       </div>

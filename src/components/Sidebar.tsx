@@ -18,16 +18,17 @@ import { usePathname, useRouter } from "next/navigation";
 import useResponsive from "@/hooks/useResponsive";
 import { copyToClipboard } from "@/utils";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import FeedbackModal from "./FeedbackModal";
 
 function Sidebar() {
   const path = usePathname();
   const user = useCurrentUser();
   const router = useRouter();
   const { data } = useSession();
-  const handleCopy = () => {
-    copyToClipboard(`${user?.name} has invited you to come collaborate with him on collabo
-               Join him now ${process.env.NEXT_PUBLIC_BASE_URL}
-               `);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSubmit = () => {
+    setIsOpen(true);
   };
   const menuItems = useMemo(
     () => [
@@ -81,6 +82,7 @@ function Sidebar() {
 
   return (
     <div className="max-w-[20%] hidden lg:flex h-screen sticky top-0 left-0 justify-between flex-col w-96 bg-white border-r border-[#E4E7EC]">
+      <FeedbackModal showModal={isOpen} setShowModal={setIsOpen} />
       <div>
         <div className="mx-6 mt-4 mb-8">
           <Link href="/dashboard">
@@ -117,15 +119,15 @@ function Sidebar() {
       <div className="mt-auto px-4 mb-4 w-full flex items-center">
         <div className="bg-card-bg p-4 rounded-10 text-center">
           <Image src={Medal} alt="medal" className="mx-auto" />
-          <p className="text-base text-white">Help Collabo Grow</p>
+          <p className="text-base text-white">Drop a feedback</p>
           <p className="text-xs text-milk">
-            Love using Collabo? Invite your friends today
+            We&apos;d like to hear what you think about Collabo
           </p>
           <button
-            onClick={handleCopy}
+            onClick={handleSubmit}
             className="text-purple700 mt-3 mx-auto text-sm bg-white flex items-center gap-1 py-3 px-4 rounded-lg"
           >
-            Share with friends
+            Drop feedback
           </button>
         </div>
         {/* <Image

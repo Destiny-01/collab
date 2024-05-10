@@ -29,7 +29,10 @@ function Dashboard() {
     <MainLayout>
       <div className="lg:flex mx-4 gap-8 mt-8 justify-stretch">
         <div className="w-full">
-          <div className="bg-card-bg rounded-xl h-fit w-full lg:p-8 p-6 relative">
+          <div
+            className="bg-card-bg rounded-xl h-fit w-full lg:p-8 p-6 relative"
+            id="card"
+          >
             <h5 className="text-white text-lg">
               Hi {user?.username}, need something fresh
             </h5>
