@@ -8,8 +8,8 @@ export const generateProjectIdeas = async (
   try {
     const prompt = `
             ---IDEA--- : ${idea}
-            I want you to generate 3 well written project ideas under the ${category} category for a person with bio ${bio}
-            Your return type should be of type JSON structured in the form. Return just ano object in that form
+            I want you to generate 3 well written project ideas under the ${category} category for a person with bio "${bio}"
+            Your return type should be of type JSON structured in the form:
             {
              projects: [
                {
@@ -18,10 +18,10 @@ export const generateProjectIdeas = async (
               ]}
             ${
               idea &&
-              `I have an existing idea, and I would like your response to be related, around or built on it.
+              `I have an existing idea, and I would like your response to be ideas built on the original idea of the author
             The idea is labelled "---IDEA---"`
             }
-            Your task is to generate 3 detailed project ideas that solves an existing real world problem. Each project is an object
+            Your task is to generate 3 detailed project ideas that solves a unique, real world problem that impacts society. Each project is an object
             Each Project should contain a key "problem", that outlines the problem the idea solves, "solution" that describes the solution the idea brings,
             "impact" that describes the impact the idea brings on current day society, "keyFeatures" that outlines at least 7 main features of the idea, 
             "estimated_timeline" that outputs a feasible and estimated timeline for completion of the project, "description" that's basically a detailed description of the project
