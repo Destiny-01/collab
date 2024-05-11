@@ -14,7 +14,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { UserDocument } from "@/models/User";
 
 function Step3({ data, setStep, group }: any) {
-  const { data: userData, isLoading } = useGetAllUsers();
+  const { data: userData, isLoading, refetch } = useGetAllUsers();
   const user = useCurrentUser();
   const [users, setUsers] = useState<UserDocument[] | null>([]);
   const { mutate, isPending } = useInviteToProject(group?.uuid);
@@ -63,7 +63,10 @@ function Step3({ data, setStep, group }: any) {
             Who would you like to work with on this project
           </p>
         </div>
-        <div className="bg-milk rounded-full h-10 w-10 p-2.5">
+        <div
+          onClick={() => refetch()}
+          className="bg-milk cursor-pointer rounded-full h-10 w-10 p-2.5"
+        >
           <RefreshCw color="#334054" size={20} />
         </div>
       </div>

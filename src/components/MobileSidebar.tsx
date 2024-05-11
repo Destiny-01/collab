@@ -149,9 +149,9 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
           <div className="flex items-center gap-2 mx-3">
             <Image src={Medal} alt="medal" className="mx-auto h-16 w-16" />
             <div>
-              <p className="text-lg text-white">Help Collabo Grow</p>
+              <p className="text-lg text-white">Drop a feedback</p>
               <p className="text-xs text-milk">
-                Love using Collabo? Invite your friends today
+                We&apos;d like to hear what you think about Collabo
               </p>
             </div>
           </div>
@@ -159,7 +159,7 @@ function MobileSidebar({ isOpen, setIsOpen }: any) {
             onClick={handleSubmit}
             className="text-purple700 w-full mt-3 mx-auto text-sm bg-white flex justify-center items-center gap-1 py-3 px-4 rounded-lg"
           >
-            Share with friends
+            Drop Feedback
           </button>
         </div>
         <FeedbackModal showModal={isModalOpen} setShowModal={setIsModalOpen} />

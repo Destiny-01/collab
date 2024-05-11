@@ -18,7 +18,8 @@ export const generateProjectIdeas = async (
               ]}
             ${
               idea &&
-              `I have an existing idea, and I would like your response to be ideas built on the original idea of the author
+              `I have an existing idea, and I would like your response to be ideas built on the original idea of the author.
+              It should be strictly in the ${category} and must not be web based.
             The idea is labelled "---IDEA---"`
             }
             Your task is to generate 3 detailed project ideas that solves a unique, real world problem that impacts society. Each project is an object

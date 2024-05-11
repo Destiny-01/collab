@@ -28,32 +28,34 @@ function Step2({ data, setStep, handleChange, group, mutate }: any) {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await API.get(`/groups/${group?.uuid}`);
-        const suggestions = response.data?.data?.suggestedTopics;
+    if (!suggestedTopics) {
+      const fetchData = async () => {
+        try {
+          const response = await API.get(`/groups/${group?.uuid}`);
+          const suggestions = response.data?.data?.suggestedTopics;
 
-        // Check if the fetched data meets your condition to stop
-        if (suggestions.length > 0) {
-          setSuggestedTopics(suggestions);
-          clearInterval(intervalId); // Stop the interval
-        } else {
-          if (retryCount === 10) {
-            clearInterval(intervalId);
-            toast.error("An error occurred while querying data");
-            setStep(1);
+          // Check if the fetched data meets your condition to stop
+          if (suggestions.length > 0) {
+            setSuggestedTopics(suggestions);
+            clearInterval(intervalId); // Stop the interval
+          } else {
+            if (retryCount === 10) {
+              clearInterval(intervalId);
+              toast.error("An error occurred while querying data");
+              setStep(1);
+            }
+            setRetryCount(retryCount + 1);
           }
-          setRetryCount(retryCount + 1);
+        } catch (error) {
+          console.error("Error fetching data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+      };
 
-    const intervalId = setInterval(fetchData, 4000); // Call fetchData every 5 seconds
+      const intervalId = setInterval(fetchData, 4000); // Call fetchData every 5 seconds
 
-    // Cleanup function to clear the interval when component unmounts
-    return () => clearInterval(intervalId);
+      // Cleanup function to clear the interval when component unmounts
+      return () => clearInterval(intervalId);
+    }
   }, [group?.uuid, retryCount, setStep, suggestedTopics]);
 
   return (
