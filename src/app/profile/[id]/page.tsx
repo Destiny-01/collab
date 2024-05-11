@@ -46,12 +46,6 @@ function UserProfile({ params }: { params: { id: string } }) {
           <div className="mt-2 mb-1 flex-wrap gap-y-2 flex gap-x-6">
             <p> @{user?.username}</p>
             <div className="flex items-center gap-1">
-              <Calendar size={20} color="#667185" />
-              <p className="text-sm">
-                Joined {moment(user?.createdAt).format("MMM YYYY")}
-              </p>
-            </div>
-            <div className="flex items-center gap-1">
               <MapPin size={20} color="#667185" />
               <p className="text-sm">{user?.country}</p>
             </div>
