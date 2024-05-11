@@ -40,6 +40,39 @@ export const PUT = async (
   }
 };
 
+export const DELETE = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
+  try {
+    const { currentUser } = await getCurrentUser();
+    if (!currentUser) {
+      return new Response("Invalid authentication", {
+        status: 401,
+      });
+    }
+
+    const group = await Group.findOne({
+      uuid: params.id,
+      owner: currentUser._id,
+    });
+    if (!group) {
+      return new Response("Group not found or not the owner", {
+        status: 400,
+      });
+    }
+
+    await Group.findOneAndDelete({ uuid: params.id });
+
+    return Response.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    return new Response("An error occurred", {
+      status: 400,
+    });
+  }
+};
+
 export const GET = async (
   req: Request,
   { params }: { params: { id: string } }

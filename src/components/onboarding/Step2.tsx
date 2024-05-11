@@ -15,7 +15,7 @@ function Step2({ handleChange, setStep, data }: any) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    if (!data?.avatar || !data.name || !data.username || !data.country) {
+    if (!data.title || !data.company || data.interests.length < 1) {
       toast.error("All fields are required");
       return;
     }

@@ -10,10 +10,7 @@ function Step3({ handleChange, setStep, mutate, isPending, data }: any) {
       toast.error("Bio must be at least 50 characters");
       return;
     }
-    if (!data?.avatar || !data.name || !data.username || !data.country) {
-      toast.error("All fields are required");
-      return;
-    }
+
     data.interests = data.interests.map((interest: any) => interest.value);
     mutate(data);
   };

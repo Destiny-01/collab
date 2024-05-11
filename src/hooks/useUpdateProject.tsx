@@ -17,6 +17,18 @@ export function useCreateProject() {
   });
 }
 
+export function useDeleteProject() {
+  return useMutation({
+    mutationKey: [`delete-project`],
+    mutationFn: (id) => API.delete(`/groups/${id}`),
+    onSuccess: () => {},
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(error.response?.data || error.message);
+    },
+  });
+}
+
 export function useUpdateProject() {
   const router = useRouter();
   const queryClient = useQueryClient();

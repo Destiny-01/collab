@@ -9,11 +9,13 @@ import SingleProjectModal from "../SingleProjectModal";
 import { ChevronLeft } from "react-feather";
 import API from "@/utils/api";
 import Loader from "../Loader";
+import { useDeleteProject } from "@/hooks/useUpdateProject";
 
 function Step2({ data, setStep, handleChange, group, mutate }: any) {
   const [suggestedTopics, setSuggestedTopics] =
     useState<Group["suggestedTopics"]>();
   const [retryCount, setRetryCount] = useState(0);
+  const { mutate: deleteProject } = useDeleteProject();
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -111,13 +113,20 @@ function Step2({ data, setStep, handleChange, group, mutate }: any) {
                 href="#"
                 onClick={() => {
                   setSuggestedTopics(undefined);
+                  deleteProject(group?.uuid);
                   mutate({ category: data.category.value, idea: data.idea });
                 }}
               >
                 Generate more
               </a>{" "}
               or{" "}
-              <a href="#" onClick={() => setStep(1)}>
+              <a
+                href="#"
+                onClick={() => {
+                  deleteProject(group?.uuid);
+                  setStep(1);
+                }}
+              >
                 Refine Prompt
               </a>
             </p>
