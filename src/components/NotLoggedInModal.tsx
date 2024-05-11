@@ -48,7 +48,7 @@ function NotLoggedInModal({ onClose }: { onClose: () => void }) {
               Login
             </button>
           </Link>
-          <Link href="/auth/register">
+          <Link href="/auth/signup">
             <button className="bg-transparent font-medium text-purple500 border-[1.5px] border-purple500 py-2.5 px-6 rounded-lg">
               Register
             </button>

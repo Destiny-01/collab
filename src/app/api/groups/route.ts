@@ -39,7 +39,7 @@ export const GET = async (req: NextRequest, res: Response) => {
   try {
     const { searchParams } = req.nextUrl;
     const user = searchParams.get("user");
-  
+
     const { currentUser } = await getCurrentUser();
 
     const allGroups = await Group.find({
