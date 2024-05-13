@@ -20,6 +20,7 @@ import Loader from "@/components/Loader";
 import Link from "next/link";
 import useResponsive from "@/hooks/useResponsive";
 import EmptyState from "@/assets/empty-project.png";
+import DefaultCover from "@/assets/Default Cover.png";
 
 function UserProfile({ params }: { params: { id: string } }) {
   const { isMobile } = useResponsive();
@@ -102,7 +103,7 @@ function UserProfile({ params }: { params: { id: string } }) {
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="lg:h-[118px] h-[187px] mb-2">
                       <Image
-                        src={group.photo || Pic}
+                        src={group.photo || DefaultCover}
                         alt="banner"
                         width="0"
                         unoptimized

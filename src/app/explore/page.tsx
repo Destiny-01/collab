@@ -18,6 +18,7 @@ import EmptyState from "@/assets/empty-project.png";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useResponsive from "@/hooks/useResponsive";
 import DashboardImage from "@/assets/dashboard-image.png";
+import DefaultCover from "@/assets/Default Cover.png";
 
 function Projects() {
   const user = useCurrentUser();
@@ -143,7 +144,7 @@ function Projects() {
                 <Link href={`/projects/${group.uuid}`}>
                   <div className="lg:h-[200px] h-[187px] mb-2">
                     <Image
-                      src={group.photo || Pic}
+                      src={group.photo || DefaultCover}
                       alt="banner"
                       width="0"
                       unoptimized

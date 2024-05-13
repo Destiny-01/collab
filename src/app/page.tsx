@@ -15,11 +15,11 @@ import HomeCollab from "@/assets/home-collab.svg";
 import Pic from "@/assets/avatar.jpeg";
 import EmptyState from "@/assets/empty-project.png";
 import Logo from "@/assets/LogoText.svg";
+import DefaultCover from "@/assets/Default Cover.png";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import options from "@/data/options";
 import Loader from "@/components/Loader";
-import Navbar from "@/components/Navbar";
 import useResponsive from "@/hooks/useResponsive";
 import { useGetAllGroups } from "@/hooks/useCurrentProject";
 import { Group } from "@/models/Group";
@@ -295,7 +295,7 @@ export default function Home() {
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="lg:h-[200px] h-[187px] mb-2">
                       <Image
-                        src={group.photo || Pic}
+                        src={group.photo || DefaultCover}
                         alt="banner"
                         width="0"
                         unoptimized

@@ -12,6 +12,7 @@ import { MessageSquare } from "react-feather";
 import Pic from "@/assets/avatar.jpeg";
 import Loader from "@/components/Loader";
 import EmptyState from "@/assets/empty-project.png";
+import DefaultCover from "@/assets/Default Cover.png";
 
 function Projects() {
   const { data, isLoading } = useGetMyGroups();
@@ -56,7 +57,7 @@ function Projects() {
                 <Link href={`/projects/${group.uuid}`}>
                   <div className="lg:h-[200px] h-[187px] mb-2">
                     <Image
-                      src={group.photo || Pic}
+                      src={group.photo || DefaultCover}
                       alt="banner"
                       width="0"
                       unoptimized

@@ -16,6 +16,7 @@ import Link from "next/link";
 import { renderList } from "./project/Details";
 import NotLoggedInModal from "./NotLoggedInModal";
 import { useState } from "react";
+import DefaultCover from "@/assets/Default Cover.png";
 
 export default function ExploreProject({ params }: { params: { id: string } }) {
   const { data } = useGetSingleProject(params.id);
@@ -44,7 +45,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
       <div className="lg:flex gap-8 lg:pt-6 pt-0 lg:p-8 p-4">
         <div className="w-full">
           <Image
-            src={group?.photo || Pic}
+            src={group?.photo || DefaultCover}
             width="0"
             height="0"
             unoptimized
@@ -90,7 +91,7 @@ export default function ExploreProject({ params }: { params: { id: string } }) {
                 <Link
                   key={i}
                   href={`/profile/${member._id}`}
-                  className="lg:w-1/3 w-full"
+                  className="lg:w-[31.33%] w-full"
                 >
                   <div className="bg-white rounded-10 p-4 border border-milk">
                     <Image

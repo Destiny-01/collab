@@ -5,6 +5,7 @@ import { LogOut, Plus, Settings, VolumeX } from "react-feather";
 import { Group } from "@/models/Group";
 import TaskImage from "@/assets/task.png";
 import Link from "next/link";
+import DefaultCover from "@/assets/Default Cover.png";
 
 function Conversation({ group }: { group: Group }) {
   return (
@@ -28,7 +29,7 @@ function Conversation({ group }: { group: Group }) {
       </div>
       <div className="bg-white p-8 lg:w-1/2 mx-4 lg:mx-0 mb-4 lg:mb-0 rounded-10 lg:rounded-none lg:border-l border-[#E4E7EC]">
         <Image
-          src={group?.photo || Pic}
+          src={group?.photo || DefaultCover}
           className="h-20 mx-auto w-20 rounded-lg"
           alt="avatar"
           width="0"

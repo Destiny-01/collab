@@ -15,6 +15,7 @@ import { MessageCircle, MessageSquare, ThumbsUp } from "react-feather";
 import useResponsive from "@/hooks/useResponsive";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Loader from "@/components/Loader";
+import DefaultCover from "@/assets/Default Cover.png";
 
 function Dashboard() {
   const user = useCurrentUser();
@@ -83,7 +84,7 @@ function Dashboard() {
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="lg:h-[118px] h-[187px] mb-2">
                       <Image
-                        src={group.photo || Pic}
+                        src={group.photo || DefaultCover}
                         width="0"
                         unoptimized
                         height="0"
@@ -160,7 +161,7 @@ function Dashboard() {
                 >
                   <div className="min-h-[118px] lg:min-w-[125px] min-w-[118px]">
                     <Image
-                      src={group.photo || Pic}
+                      src={group.photo || DefaultCover}
                       width="0"
                       height="0"
                       unoptimized

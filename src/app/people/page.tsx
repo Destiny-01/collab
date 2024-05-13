@@ -49,14 +49,14 @@ function People() {
             <Search color="#475367" size={20} />
           </div>
         </div>
-        <div className="flex gap-4 my-8">
+        <div className="flex flex-wrap gap-4 my-8">
           {isLoading ? (
             <Loader />
           ) : (
             searchedUsers?.map((user, i) => (
               <div
                 key={i}
-                className="bg-white cursor-pointer max-w-[50%] lg:max-w-[20%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[20%]"
+                className="bg-white cursor-pointer max-w-[50%] lg:max-w-[19%] rounded-10 border mb-4 lg:mb-0 border-milk lg:w-[19%]"
               >
                 <Link href={`/profile/${user._id}`}>
                   <div className="h-[180px] relative overflow-hidden p-4">

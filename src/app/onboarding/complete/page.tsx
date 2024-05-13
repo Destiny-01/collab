@@ -13,6 +13,7 @@ import { useGetAllGroups } from "@/hooks/useCurrentProject";
 import { Group } from "@/models/Group";
 import { underscoreToCapital } from "@/utils";
 import Loader from "@/components/Loader";
+import DefaultCover from "@/assets/Default Cover.png";
 
 export default function Onboarding() {
   const { data, isLoading } = useGetAllGroups();
@@ -55,7 +56,7 @@ export default function Onboarding() {
                   <Link href={`/projects/${group.uuid}`}>
                     <div className="h-[162px]">
                       <Image
-                        src={group.photo || Pic}
+                        src={group.photo || DefaultCover}
                         width="0"
                         height="0"
                         unoptimized
